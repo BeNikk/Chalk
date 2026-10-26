@@ -90,6 +90,17 @@
 
 /* Footer */
 
+.site-footer a {
+  text-decoration: underline; 
+  transition: color 0.2s ease; 
+}
+
+.site-footer a:hover {
+  color: black;
+  font-weight: 600; 
+}
+
+
 .site-footer {
   padding: var(--space-6) 0;
   border-top: 1px solid var(--border);
