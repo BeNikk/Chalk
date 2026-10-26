@@ -4,9 +4,9 @@
 
 :root {
   /* Colors */
-  --bg: #fbfaf7;
+  --bg: var(--bg);
   --surface: #ffffff;
-  --text: #191919;
+  --text: var(--text);
   --text-muted: #5f5e5b;
   --border: #e6e3dd;
 
