@@ -77,6 +77,13 @@
   font-size: var(--text-sm);
 }
 
+.footer-links a:hover{
+  color: var(--text);
+}
+
+#OpenPeeps a:hover{
+  color: var(--text);
+}
 /* Cards */
 
 .card {
