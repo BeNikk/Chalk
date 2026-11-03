@@ -97,6 +97,10 @@
   font-size: var(--text-sm);
 }
 
+.site-footer a:hover {
+  color: var(--text);
+}
+
 .site-footer .container,
 .footer-links {
   display: flex;
