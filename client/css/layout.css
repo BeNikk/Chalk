@@ -9,8 +9,10 @@
 /* Header */
 
 .site-header {
-  position: sticky; /* stays at the top while you scroll */
-  z-index: 1; /* above the tilted notes and people as they scroll under it */
+  position: sticky;
+  /* stays at the top while you scroll */
+  z-index: 1;
+  /* above the tilted notes and people as they scroll under it */
   top: 0;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
@@ -91,13 +93,13 @@
 /* Footer */
 
 .site-footer a {
-  text-decoration: underline; 
-  transition: color 0.2s ease; 
+  text-decoration: underline;
+  transition: color 0.2s ease;
 }
 
 .site-footer a:hover {
   color: black;
-  font-weight: 700; 
+  font-weight: 700;
 }
 
 .site-footer .container,
