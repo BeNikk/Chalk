@@ -88,6 +88,7 @@ client/                  the website (plain HTML, CSS and JavaScript)
 server/                  the backend API (coming soon)
 docs/                    contributing guide and pull request template
   images/                screenshots used in the docs
+  help/                  short explanations of the ideas used in the code (start here if you're stuck)
 ```
 
 ### Design in one paragraph

@@ -1,11 +1,9 @@
-// Every setting the server uses is read here, in one place.
-// Other files import `config` instead of reading process.env themselves,
-// so you never have to hunt through the code to find out what goes in .env.
+// Every setting the server needs, read from .env in one place.
+// New to .env files? See docs/help/environment-variables.md
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Stop the server straight away if a required setting is missing.
-// A clear error at startup is much easier to fix than a confusing crash later.
+// Fail at startup with a clear message, instead of a confusing crash later.
 function requireSetting(name) {
   const value = process.env[name];
   if (!value) {
@@ -14,7 +12,7 @@ function requireSetting(name) {
   return value;
 }
 
-// Settings that are only required in production, where emails and photos must really work.
+// Required on the live site; optional on your laptop.
 function productionSetting(name) {
   return isProduction ? requireSetting(name) : process.env[name] || '';
 }
@@ -25,11 +23,9 @@ const config = {
   appUrl: process.env.APP_URL || 'http://localhost:3000',
   sessionSecret: requireSetting('SESSION_SECRET'),
   databaseUrl: requireSetting('DATABASE_URL'),
-
   adminEmail: productionSetting('ADMIN_EMAIL').toLowerCase(),
 
-  // When these are empty (local development), emails are printed in the terminal
-  // and photos are saved to the uploads/ folder instead.
+  // Left empty locally: emails print in the terminal, photos save to uploads/.
   resendApiKey: productionSetting('RESEND_API_KEY'),
   emailFrom: process.env.EMAIL_FROM || 'Chalk <hello@biznudge.in>',
   cloudinaryUrl: productionSetting('CLOUDINARY_URL'),

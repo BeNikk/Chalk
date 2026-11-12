@@ -169,7 +169,7 @@ The full guide is in [`client/illustrations/README.md`](../client/illustrations/
 
 A theme changes how a personal page looks: its colors, fonts, background, anything. Each theme is **one CSS file** in a `themes/` folder, so adding a theme is a one-file pull request.
 
-A theme works by giving new values to the CSS variables from `client/css/base.css`. (New to CSS variables? There's an explanation at the bottom of that file.) For example:
+A theme works by giving new values to the CSS variables from `client/css/base.css`. (New to CSS variables? See [docs/help/css-variables.md](help/css-variables.md).) For example:
 
 ```css
 /* themes/midnight.css: dark blue with a pink accent */
