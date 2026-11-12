@@ -34,3 +34,8 @@ test('the app.js that Vercel runs answers like the real server', async () => {
   await request(vercelApp).get('/no-such-page').expect(404);
   await request(vercelApp).post('/api/auth/login').send({}).expect(400);
 });
+
+test('/favicon.ico points browsers to the SVG icon', async () => {
+  const res = await request(app).get('/favicon.ico').expect(301);
+  assert.equal(res.headers.location, '/favicon.svg');
+});

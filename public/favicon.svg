@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- A stick of chalk, like the logo -->
-  <rect x="12" y="3" width="9" height="26" rx="3" fill="#fbf1cc" stroke="#191919" stroke-width="2.5" transform="rotate(25 16 16)" />
+  <!-- A stick of chalk, like the logo, on a yellow tile so it shows on light and dark browser tabs -->
+  <rect width="32" height="32" rx="8" fill="#f5d469" />
+  <rect x="12.5" y="5" width="7" height="22" rx="2.5" fill="#ffffff" stroke="#191919" stroke-width="2.5" transform="rotate(25 16 16)" />
 </svg>

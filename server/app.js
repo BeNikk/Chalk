@@ -56,6 +56,11 @@ app.get('/', (req, res) => {
   res.redirect('/index.html');
 });
 
+// Browsers ask for /favicon.ico by habit. Ours is an SVG.
+app.get('/favicon.ico', (req, res) => {
+  res.redirect(301, '/favicon.svg');
+});
+
 // Must come after all routes: any /api path nothing above matched gets a JSON 404.
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Not found' });
