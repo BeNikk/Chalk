@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rules · Chalk</title>
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" />
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="index.html">
+          <span class="logo-mark" aria-hidden="true"></span>
+          Chalk
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a class="nav-link nav-link--extra" href="feed.html">Feed</a>
+          <a class="nav-link nav-link--extra" href="rules.html">Rules</a>
+          <a class="nav-link" href="login.html">Log in</a>
+          <a class="button button--primary button--small" href="signup.html">Start writing</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page rules">
+      <div class="page-heading">
+        <h1>The rules</h1>
+        <p class="lead">Chalk is a small corner of the internet for our campus. Keep it a place people want to write in.</p>
+      </div>
+
+      <section>
+        <h2>Be kind</h2>
+        <ul class="check-list">
+          <li>Rant about things, not people. <strong>No negative posts about named individuals</strong>, students or staff.</li>
+          <li><strong>Don't share photos of other people without their permission.</strong> That includes profile photos: use one of yourself.</li>
+          <li>No bullying, threats, hate, or anything that targets someone for who they are.</li>
+          <li>Disagree in the comments like you would face to face.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Use the labels</h2>
+        <p>Every post gets one: <span class="label-chip" data-label="rant">#rant</span> <span class="label-chip" data-label="poetry">#poetry</span> <span class="label-chip" data-label="mess">#mess</span> <span class="label-chip" data-label="music">#music</span> <span class="label-chip" data-label="fixit">#fixit</span>. Pick the one that fits, so people can find the mood they're in. For <strong>#fixit</strong>, say what's broken and where, so it can actually get fixed.</p>
+      </section>
+
+      <section>
+        <h2>How names work</h2>
+        <ul class="check-list">
+          <li>You sign up with your email address. It's never shown on the site.</li>
+          <li>You post under a handle. Everyone else only sees the handle.</li>
+          <li><strong>The people who run Chalk can see which email is behind a handle.</strong> They only look in serious cases, like threats or someone being harmed.</li>
+          <li>It's a nickname, not a mask. On a small campus, people may still recognise how you write.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Moderators</h2>
+        <p>Moderators are people chosen by the admin. They have a <span class="badge">Moderator</span> badge on their profile, and they can delete any post or comment that breaks these rules. If someone keeps breaking them, the people running Chalk can remove their account.</p>
+        <p>See something that breaks the rules? Tell a moderator or one of the open source guild's organisers in person. (A report button is on the list of things to build.)</p>
+      </section>
+
+      <section>
+        <h2>Your stuff</h2>
+        <p>You can delete your own posts and comments at any time, and they're gone for everyone.</p>
+      </section>
+    </main>
+
+    <script type="module" src="js/pages/home.js"></script>
+  </body>
+</html>

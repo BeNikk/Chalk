@@ -54,6 +54,11 @@ app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
+// Any other address that isn't a file in client/ gets the friendly "Page not found" page.
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(clientFolder, '404.html'));
+});
+
 app.use(errorHandler);
 
 export default app;

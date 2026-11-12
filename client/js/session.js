@@ -19,15 +19,17 @@ function showLoggedInNav(nav, user) {
     try {
       await logOut();
     } finally {
-      window.location.href = 'index.html';
+      window.location.href = '/index.html';
     }
   });
 
+  // Links start with / so they work from any address, even the 404 page at /some/missing/page.
   nav.replaceChildren(
-    link('feed.html', 'Feed', 'nav-link nav-link--extra'),
-    link(`profile.html?handle=${user.handle}`, `@${user.handle}`, 'nav-link nav-link--extra'),
+    link('/feed.html', 'Feed', 'nav-link nav-link--extra'),
+    link('/rules.html', 'Rules', 'nav-link nav-link--extra'),
+    link(`/profile.html?handle=${user.handle}`, `@${user.handle}`, 'nav-link nav-link--extra'),
     logOutButton,
-    link('write.html', 'Write', 'button button--primary button--small'),
+    link('/write.html', 'Write', 'button button--primary button--small'),
   );
 }
 

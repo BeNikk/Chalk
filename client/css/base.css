@@ -110,6 +110,12 @@ a {
   color: inherit;
 }
 
+/* A clear outline around whatever you've reached with the Tab key. */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
 /* Make sure the `hidden` attribute always hides, even on elements we style with display: grid. */
 [hidden] {
   display: none !important;
