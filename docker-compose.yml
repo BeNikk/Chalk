@@ -1,0 +1,26 @@
+# Runs a Postgres database on your laptop for local development.
+# Start it with `npm run setup` (or `docker compose up -d`), stop it with `docker compose down`.
+# In production we use Supabase instead; this file is only for local work.
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: chalk
+      POSTGRES_PASSWORD: chalk
+      POSTGRES_DB: chalk
+    ports:
+      # Port 5433 on your laptop, so it doesn't clash with a Postgres you may already have on 5432.
+      - "5433:5432"
+    volumes:
+      # Keeps your data when the container restarts. `docker compose down -v` wipes it.
+      - chalk-db:/var/lib/postgresql/data
+    healthcheck:
+      # Lets `docker compose up --wait` wait until the database is ready to accept connections.
+      test: ["CMD-SHELL", "pg_isready -U chalk"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  chalk-db:
