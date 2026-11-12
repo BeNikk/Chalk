@@ -14,7 +14,7 @@ If we want a different color later, we have to find and change every copy. Miss 
 
 ## The fix: give the value a name, once
 
-At the top of `client/css/base.css`:
+At the top of `public/css/base.css`:
 
 ```css
 :root {
@@ -50,7 +50,7 @@ A theme just gives the same names new values:
 
 Every part of the page that uses `var(--bg)` and `var(--text)` switches colors, without the theme touching any other CSS. That's why a whole theme fits in one small file.
 
-All of Chalk's variables are in the `:root` block at the top of `client/css/base.css`.
+All of Chalk's variables are in the `:root` block at the top of `public/css/base.css`.
 
 ## Learn more
 

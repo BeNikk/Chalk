@@ -88,10 +88,10 @@ All work starts from an [issue](https://github.com/BeNikk/Chalk/issues). Issues 
 
 | Label | Area |
 |---|---|
-| `frontend` | HTML, CSS, JavaScript in `client/` |
+| `frontend` | HTML, CSS, JavaScript in `public/` |
 | `backend` | The API in `server/` |
 | `themes` | Personal-page themes |
-| `illustrations` | Drawings in `client/illustrations/` |
+| `illustrations` | Drawings in `public/illustrations/` |
 | `docs` | README, this guide, comments |
 
 **To claim an issue:**
@@ -129,7 +129,7 @@ Have an idea that isn't an issue yet? Open a new issue to discuss it first, befo
 5. **Commit** with a message that says what you did:
 
    ```bash
-   git add client/index.html
+   git add public/index.html
    git commit -m "Fix broken GitHub link in footer"
    ```
 
@@ -176,7 +176,7 @@ Have an idea that isn't an issue yet? Open a new issue to discuss it first, befo
 
 We'd love your drawings on the site. Any Open Peeps figure can be replaced by a student's drawing.
 
-The full guide is in [`client/illustrations/README.md`](../client/illustrations/README.md). In short:
+The full guide is in [`public/illustrations/README.md`](../public/illustrations/README.md). In short:
 
 - Black lines on a transparent background, optionally with one soft pastel fill.
 - Saved as an **SVG**, under 100 KB.
@@ -187,10 +187,10 @@ The full guide is in [`client/illustrations/README.md`](../client/illustrations/
 
 ## Adding a theme
 
-A theme changes how a profile page looks: colors, fonts, borders. Each theme is **one CSS file** in `client/themes/`, so adding one is a small, fun pull request.
+A theme changes how a profile page looks: colors, fonts, borders. Each theme is **one CSS file** in `public/themes/`, so adding one is a small, fun pull request.
 
 ```css
-/* client/themes/midnight.css: dark blue, still easy to read */
+/* public/themes/midnight.css: dark blue, still easy to read */
 .profile {
   --bg: #11132b;
   --surface: #1b1e3d;

@@ -27,7 +27,7 @@ Chalk is built by the students of the open source guild. It's small on purpose, 
 - **Follow people** and see a profile's followers and following. The feed has a *Following* filter.
 - **Your own profile page** with a photo, a bio and a **theme**. Each theme is one CSS file, and anyone can add a new one.
 - **Accounts** with email and password, email verification, and "forgot password".
-- **Moderators**, chosen by the admin, can remove posts and comments that break the [rules](client/rules.html).
+- **Moderators**, chosen by the admin, can remove posts and comments that break the [rules](public/rules.html).
 
 ![The Chalk feed: label filters and post cards with likes, comments and share buttons](docs/images/feed.png)
 
@@ -87,7 +87,7 @@ Something went wrong? See [If setup goes wrong](docs/CONTRIBUTING.md#if-setup-go
 ## How the code is organised
 
 ```
-client/                  the website: plain HTML, CSS and JavaScript (no build step)
+public/                  the website: plain HTML, CSS and JavaScript (no build step)
   *.html                 one file per page: index, feed, post, write, profile, settings, login…
   css/                   base.css (variables), layout.css (where things go), components.css (how things look)
   js/api.js              every request to the server goes through here
@@ -132,7 +132,7 @@ Good places to start:
 
 - Issues labelled [`first-timer`](https://github.com/BeNikk/Chalk/labels/first-timer) or [`good-first-issue`](https://github.com/BeNikk/Chalk/labels/good-first-issue)
 - Making a profile theme (see [docs/help/themes.md](docs/help/themes.md))
-- Adding your own drawing (see [`client/illustrations/README.md`](client/illustrations/README.md))
+- Adding your own drawing (see [`public/illustrations/README.md`](public/illustrations/README.md))
 
 Ideas for new features are welcome as a separate discussion.
 

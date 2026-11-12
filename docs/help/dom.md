@@ -15,7 +15,7 @@ p.textContent = post.body;             // the text inside it
 list.append(p);                        // put it on the page
 ```
 
-`client/js/render.js` has a tiny helper so this fits on one line:
+`public/js/render.js` has a tiny helper so this fits on one line:
 
 ```js
 const p = el('p', 'post-body', post.body);
@@ -50,7 +50,7 @@ button.addEventListener('click', loadPosts);
 
 ## Pop-ups with `<dialog>`
 
-The "Liked by" and "Followers" lists open in a `<dialog>`, a pop-up box that's built into HTML (see `client/js/people.js`):
+The "Liked by" and "Followers" lists open in a `<dialog>`, a pop-up box that's built into HTML (see `public/js/people.js`):
 
 ```js
 dialog.showModal(); // opens it, dims the page behind it, and Escape closes it

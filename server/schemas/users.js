@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-// Every theme in client/themes/ must be listed here (scripts/check-themes.js checks this).
+// Every theme in public/themes/ must be listed here (scripts/check-themes.js checks this).
 export const THEMES = ['default', 'chalkboard'];
 
 export const updateMeSchema = z.object({

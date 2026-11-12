@@ -2,7 +2,7 @@
 
 ## From the browser
 
-The settings page has `<input type="file">`. When you click "Upload photo", `client/js/api.js` puts the file in a **FormData** object and sends it to `PUT /api/me/avatar`. FormData is how browsers send files: it's not JSON, so the browser sets the `Content-Type` itself.
+The settings page has `<input type="file">`. When you click "Upload photo", `public/js/api.js` puts the file in a **FormData** object and sends it to `PUT /api/me/avatar`. FormData is how browsers send files: it's not JSON, so the browser sets the `Content-Type` itself.
 
 ## On the server: Multer
 

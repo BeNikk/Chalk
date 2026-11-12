@@ -1,13 +1,13 @@
-// Part of `npm run lint`. Checks the themes in client/themes/:
+// Part of `npm run lint`. Checks the themes in public/themes/:
 // 1. they only style things inside `.profile`, so a theme can't change the rest of the site,
 // 2. they don't load anything from other websites (no @import or url()), and
-// 3. the theme lists (server/schemas/users.js and client/js/themes.js) match the files.
+// 3. the theme lists (server/schemas/users.js and public/js/themes.js) match the files.
 
 import { readdirSync, readFileSync } from 'node:fs';
 import { THEMES as serverThemes } from '../server/schemas/users.js';
-import { THEMES as clientThemes } from '../client/js/themes.js';
+import { THEMES as clientThemes } from '../public/js/themes.js';
 
-const folder = 'client/themes';
+const folder = 'public/themes';
 const problems = [];
 
 // Every selector, i.e. the text before each `{`, split at commas. Keyframe steps are left out.
@@ -42,7 +42,7 @@ for (const file of files) {
     problems.push(`${file}: add '${id}' to THEMES in server/schemas/users.js`);
   }
   if (!clientThemes.some((theme) => theme.id === id)) {
-    problems.push(`${file}: add { id: '${id}', name: '…' } to THEMES in client/js/themes.js`);
+    problems.push(`${file}: add { id: '${id}', name: '…' } to THEMES in public/js/themes.js`);
   }
 }
 
@@ -50,7 +50,7 @@ for (const file of files) {
 const themeIds = new Set([...serverThemes, ...clientThemes.map((theme) => theme.id)]);
 for (const id of themeIds) {
   if (!files.includes(`${id}.css`)) {
-    problems.push(`'${id}' is listed as a theme, but client/themes/${id}.css doesn't exist`);
+    problems.push(`'${id}' is listed as a theme, but public/themes/${id}.css doesn't exist`);
   }
 }
 

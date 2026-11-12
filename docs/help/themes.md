@@ -7,7 +7,7 @@ Every Chalk user can pick a **theme** for their profile page. A theme is **one C
 The profile page wraps everything in `<main class="profile">`. A theme gives new values to Chalk's CSS variables, but only inside `.profile`:
 
 ```css
-/* client/themes/midnight.css */
+/* public/themes/midnight.css */
 .profile {
   --bg: #11132b;
   --surface: #1b1e3d;
@@ -35,10 +35,10 @@ You can also add rules for things inside the profile, like `.profile .post-card 
 
 ## Adding your theme, step by step
 
-1. Copy `client/themes/default.css` to `client/themes/your-theme.css` (lowercase, dashes).
+1. Copy `public/themes/default.css` to `public/themes/your-theme.css` (lowercase, dashes).
 2. Change the variables. Make sure text is easy to read on the background (try the [WebAIM contrast checker](https://webaim.org/resources/contrastchecker/)).
 3. Add it to **both** theme lists:
-   - `client/js/themes.js`: `{ id: 'your-theme', name: 'Your Theme' }`
+   - `public/js/themes.js`: `{ id: 'your-theme', name: 'Your Theme' }`
    - `server/schemas/users.js`: `'your-theme'` in `THEMES`
 4. Run `npm run lint`. It checks that your file only styles things inside `.profile` and that it's in both lists.
 5. Pick your theme in Settings, open your profile, and take a screenshot for your pull request.

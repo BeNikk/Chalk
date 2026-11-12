@@ -4,7 +4,7 @@ How the live site at **https://chalk-client.vercel.app** is set up. This is for 
 
 ```
 Browser ──> Vercel (one project)
-              ├── public/   the website (copied from client/ at build time, served by Vercel's CDN)
+              ├── public/   the website, served as files by Vercel's CDN
               └── app.js    the Express API (/api/...), run as a Vercel Function
                     ├── Supabase   Postgres database
                     ├── Resend     emails from biznudge.in
@@ -40,7 +40,7 @@ The free plan sends up to 100 emails a day.
 ## 4. Vercel
 
 1. Open the existing **chalk-client** project → **Settings**:
-   - **Root Directory**: the repository root (empty), not `client/`.
+   - **Root Directory**: the repository root (empty), not a subfolder.
    - **Framework Preset**: **Express** (not "Other"; Express is how Vercel finds `app.js`). The build command comes from `vercel.json`.
 2. **Settings → Environment Variables**, for the **Production** environment:
 
@@ -79,6 +79,7 @@ Go through this list after the first deploy, and after big changes:
 ## Troubleshooting
 
 - **`P1001: Can't reach database server at db.….supabase.co`** during the build: the Direct connection only works over IPv6, and Vercel uses IPv4. Use the **Session pooler** string (`….pooler.supabase.com:5432`) for `DIRECT_URL`.
+- **The API works but every page says Page not found**: Vercel only serves website files that are in `public/` in the repository. A folder made during the build isn't served. Keep the website in `public/`.
 - **Every address shows the landing page, and logging in or signing up fails with `405`**: Vercel is deploying only the website. Set **Framework Preset** to **Express**, turn off the Output Directory override, and redeploy without the build cache.
 - **`No entrypoint found which imports express`**: the root `app.js` must import `express` itself (it wraps `server/app.js` in a small Express app). Don't shorten it to a one-line re-export.
 - **The build says the database was not updated** on a production deploy: add `DIRECT_URL` to the Production environment variables.

@@ -26,9 +26,9 @@ if (config.isProduction) {
 
 app.use(express.json());
 
-// Serves the website from client/, so locally the site and the API share one address.
-const clientFolder = path.join(import.meta.dirname, '..', 'client');
-app.use(express.static(clientFolder));
+// Serves the website from public/, so locally the site and the API share one address.
+const websiteFolder = path.join(import.meta.dirname, '..', 'public');
+app.use(express.static(websiteFolder));
 
 // Profile photos saved on this computer (only when there's no Cloudinary, i.e. not on the live site).
 if (!config.isProduction) {
@@ -55,10 +55,10 @@ app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
-// Any other address that isn't a file in client/ gets the friendly "Page not found" page.
+// Any other address that isn't a file in public/ gets the friendly "Page not found" page.
 // Read once at start-up. Written with `new URL(…, import.meta.url)` so Vercel sees the file is
 // needed and includes it with the server.
-const notFoundPage = readFileSync(new URL('../client/404.html', import.meta.url), 'utf8');
+const notFoundPage = readFileSync(new URL('../public/404.html', import.meta.url), 'utf8');
 app.use((req, res) => {
   res.status(404).type('html').send(notFoundPage);
 });

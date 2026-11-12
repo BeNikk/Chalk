@@ -23,7 +23,7 @@ const data = await response.json();
 
 A request takes time. `await` means "wait here until it's done, then continue". A function that uses `await` must be marked `async`. If something goes wrong, the awaited call **throws an error**, which you catch with `try { … } catch (error) { … }`.
 
-## Why everything goes through `client/js/api.js`
+## Why everything goes through `public/js/api.js`
 
 `api.js` has one small function per API address (`logIn`, `signUp`, `getMe`…), all built on one `request()` helper that:
 
@@ -45,7 +45,7 @@ export function logIn(details) { … }
 import { logIn } from '../api.js';
 ```
 
-Pages load their script with `<script type="module" src="js/pages/login.js">`. Each page has its own small file in `client/js/pages/`, and shared code lives in `client/js/`.
+Pages load their script with `<script type="module" src="js/pages/login.js">`. Each page has its own small file in `public/js/pages/`, and shared code lives in `public/js/`.
 
 ## Learn more
 

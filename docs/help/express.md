@@ -26,7 +26,7 @@ Middleware is a function that runs on requests **before** (or instead of) your r
 In `server/app.js`:
 
 1. `express.json()` reads JSON sent by the browser and puts it in `req.body`.
-2. `express.static(...)` sends files from `client/` (HTML, CSS, images) if the path matches one.
+2. `express.static(...)` sends files from `public/` (HTML, CSS, images) if the path matches one.
 3. The routes, like `/api/health`.
 4. A last `app.use('/api', ...)` that catches any API path nothing else matched, and answers `404`.
 
