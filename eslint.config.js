@@ -11,7 +11,7 @@ export default [
   js.configs.recommended,
 
   {
-    files: ['server/**/*.js', 'scripts/**/*.js', 'prisma/**/*.js', '*.config.js'],
+    files: ['server/**/*.js', 'scripts/**/*.js', 'prisma/**/*.js', 'tests/**/*.js', '*.config.js'],
     languageOptions: { globals: globals.node },
   },
   {
@@ -23,6 +23,8 @@ export default [
     rules: {
       // `===` instead of `==`, because `==` quietly converts types ("1" == 1 is true).
       eqeqeq: 'error',
+      // Names starting with _ are allowed to be unused, e.g. Express's `next` in an error handler.
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
   },
 ];

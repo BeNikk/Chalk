@@ -19,6 +19,7 @@ function productionSetting(name) {
 
 const config = {
   isProduction,
+  isTest: process.env.NODE_ENV === 'test',
   port: Number(process.env.PORT) || 3000,
   appUrl: process.env.APP_URL || 'http://localhost:3000',
   sessionSecret: requireSetting('SESSION_SECRET'),

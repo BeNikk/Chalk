@@ -4,8 +4,19 @@
 
 import path from 'node:path';
 import express from 'express';
+import config from './config.js';
+import { sessionMiddleware } from './session.js';
+import { errorHandler } from './middleware/errorHandler.js';
+import authRoutes from './routes/auth.js';
+import meRoutes from './routes/me.js';
 
 const app = express();
+
+// On Vercel, requests reach us through a proxy. This lets secure cookies and rate limits
+// see the visitor's real connection instead of the proxy's.
+if (config.isProduction) {
+  app.set('trust proxy', 1);
+}
 
 app.use(express.json());
 
@@ -13,14 +24,22 @@ app.use(express.json());
 const clientFolder = path.join(import.meta.dirname, '..', 'client');
 app.use(express.static(clientFolder));
 
+// Only API requests need to know who's logged in.
+app.use('/api', sessionMiddleware);
+
 // "Is the server alive?" Used by CI and after deploying.
 app.get('/api/health', (req, res) => {
   res.json({ ok: true });
 });
 
-// Must stay last: any /api path nothing above matched gets a JSON 404.
+app.use('/api/auth', authRoutes);
+app.use('/api/me', meRoutes);
+
+// Must come after all routes: any /api path nothing above matched gets a JSON 404.
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
+
+app.use(errorHandler);
 
 export default app;

@@ -15,6 +15,16 @@ function createEnvFile() {
   console.log('Created .env from .env.example');
 }
 
+// A second, separate database for `npm test`, which wipes its data on every run.
+function createTestDatabase() {
+  try {
+    execSync('docker compose exec -T db createdb -U chalk chalk_test', { stdio: 'ignore' });
+    console.log('Created the chalk_test database');
+  } catch {
+    // It already exists. Nothing to do.
+  }
+}
+
 function checkDockerIsRunning() {
   try {
     execSync('docker info', { stdio: 'ignore' });
@@ -29,6 +39,7 @@ checkDockerIsRunning();
 
 // --wait blocks until the database's healthcheck (in docker-compose.yml) says it's ready.
 run('docker compose up -d --wait');
+createTestDatabase();
 
 // Create (or update) the tables from prisma/migrations, then fill them with fake data.
 run('npx prisma migrate deploy');

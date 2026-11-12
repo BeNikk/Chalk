@@ -12,6 +12,10 @@ When a comment in the code says *"See docs/help/…"*, this is where it points.
 | [Databases](databases.md) | Tables, rows, columns, relations, and where Chalk's database runs | `prisma/schema.prisma` |
 | [Prisma](prisma.md) | The schema, migrations, seeding, and the `db:` commands | `prisma/`, `server/db.js` |
 | [Passwords](passwords.md) | Why we store hashes, not passwords, and how bcrypt works | `server/services/passwords.js` |
+| [Sessions and cookies](sessions.md) | How the server remembers who's logged in | `server/session.js` |
+| [Email links](email-links.md) | Verify and reset-password links, and why only hashes are stored | `server/services/tokens.js`, `server/services/email.js` |
+| [Validation](validation.md) | Checking every request with Zod schemas | `server/schemas/`, `server/middleware/validate.js` |
+| [Tests](testing.md) | Running and writing tests | `tests/` |
 
 ## Missing something?
 
