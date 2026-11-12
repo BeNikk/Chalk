@@ -48,7 +48,16 @@ You only do this once.
    git remote add upstream https://github.com/BeNikk/Chalk.git
    ```
 
-5. **Run it:** open `client/index.html` in your browser. That's it for now. (When the backend arrives, the README will have a one-command setup.)
+5. **Install [Node.js](https://nodejs.org/) 22.18 or newer** and **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**, and open Docker Desktop. (On Linux, Docker Engine with the compose plugin works too.)
+6. **Run it:**
+
+   ```bash
+   npm install
+   npm run setup
+   npm run dev
+   ```
+
+   Open http://localhost:3000 and log in as `inkyfox@chalk.test` with the password `chalk-dev-password`. The README lists the other fake users and every command.
 
 ---
 
@@ -103,7 +112,7 @@ Have an idea that isn't an issue yet? Open a new issue to discuss it first, befo
    ```
 
 3. **Make your change.** Keep it small and focused on the issue. If you spot something else to fix, open a separate issue for it.
-4. **Check it in the browser.** Refresh the page, try it at phone width too (in your browser's developer tools), and take a screenshot.
+4. **Check it.** Refresh the page and try it at phone width too (in your browser's developer tools), and take a screenshot. Then run `npm run lint` and `npm test`; CI runs the same checks on your pull request.
 5. **Commit** with a message that says what you did:
 
    ```bash
@@ -165,23 +174,20 @@ The full guide is in [`client/illustrations/README.md`](../client/illustrations/
 
 ## Adding a theme
 
-> Themes arrive with personal pages, which aren't built yet. This section explains how they'll work, so you can start thinking about yours.
-
-A theme changes how a personal page looks: its colors, fonts, background, anything. Each theme is **one CSS file** in a `themes/` folder, so adding a theme is a one-file pull request.
-
-A theme works by giving new values to the CSS variables from `client/css/base.css`. (New to CSS variables? See [docs/help/css-variables.md](help/css-variables.md).) For example:
+A theme changes how a profile page looks: colors, fonts, borders. Each theme is **one CSS file** in `client/themes/`, so adding one is a small, fun pull request.
 
 ```css
-/* themes/midnight.css: dark blue with a pink accent */
+/* client/themes/midnight.css: dark blue, still easy to read */
 .profile {
   --bg: #11132b;
+  --surface: #1b1e3d;
   --text: #f4f1ff;
-  --accent: #ff7ac6;
-  --font: "Space Mono", monospace;
+  --text-muted: #b9b4d9;
+  --border: #3a3e6b;
 }
 ```
 
-Themes only change the personal page. The rest of the site stays the same for everyone.
+The step-by-step guide, with the list of variables you can change, is in [docs/help/themes.md](help/themes.md). `npm run lint` checks that your theme only styles the profile page.
 
 ---
 
@@ -195,7 +201,15 @@ Themes only change the personal page. The rest of the site stays the same for ev
   - `layout.css` decides *where* things go. `components.css` decides how single pieces *look*.
   - Use flexbox and grid, and check that your change works on a phone-sized screen.
   - Keep animations small, and make sure they don't get in the way of reading or writing.
+- **Backend:**
+  - Each request goes route → controller → model. Database code (Prisma) only lives in `server/models/`.
+  - Check every request body with a Zod schema in `server/schemas/`.
+  - Never send private data (emails, password hashes) in answers. Use the `toPublic…` functions in the models.
+  - Add or update a test in `tests/` for any API change. Copy a nearby test and change it.
+  - Changing `prisma/schema.prisma`? Run `npm run db:migrate -- --name what_changed` and commit the new migration.
+- **People's words:** show anything a user wrote with `textContent`, never `innerHTML` (see [docs/help/dom.md](help/dom.md)).
 - **Accessibility:** images need `alt` text (use `alt=""` for decoration), and text must be readable against its background.
+- **Stuck on an idea in the code?** The [help pages](help/README.md) explain each one, with links to learn more.
 
 ---
 

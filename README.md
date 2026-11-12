@@ -4,14 +4,15 @@
 
 Chalk is built by the students of the open source guild. It's small on purpose, so it can be your **first real open source contribution**.
 
+**Live:** https://chalk-client.vercel.app
+
 ![The Chalk landing page: a big "Write anything. Under a name you choose." heading, a row of hand-drawn people, and five pastel sticky notes for the post labels](docs/images/landing.png)
 
 ---
 
-## What Chalk will do
+## What Chalk does
 
-- **A shared campus feed:** everyone's posts in one place, newest first.
-- **Labels on every post:**
+- **Write posts** with a label:
 
   | Label | For |
   |---|---|
@@ -21,85 +22,101 @@ Chalk is built by the students of the open source guild. It's small on purpose, 
   | `#music` | What's on repeat, and why |
   | `#fixit` | Something on campus that needs fixing |
 
-- **Your own page:** a personal page you can dress up with a theme. Each theme is one CSS file, and anyone can add a new one.
-- **Text and images** to start. Audio and video links come later(scoped for future).
+- **A shared feed** of everyone's posts, newest first, filtered by label.
+- **Like, comment and share** posts. Sharing opens your phone's share sheet, or copies the link.
+- **Your own profile page** with a photo, a bio and a **theme**. Each theme is one CSS file, and anyone can add a new one.
+- **Accounts** with email and password, email verification, and "forgot password".
+- **Moderators**, chosen by the admin, can remove posts and comments that break the [rules](client/rules.html).
+
+![The Chalk feed: label filters and post cards with likes, comments and share buttons](docs/images/feed.png)
 
 ### How names work
 
-- You log in with your college account, so everyone on Chalk is from campus.
-- You post under a **handle** you choose. Other students only ever see the handle.
-- **Moderators can see which account is behind a handle**, and only look in serious cases. This is stated openly in the community rules.
+- You sign up with your email address. It's never shown on the site.
+- You post under a **handle** you choose. Everyone else only sees the handle.
+- The people who run Chalk's database (not moderators) can see which email is behind a handle, and only look in serious cases.
 - It's a nickname, not a mask. On a small campus, people may still recognise how you write.
 
-### Community rules (short version)
-
-- No negative posts about named people.
-- Don't share photos of others without their consent.
-
 ---
 
-## Where the project is right now
+## Run it on your laptop
 
-Chalk is being built step by step, in the open.
+You need:
 
-| Part | Status |
+- [Git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/) **22.18 or newer** (check with `node --version`)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/), installed and running (it runs the database)
+
+Want to contribute? Fork the repository first and follow the [contributing guide](docs/CONTRIBUTING.md) instead. To just try Chalk:
+
+```bash
+git clone https://github.com/BeNikk/Chalk.git
+cd Chalk
+npm install
+npm run setup     # starts the database, creates the tables, adds fake users and posts
+npm run dev       # starts Chalk at http://localhost:3000
+```
+
+Open **http://localhost:3000**. You don't need any accounts or API keys:
+
+- **Log in as a fake user**: `inkyfox@chalk.test` (or `chalk_admin`, `mod_mango`, `mess_hall`, `lofi_leela`, `quiet_kid`, all `@chalk.test`), password **`chalk-dev-password`**. `chalk_admin` is the admin and `mod_mango` is a moderator.
+- **Emails** (verify, reset password) are printed in the terminal running `npm run dev`. Copy the link from there.
+- **Profile photos** are saved in the `uploads/` folder.
+
+`npm run dev` restarts the server whenever you save a file. Refresh the browser to see your change.
+
+### Commands
+
+| Command | What it does |
 |---|---|
-| Landing page (design, HTML, CSS, illustrations) | In progress |
-| Feed, posting, labels |  Next |
-| Login and handles | Planned |
-| Personal pages and themes |  Planned |
-| Backend API, database, tests | Planned |
+| `npm run setup` | First-time setup. Running it again resets your data to the fake data. |
+| `npm run dev` | Starts Chalk and restarts it when you save |
+| `npm test` | Runs the tests (needs the database from `npm run setup`) |
+| `npm run lint` | Checks the code and the themes for mistakes |
+| `npm run db:seed` | Resets your data to the fake users and posts |
+| `npm run db:studio` | Opens a page to browse the database |
+| `npm run db:migrate -- --name what_changed` | After changing `prisma/schema.prisma`: updates the tables |
+| `docker compose down` | Stops the database (your data stays) |
 
-Many features are deliberately left unbuilt so they can become starter issues for new contributors.
-Open to ideas as a separate discussion forum
-
----
-
-## Run it locally
-
-Right now Chalk is a plain HTML and CSS page, so there's nothing to install.
-
-1. Install [Git](https://git-scm.com/downloads).
-2. Get the code:
-
-   ```bash
-   git clone https://github.com/BeNikk/Chalk.git
-   cd Chalk
-   ```
-
-3. Open `client/index.html` in your browser (use live server extension preferably).
-
-After you change a file, save it and refresh the browser to see the change.
-
-> When the backend arrives, these steps will change to a single setup command. This section will be updated then.
+Stuck? The [help pages](docs/help/README.md) explain every idea used in the code, from CSS variables to sessions.
 
 ---
 
 ## How the code is organised
 
 ```
-client/                  the website (plain HTML, CSS and JavaScript)
-  index.html             the landing page
-  css/
-    base.css             colors, fonts and spacing as CSS variables, plus basic text styles
-    layout.css           where things go: header, sections, grids, footer
-    components.css       how single pieces look: buttons, cards, sticky notes
-  illustrations/         the drawings of people used across the site
-server/                  the backend API (coming soon)
-docs/                    contributing guide and pull request template
-  images/                screenshots used in the docs
-  help/                  short explanations of the ideas used in the code (start here if you're stuck)
+client/                  the website: plain HTML, CSS and JavaScript (no build step)
+  *.html                 one file per page: index, feed, post, write, profile, settings, login…
+  css/                   base.css (variables), layout.css (where things go), components.css (how things look)
+  js/api.js              every request to the server goes through here
+  js/pages/              one small script per page
+  themes/                profile themes, one CSS file each
+  illustrations/         the drawings of people
+server/                  the API (Express)
+  routes/                which address runs which controller
+  controllers/           what each request does
+  models/                all database code (Prisma)
+  services/              passwords, email, photos, tokens
+  middleware/            login checks, input checks, uploads, rate limits, errors
+  schemas/               what each request must look like (Zod)
+prisma/                  schema.prisma (every table), migrations, seed.js (fake data)
+tests/                   the tests, one file per part of the API
+docs/                    contributing guide, help pages, deployment guide
 ```
 
-### Design in one paragraph
-
-Calm and clean, like a notebook: an off-white background, near-black text, big bold headings, thin borders and lots of space. Color comes from soft pastel tints (one per label) and the yellow main button. Hand-drawn people from [Open Peeps](https://www.openpeeps.com/) appear around the page and wobble when you hover over them. The quirky stuff goes on personal pages, through themes.
+The website only talks to the server through its JSON API (`/api/...`, listed in [docs/help/api.md](docs/help/api.md)), so anyone can build another client against it: a Telegram bot, a CLI, a phone app.
 
 ### Tech
 
-- **Frontend:** plain HTML, CSS and JavaScript. No frameworks and no build step, so you can read every file.
-- **Backend (planned):** Node.js with Express, a PostgreSQL database, and Google login limited to college accounts.
-- **Fonts:** [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque) for headings, [DM Sans](https://fonts.google.com/specimen/DM+Sans) for text, [Caveat](https://fonts.google.com/specimen/Caveat) for handwriting.
+- **Frontend:** plain HTML, CSS and JavaScript modules. No frameworks, no build step.
+- **Backend:** Node.js, Express 5, Prisma (ORM) with PostgreSQL, Zod, bcrypt, cookie sessions.
+- **Services:** Supabase (database), Resend (email), Cloudinary (photos), Vercel (hosting). See [docs/DEPLOYING.md](docs/DEPLOYING.md).
+- **Checks:** ESLint, Node's test runner with Supertest, GitHub Actions on every pull request.
+- **Fonts:** [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque), [DM Sans](https://fonts.google.com/specimen/DM+Sans), [Caveat](https://fonts.google.com/specimen/Caveat).
+
+### Design in one paragraph
+
+Calm and clean, like a notebook: an off-white background, near-black text, big bold headings, thin borders and lots of space. Color comes from soft pastel tints (one per label) and the yellow main button. Hand-drawn people from [Open Peeps](https://www.openpeeps.com/) appear around the site and wobble when you hover over them. The quirky stuff goes on profile pages, through themes.
 
 ---
 
@@ -112,11 +129,15 @@ Read the **[contributing guide](docs/CONTRIBUTING.md)**. It walks you through se
 Good places to start:
 
 - Issues labelled [`first-timer`](https://github.com/BeNikk/Chalk/labels/first-timer) or [`good-first-issue`](https://github.com/BeNikk/Chalk/labels/good-first-issue)
+- Making a profile theme (see [docs/help/themes.md](docs/help/themes.md))
 - Adding your own drawing (see [`client/illustrations/README.md`](client/illustrations/README.md))
+
+Ideas for new features are welcome as a separate discussion.
 
 ---
 
-## Credits
+## Credits and license
 
 - Illustrations: [Open Peeps](https://www.openpeeps.com/) by Pablo Stanley, released under CC0.
 - Built by the students of our open source guild.
+- Code released under the [MIT License](LICENSE).

@@ -163,3 +163,6 @@ server/generated/
 
 # Made by scripts/vercel-build.js on Vercel (a copy of client/)
 public/
+
+# Local drafts of starter issues (not committed)
+STARTER_ISSUES.md
