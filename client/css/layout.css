@@ -20,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  height: var(--header-height);
 }
 
 .site-nav {
@@ -86,6 +86,51 @@
 .post-list {
   display: grid;
   gap: var(--space-4);
+}
+
+/* Profile pages: the theme's colors and font fill the whole area under the header */
+
+.profile {
+  min-height: calc(100vh - var(--header-height));
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.profile-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+
+.profile-details {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.settings {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.photo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* Let the file picker shrink on phones instead of pushing the page wider than the screen. */
+.settings-section {
+  min-width: 0;
+}
+
+.photo-row .field {
+  flex: 1 1 200px;
+  min-width: 0;
 }
 
 /* Narrow pages: sign up, log in and the other account forms */

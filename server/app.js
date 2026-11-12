@@ -11,6 +11,9 @@ import authRoutes from './routes/auth.js';
 import meRoutes from './routes/me.js';
 import postRoutes from './routes/posts.js';
 import commentRoutes from './routes/comments.js';
+import userRoutes from './routes/users.js';
+import adminRoutes from './routes/admin.js';
+import { UPLOADS_FOLDER } from './services/photos.js';
 
 const app = express();
 
@@ -26,6 +29,11 @@ app.use(express.json());
 const clientFolder = path.join(import.meta.dirname, '..', 'client');
 app.use(express.static(clientFolder));
 
+// Profile photos saved on this computer (only when there's no Cloudinary, i.e. not on the live site).
+if (!config.isProduction) {
+  app.use('/uploads', express.static(UPLOADS_FOLDER));
+}
+
 // Only API requests need to know who's logged in.
 app.use('/api', sessionMiddleware);
 
@@ -38,6 +46,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/me', meRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Must come after all routes: any /api path nothing above matched gets a JSON 404.
 app.use('/api', (req, res) => {

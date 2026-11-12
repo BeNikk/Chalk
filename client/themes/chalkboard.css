@@ -1,0 +1,26 @@
+/* Chalkboard: a green board with chalk-white handwriting. */
+
+.profile {
+  --bg: #2f4a3a;
+  --surface: #36543f;
+  --text: #f4f1e8;
+  --text-muted: #c8d4c3;
+  --border: #6c8a72;
+  --font: "Caveat", cursive;
+  --font-heading: "Caveat", cursive;
+
+  /* Darker tints, so chalk-white text stays readable on them */
+  --tint-red: #7d4b45;
+  --tint-purple: #5b4f7a;
+  --label-rant: #7d4b45;
+  --label-poetry: #5b4f7a;
+  --label-mess: #4f6e4a;
+  --label-music: #3f5f7a;
+  --label-fixit: #7a6a3a;
+
+  font-size: 1.25rem; /* handwriting reads small, so make it bigger */
+}
+
+.profile .post-card {
+  border-style: dashed;
+}

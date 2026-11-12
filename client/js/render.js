@@ -82,6 +82,12 @@ function renderActions(post, user) {
   return actions;
 }
 
+// "Joined November 2026"
+export function joinedDate(dateString) {
+  const month = new Date(dateString).toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  return `Joined ${month}`;
+}
+
 // One post. In the feed (`full: false`) long posts are shortened and the card links to the post page.
 export function renderPostCard(post, user, { full = false } = {}) {
   const card = el('article', full ? 'post-card post-card--full' : 'post-card');

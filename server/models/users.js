@@ -34,9 +34,37 @@ export function updatePassword(userId, passwordHash) {
   return prisma.user.update({ where: { id: userId }, data: { passwordHash } });
 }
 
+export function updateProfile(userId, { bio, theme }) {
+  return prisma.user.update({ where: { id: userId }, data: { bio, theme } });
+}
+
+export function updateAvatar(userId, { avatarUrl, avatarId }) {
+  return prisma.user.update({ where: { id: userId }, data: { avatarUrl, avatarId } });
+}
+
+export function setRole(userId, role) {
+  return prisma.user.update({ where: { id: userId }, data: { role } });
+}
+
+export function listModerators() {
+  return prisma.user.findMany({ where: { role: 'MODERATOR' }, orderBy: { handle: 'asc' } });
+}
+
 // Moderators and the admin can remove anyone's posts and comments.
 export function canModerate(user) {
   return user.role === 'MODERATOR' || user.role === 'ADMIN';
+}
+
+// What anyone can see about a user. No email: that stays private.
+export function toPublicProfile(user) {
+  return {
+    handle: user.handle,
+    bio: user.bio,
+    theme: user.theme,
+    avatarUrl: user.avatarUrl,
+    role: user.role,
+    joinedAt: user.createdAt,
+  };
 }
 
 // What a user sees about their own account. Never includes the password hash.

@@ -57,6 +57,7 @@
   --radius-lg: 14px;
   --radius-pill: 999px; /* fully rounded ends, for chips and small buttons */
   --content-width: 1080px;
+  --header-height: 64px;
 }
 
 * {

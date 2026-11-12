@@ -241,6 +241,12 @@
   margin-top: var(--space-6);
 }
 
+/* Grid rows normally refuse to be narrower than their content (like a file picker). This lets them shrink. */
+.form > *,
+.field > * {
+  min-width: 0;
+}
+
 .field {
   display: grid;
   gap: var(--space-2);
@@ -252,6 +258,7 @@
 
 .field input,
 .field textarea {
+  max-width: 100%;
   padding: var(--space-3);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -388,7 +395,7 @@ fieldset.field legend {
 
 .label-choice:has(input:checked) {
   border-color: var(--text);
-  background: var(--label-color);
+  background: var(--label-color, var(--accent)); /* theme choices have no label color */
 }
 
 .label-choice:has(input:focus-visible) {
@@ -532,6 +539,12 @@ fieldset.field legend {
   height: 28px;
 }
 
+.avatar--large {
+  width: 112px;
+  height: 112px;
+  font-size: 3rem;
+}
+
 .avatar--letter {
   display: grid;
   place-items: center;
@@ -541,7 +554,36 @@ fieldset.field legend {
   font-weight: 700;
 }
 
+/* Settings */
+
+.settings-section h2 {
+  font-size: var(--text-h3);
+}
+
+.moderator-list {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.moderator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 600;
+}
+
 /* Bits and pieces */
+
+.badge {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--text);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
 
 .empty-state {
   padding: var(--space-7) 0;

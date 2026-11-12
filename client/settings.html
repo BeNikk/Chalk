@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Settings · Chalk</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" />
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="index.html">
+          <span class="logo-mark" aria-hidden="true"></span>
+          Chalk
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a class="nav-link nav-link--extra" href="feed.html">Feed</a>
+          <a class="nav-link nav-link--extra" href="rules.html">Rules</a>
+          <a class="nav-link" href="login.html">Log in</a>
+          <a class="button button--primary button--small" href="signup.html">Start writing</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="page-heading">
+        <h1>Settings</h1>
+        <p class="lead">Change how your profile looks to everyone else.</p>
+      </div>
+
+      <!-- Hidden until we know you're logged in. -->
+      <div class="settings" id="settings" hidden>
+        <section class="settings-section">
+          <h2>Profile photo</h2>
+          <form class="form" id="photo-form">
+            <p class="form-message" role="alert"></p>
+            <div class="photo-row">
+              <div id="photo-preview"></div>
+              <div class="field">
+                <label for="photo">Choose a photo of yourself</label>
+                <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" />
+                <p class="field-hint">JPG, PNG or WebP, up to 2 MB. It's cropped to a square.</p>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="button button--primary" type="submit">Upload photo</button>
+              <button class="button" id="remove-photo" type="button" hidden>Remove photo</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="settings-section">
+          <h2>Bio and theme</h2>
+          <form class="form" id="profile-form">
+            <p class="form-message" role="alert"></p>
+            <div class="field">
+              <label for="bio">Bio</label>
+              <textarea id="bio" name="bio" rows="3" maxlength="160"></textarea>
+              <p class="field-hint">A line about you, up to 160 characters.</p>
+              <p class="field-error" data-error-for="bio"></p>
+            </div>
+            <fieldset class="field">
+              <legend>Theme for your profile page</legend>
+              <div class="label-choices" id="theme-choices"></div>
+              <p class="field-hint">Want a new theme? You can make one: see docs/help/themes.md on GitHub.</p>
+            </fieldset>
+            <div>
+              <button class="button button--primary" type="submit">Save</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Only the admin sees this. -->
+        <section class="settings-section" id="moderators" hidden>
+          <h2>Moderators</h2>
+          <p class="lead">Moderators can delete any post or comment.</p>
+          <ul class="moderator-list" id="moderator-list"></ul>
+          <form class="form" id="moderator-form">
+            <p class="form-message" role="alert"></p>
+            <div class="field">
+              <label for="handle">Add a moderator by handle</label>
+              <input id="handle" name="handle" type="text" required />
+            </div>
+            <div>
+              <button class="button button--primary" type="submit">Make moderator</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <script type="module" src="js/pages/settings.js"></script>
+  </body>
+</html>

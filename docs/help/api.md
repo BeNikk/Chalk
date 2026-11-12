@@ -44,6 +44,24 @@ The website is just one **client** of Chalk's API. Anything that can send HTTP r
 | POST | `/api/auth/forgot-password` | anyone | `{ email }` → emails a reset link |
 | POST | `/api/auth/reset-password` | anyone | `{ token, password }` → sets a new password |
 | GET | `/api/me` | logged in | your account |
+| PATCH | `/api/me` | logged in | `{ bio?, theme? }` → changes your bio or theme |
+| PUT | `/api/me/avatar` | logged in | a file in the form field `photo` (JPG/PNG/WebP, max 2 MB) → sets your photo |
+| DELETE | `/api/me/avatar` | logged in | removes your photo |
+
+## Profiles
+
+| Method | Address | Who | Does |
+|---|---|---|---|
+| GET | `/api/users/:handle` | anyone | `{ "user": { handle, bio, theme, avatarUrl, role, joinedAt } }` (never the email) |
+| GET | `/api/users/:handle/posts?before=42` | anyone | that user's posts, like the feed |
+
+## Admin
+
+| Method | Address | Who | Does |
+|---|---|---|---|
+| GET | `/api/admin/moderators` | admin | `{ "moderators": [ … ] }` |
+| PUT | `/api/admin/moderators/:handle` | admin | makes that user a moderator |
+| DELETE | `/api/admin/moderators/:handle` | admin | makes them a normal user again |
 
 ## Posts and likes
 

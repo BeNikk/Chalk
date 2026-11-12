@@ -6,7 +6,9 @@
 // it throws an error carrying the server's message, so pages can show it.
 async function request(method, path, body) {
   const options = { method, headers: {} };
-  if (body !== undefined) {
+  if (body instanceof FormData) {
+    options.body = body; // a file upload: the browser sets the right Content-Type itself
+  } else if (body !== undefined) {
     options.headers['Content-Type'] = 'application/json';
     options.body = JSON.stringify(body);
   }
@@ -111,4 +113,44 @@ export function addComment(postId, body) {
 
 export function deleteComment(id) {
   return request('DELETE', `/comments/${id}`);
+}
+
+// ---------- Profiles and settings ----------
+
+// encodeURIComponent keeps a strange handle (like "../me") from changing which address we ask for.
+export function getProfile(handle) {
+  return request('GET', `/users/${encodeURIComponent(handle)}`);
+}
+
+export function getUserPosts(handle, before) {
+  const query = before ? `?before=${before}` : '';
+  return request('GET', `/users/${encodeURIComponent(handle)}/posts${query}`);
+}
+
+export function updateMe({ bio, theme }) {
+  return request('PATCH', '/me', { bio, theme });
+}
+
+export function uploadAvatar(file) {
+  const form = new FormData();
+  form.append('photo', file);
+  return request('PUT', '/me/avatar', form);
+}
+
+export function removeAvatar() {
+  return request('DELETE', '/me/avatar');
+}
+
+// ---------- Admin ----------
+
+export function getModerators() {
+  return request('GET', '/admin/moderators');
+}
+
+export function addModerator(handle) {
+  return request('PUT', `/admin/moderators/${encodeURIComponent(handle)}`);
+}
+
+export function removeModerator(handle) {
+  return request('DELETE', `/admin/moderators/${encodeURIComponent(handle)}`);
 }
