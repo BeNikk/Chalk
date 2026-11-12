@@ -1,0 +1,108 @@
+// Every table in Chalk's database. Prisma reads this file to create the tables
+// and to generate the code we use to read and write them.
+// New to databases or Prisma? See docs/help/databases.md and docs/help/prisma.md
+
+generator client {
+  provider = "prisma-client"
+  output   = "../server/generated/prisma"
+}
+
+// The connection address comes from prisma.config.js, not from this file.
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum Label {
+  RANT
+  POETRY
+  MESS
+  MUSIC
+  FIXIT
+}
+
+enum TokenPurpose {
+  VERIFY
+  RESET
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  email           String    @unique // always saved in lowercase
+  passwordHash    String
+  handle          String    @unique // always saved in lowercase
+  bio             String    @default("")
+  theme           String    @default("default")
+  avatarUrl       String?
+  avatarId        String? // Cloudinary's id for the photo, so we can delete it later
+  role            Role      @default(USER)
+  emailVerifiedAt DateTime? // empty until the user clicks the link in their email
+  createdAt       DateTime  @default(now())
+
+  posts    Post[]
+  comments Comment[]
+  likes    Like[]
+  tokens   EmailToken[]
+}
+
+// One row per "verify your email" or "reset your password" link we send.
+model EmailToken {
+  id        Int          @id @default(autoincrement())
+  userId    Int
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  purpose   TokenPurpose
+  tokenHash String       @unique // a scrambled copy; the real token only exists in the email
+  expiresAt DateTime
+  usedAt    DateTime? // set when the link is used, so it can't be used twice
+  createdAt DateTime     @default(now())
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  label     Label
+  title     String?
+  body      String
+  createdAt DateTime @default(now())
+
+  comments Comment[]
+  likes    Like[]
+
+  @@index([createdAt]) // the feed always asks for the newest posts first
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  body      String
+  createdAt DateTime @default(now())
+
+  @@index([postId])
+}
+
+model Like {
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId]) // one like per person per post
+}
+
+// Login sessions, in the shape our session library (@quixo3/prisma-session-store) expects.
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
