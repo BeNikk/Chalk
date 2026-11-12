@@ -106,6 +106,22 @@ test('liking needs an account and a real post', async () => {
   await browser.put('/api/posts/999999/like').expect(404);
 });
 
+test('anyone can see who liked a post, newest like first', async () => {
+  const post = await createPost(await createUser({ handle: 'author' }));
+  const first = await createUser({ handle: 'first_fan' });
+  const second = await createUser({ handle: 'second_fan' });
+  await (await logIn(first)).put(`/api/posts/${post.id}/like`).expect(200);
+  await (await logIn(second)).put(`/api/posts/${post.id}/like`).expect(200);
+
+  const res = await request(app).get(`/api/posts/${post.id}/likes`).expect(200);
+  assert.deepEqual(res.body.people, [
+    { handle: 'second_fan', avatarUrl: null },
+    { handle: 'first_fan', avatarUrl: null },
+  ]);
+
+  await request(app).get('/api/posts/999999/likes').expect(404);
+});
+
 test('the feed loads 20 posts at a time', async () => {
   const author = await createUser();
   for (let i = 0; i < 21; i++) {

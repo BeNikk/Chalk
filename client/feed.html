@@ -30,31 +30,54 @@
       </div>
     </header>
 
-    <main class="page">
-      <div class="feed-banner">
-        <div class="page-heading">
-          <h1>The feed</h1>
-          <p class="lead">What campus is writing, newest first.</p>
-        </div>
-        <div class="feed-banner-crowd">
-          <img class="illustration" src="illustrations/reader.svg" alt="" />
-          <img class="illustration" src="illustrations/coffee.svg" alt="" />
-          <img class="illustration" src="illustrations/writer.svg" alt="" />
-        </div>
-      </div>
+    <main class="page page--wide">
+      <div class="feed-layout">
+        <div>
+          <div class="feed-banner">
+            <div class="page-heading">
+              <h1>The feed</h1>
+              <p class="lead" id="greeting">What campus is writing, newest first.</p>
+            </div>
+            <div class="feed-banner-crowd">
+              <img class="illustration" src="illustrations/reader.svg" alt="" />
+              <img class="illustration" src="illustrations/coffee.svg" alt="" />
+              <img class="illustration" src="illustrations/writer.svg" alt="" />
+            </div>
+          </div>
 
-      <div class="label-filter" role="group" aria-label="Show only one label">
-        <button type="button" data-label="" aria-pressed="false">All</button>
-        <button type="button" data-label="rant" aria-pressed="false">#rant</button>
-        <button type="button" data-label="poetry" aria-pressed="false">#poetry</button>
-        <button type="button" data-label="mess" aria-pressed="false">#mess</button>
-        <button type="button" data-label="music" aria-pressed="false">#music</button>
-        <button type="button" data-label="fixit" aria-pressed="false">#fixit</button>
-      </div>
+          <div class="label-filter" role="group" aria-label="Show only one label">
+            <button type="button" data-label="" aria-pressed="false">All</button>
+            <button type="button" data-label="rant" aria-pressed="false">#rant</button>
+            <button type="button" data-label="poetry" aria-pressed="false">#poetry</button>
+            <button type="button" data-label="mess" aria-pressed="false">#mess</button>
+            <button type="button" data-label="music" aria-pressed="false">#music</button>
+            <button type="button" data-label="fixit" aria-pressed="false">#fixit</button>
+          </div>
 
-      <p class="form-message form-message--error" id="feed-error" role="alert"></p>
-      <div class="post-list" id="posts"></div>
-      <button class="button load-more" id="load-more" type="button" hidden>Load more</button>
+          <p class="form-message form-message--error" id="feed-error" role="alert"></p>
+          <div class="post-list" id="posts"></div>
+          <button class="button load-more" id="load-more" type="button" hidden>Load more</button>
+        </div>
+
+        <aside class="feed-side" aria-label="Write and labels">
+          <div class="side-card">
+            <img class="illustration" src="illustrations/idea.svg" alt="" />
+            <p class="hand">Something on your mind?</p>
+            <a class="button button--primary" href="write.html">Write a post</a>
+          </div>
+
+          <div>
+            <h2 class="side-heading">Labels</h2>
+            <div class="label-notes">
+              <a class="label-note" data-label="rant" href="feed.html?label=rant"><strong>#rant</strong><span>Let it out.</span></a>
+              <a class="label-note" data-label="poetry" href="feed.html?label=poetry"><strong>#poetry</strong><span>Nobody's grading this.</span></a>
+              <a class="label-note" data-label="mess" href="feed.html?label=mess"><strong>#mess</strong><span>Half-thoughts welcome.</span></a>
+              <a class="label-note" data-label="music" href="feed.html?label=music"><strong>#music</strong><span>What's on repeat?</span></a>
+              <a class="label-note" data-label="fixit" href="feed.html?label=fixit"><strong>#fixit</strong><span>Say it so it gets fixed.</span></a>
+            </div>
+          </div>
+        </aside>
+      </div>
     </main>
 
     <script type="module" src="js/pages/feed.js"></script>

@@ -101,6 +101,10 @@ export function unlikePost(id) {
   return request('DELETE', `/posts/${id}/like`);
 }
 
+export function getLikers(id) {
+  return request('GET', `/posts/${id}/likes`);
+}
+
 // ---------- Comments ----------
 
 export function getComments(postId) {

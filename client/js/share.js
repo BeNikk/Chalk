@@ -4,14 +4,15 @@ function postLink(post) {
   return new URL(`post.html?id=${post.id}`, window.location.href).href;
 }
 
-// Shows a short message on the button, then puts the label back.
-function flash(button, message) {
-  button.textContent = message;
-  setTimeout(() => (button.textContent = 'Share'), 2000);
+// Shows a short message on the button, then puts the word back.
+function flash(text, message) {
+  text.textContent = message;
+  setTimeout(() => (text.textContent = 'Share'), 2000);
 }
 
 export function setUpShareButton(button, post) {
-  button.textContent = 'Share';
+  const text = button.querySelector('.action-text');
+  text.textContent = 'Share';
 
   button.addEventListener('click', async () => {
     const url = postLink(post);
@@ -29,7 +30,7 @@ export function setUpShareButton(button, post) {
 
     try {
       await navigator.clipboard.writeText(url);
-      flash(button, 'Link copied!');
+      flash(text, 'Link copied!');
     } catch {
       prompt('Copy this link:', url);
     }

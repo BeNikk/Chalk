@@ -17,6 +17,9 @@
   /* Only for error messages: a dark red that's readable on white */
   --danger: #b42318;
 
+  /* A liked heart */
+  --heart: #e5484d;
+
   /* Soft tints for a little color */
   --tint-red: #fbe4e1;
   --tint-purple: #ece7f8;

@@ -73,6 +73,7 @@ The website is just one **client** of Chalk's API. Anything that can send HTTP r
 | DELETE | `/api/posts/:id` | author, moderator, admin | deletes a post |
 | PUT | `/api/posts/:id/like` | logged in | likes a post |
 | DELETE | `/api/posts/:id/like` | logged in | unlikes it |
+| GET | `/api/posts/:id/likes` | anyone | who liked it: `{ "people": [ { "handle", "avatarUrl" } ] }`, newest first, up to 100 |
 
 - The feed answers `{ "posts": [ … ] }`; a single post answers `{ "post": { … } }`.
 - To load older posts, pass `before` = the `id` of the last post you already have. An empty list means there are no more.

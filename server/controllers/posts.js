@@ -10,7 +10,7 @@ import {
   listPosts,
   postExists,
 } from '../models/posts.js';
-import { countLikes, likePost, unlikePost } from '../models/likes.js';
+import { countLikes, likePost, listLikers, unlikePost } from '../models/likes.js';
 import { canModerate } from '../models/users.js';
 
 const POST_NOT_FOUND = { error: 'That post does not exist (or was deleted).' };
@@ -81,4 +81,13 @@ export async function unlike(req, res) {
   }
   await unlikePost(req.user.id, id);
   res.json({ likeCount: await countLikes(id), likedByMe: false });
+}
+
+// GET /api/posts/:id/likes: who liked it
+export async function getLikers(req, res) {
+  const id = await existingPostId(req);
+  if (!id) {
+    return res.status(404).json(POST_NOT_FOUND);
+  }
+  res.json({ people: await listLikers(id) });
 }

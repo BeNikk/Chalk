@@ -9,6 +9,7 @@ const list = document.querySelector('#posts');
 const loadMoreButton = document.querySelector('#load-more');
 const errorMessage = document.querySelector('#feed-error');
 const filterButtons = document.querySelectorAll('.label-filter button');
+const labelNotes = document.querySelectorAll('.label-note');
 
 const labels = [...filterButtons].map((button) => button.dataset.label);
 
@@ -21,6 +22,9 @@ let listVersion = 0;
 function showActiveFilter() {
   for (const button of filterButtons) {
     button.setAttribute('aria-pressed', String(button.dataset.label === label));
+  }
+  for (const note of labelNotes) {
+    note.setAttribute('aria-current', String(note.dataset.label === label));
   }
 }
 
@@ -40,8 +44,14 @@ async function loadPosts() {
       oldestPostId = posts.at(-1).id;
     } else if (oldestPostId === null) {
       list.append(renderEmptyState('Nothing here yet. Be the first to write something!'));
+      loadMoreButton.hidden = true;
+      return;
     }
-    loadMoreButton.hidden = posts.length < 20; // a short page means there's nothing older
+
+    // A short page means there's nothing older.
+    const reachedTheEnd = posts.length < 20;
+    loadMoreButton.hidden = reachedTheEnd;
+    if (reachedTheEnd) list.append(renderEmptyState("You're all caught up!", 'coffee'));
   } catch (error) {
     errorMessage.textContent = error.message;
   } finally {
@@ -63,8 +73,19 @@ function chooseLabel(newLabel) {
 for (const button of filterButtons) {
   button.addEventListener('click', () => chooseLabel(button.dataset.label));
 }
+// The sticky notes in the sidebar are links, so they work without JavaScript too; this just skips the reload.
+for (const note of labelNotes) {
+  note.addEventListener('click', (event) => {
+    event.preventDefault();
+    chooseLabel(note.dataset.label);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 loadMoreButton.addEventListener('click', loadPosts);
 
 user = await loadSession();
+if (user) {
+  document.querySelector('#greeting').textContent = `Hi @${user.handle}, here's what campus is writing.`;
+}
 showActiveFilter();
 loadPosts();

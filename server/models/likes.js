@@ -14,3 +14,14 @@ export function unlikePost(userId, postId) {
 export function countLikes(postId) {
   return prisma.like.count({ where: { postId } });
 }
+
+// The people who liked a post, newest like first. Only public profile fields, never emails.
+export async function listLikers(postId) {
+  const likes = await prisma.like.findMany({
+    where: { postId },
+    orderBy: [{ createdAt: 'desc' }, { userId: 'desc' }],
+    take: 100,
+    select: { user: { select: { handle: true, avatarUrl: true } } },
+  });
+  return likes.map((like) => like.user);
+}

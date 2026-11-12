@@ -40,6 +40,56 @@
   color: var(--text);
 }
 
+/* The phone menu (client/js/menu.js). The button only shows on small screens. */
+.menu-button {
+  display: none;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.phone-menu {
+  display: grid;
+  padding: var(--space-2) var(--space-5) var(--space-4);
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.phone-menu-link {
+  padding: var(--space-3) 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.phone-menu-link:last-child {
+  border-bottom: 0;
+}
+
+/* Only phones get the menu. If the window gets wider while it's open, it hides. */
+@media (max-width: 720px) {
+  .menu-button {
+    display: block;
+  }
+}
+
+@media (min-width: 721px) {
+  .phone-menu {
+    display: none;
+  }
+}
+
 /* A <button> that looks like a nav link, e.g. "Log out". */
 .nav-button {
   padding: 0;
@@ -377,7 +427,7 @@
 
 .label-filter button[aria-pressed="true"] {
   border-color: var(--text);
-  box-shadow: 0 0 0 1px var(--text);
+  box-shadow: inset 0 0 0 1px var(--text); /* inside the border, so the scrolling row can't cut it off */
 }
 
 /* The label picker on the write page: radio buttons that look like chips. */
@@ -425,7 +475,8 @@ fieldset.field legend {
 
 /* On a colored card, the chip and buttons sit on white so they stand out */
 .post-card .label-chip,
-.post-card .action-button {
+.post-card .action-button,
+.post-card .like-group {
   background: var(--surface);
 }
 
@@ -492,6 +543,9 @@ fieldset.field legend {
 }
 
 .action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
@@ -511,6 +565,115 @@ fieldset.field legend {
 .action-button--danger {
   margin-left: auto;
   color: var(--danger);
+}
+
+/* Icons from client/icons. The SVG is used as a mask (a stencil), and the color shows through it,
+   so an icon is always the same color as the text around it. */
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background: currentColor;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.icon--heart { --icon: url("../icons/heart.svg"); }
+.icon--comment { --icon: url("../icons/comment.svg"); }
+.icon--share { --icon: url("../icons/share.svg"); }
+
+/* The like button and its count look like one pill, but they're two buttons:
+   the heart likes the post, the number shows who liked it. */
+.like-group {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+}
+
+.like-group:hover {
+  border-color: var(--text);
+}
+
+.like-button,
+.like-count {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.like-button {
+  padding: var(--space-2) var(--space-1) var(--space-2) var(--space-3);
+}
+
+.like-count {
+  min-width: 2.25rem;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2);
+}
+
+.like-count:not(:disabled):hover {
+  text-decoration: underline;
+}
+
+.like-count:disabled {
+  cursor: default;
+}
+
+.like-button[aria-pressed="true"] .icon {
+  --icon: url("../icons/heart-filled.svg");
+  color: var(--heart);
+  animation: pop 0.3s ease-out;
+}
+
+@keyframes pop {
+  50% { transform: scale(1.3); }
+}
+
+/* Pop-up boxes (<dialog>), like "Liked by" */
+.dialog {
+  width: min(360px, calc(100% - 2 * var(--space-5)));
+  padding: 0; /* the padding is on .dialog-box, so a click on the dialog itself means "outside" */
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 0.3);
+}
+
+.dialog-box {
+  padding: var(--space-5);
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.dialog-header h2 {
+  font-size: var(--text-h3);
+}
+
+.people-list {
+  display: grid;
+  gap: var(--space-3);
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0;
+  list-style: none;
+}
+
+.muted {
+  color: var(--text-muted);
 }
 
 /* Comments */
@@ -715,5 +878,99 @@ fieldset.field legend {
   .feed-banner-crowd .illustration {
     width: 30%;
     max-width: 120px;
+  }
+}
+
+/* The feed's sidebar on wide screens: a write prompt and the labels as small sticky notes */
+.feed-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.feed-side {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.side-card {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: center;
+}
+
+.side-card .illustration {
+  width: 120px;
+  margin: 0 auto var(--space-3);
+}
+
+.side-card .hand {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+.side-heading {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.label-notes {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-2);
+}
+
+.label-note {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  background: var(--label-color);
+  color: var(--text);
+  text-decoration: none;
+  transform: rotate(var(--tilt, -1deg));
+  transition: transform 0.2s;
+  box-shadow: 0 8px 10px -8px rgb(0 0 0 / 0.25);
+}
+
+.label-note:nth-child(even) {
+  --tilt: 1deg;
+}
+
+.label-note:hover,
+.label-note[aria-current="true"] {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.label-note[aria-current="true"] {
+  outline: 2px solid var(--text);
+}
+
+.label-note strong {
+  font-family: var(--font-heading);
+}
+
+.label-note span {
+  display: block;
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  line-height: 1.1;
+}
+
+/* Under 960px there's no room for a sidebar, so the feed is one column */
+@media (max-width: 960px) {
+  .feed-layout {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .feed-side {
+    display: none;
   }
 }

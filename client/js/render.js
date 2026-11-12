@@ -2,7 +2,7 @@
 // Everything people wrote goes in with textContent, never innerHTML, so nobody can sneak code into a post.
 // New to building HTML from JavaScript? See docs/help/dom.md
 
-import { setUpLikeButton } from './likes.js';
+import { setUpLikeButtons } from './likes.js';
 import { setUpShareButton } from './share.js';
 
 // A small helper: el('p', 'post-body', 'Hello') makes <p class="post-body">Hello</p>.
@@ -60,25 +60,47 @@ function renderMeta(post) {
   return meta;
 }
 
+// A line icon from client/icons. aria-hidden: screen readers read the button's label instead.
+function renderIcon(name) {
+  const icon = el('span', `icon icon--${name}`);
+  icon.setAttribute('aria-hidden', 'true');
+  return icon;
+}
+
 export function showCommentCount(link, count) {
-  link.textContent = `💬 ${count}`;
+  link.querySelector('.action-text').textContent = count;
   link.setAttribute('aria-label', `${count} comments`);
+}
+
+// An icon and a bit of text, like [💬 3]. Buttons get type="button" so they never submit a form.
+function renderActionButton(tag, icon, className = '') {
+  const button = el(tag, `action-button ${className}`);
+  if (tag === 'button') button.type = 'button';
+  button.append(renderIcon(icon), el('span', 'action-text'));
+  return button;
 }
 
 function renderActions(post, user) {
   const actions = el('div', 'post-actions');
 
-  const likeButton = el('button', 'action-button');
-  setUpLikeButton(likeButton, post, user);
+  // The heart likes the post; the number next to it shows who liked it.
+  const likes = el('div', 'like-group');
+  const heart = el('button', 'like-button');
+  heart.type = 'button';
+  heart.append(renderIcon('heart'));
+  const count = el('button', 'like-count');
+  count.type = 'button';
+  likes.append(heart, count);
+  setUpLikeButtons(heart, count, post, user);
 
-  const comments = el('a', 'action-button comment-link');
+  const comments = renderActionButton('a', 'comment', 'comment-link');
   comments.href = `post.html?id=${post.id}#comments`;
   showCommentCount(comments, post.commentCount);
 
-  const shareButton = el('button', 'action-button');
+  const shareButton = renderActionButton('button', 'share');
   setUpShareButton(shareButton, post);
 
-  actions.append(likeButton, comments, shareButton);
+  actions.append(likes, comments, shareButton);
   return actions;
 }
 

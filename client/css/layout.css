@@ -79,6 +79,10 @@
   padding: var(--space-7) var(--space-5);
 }
 
+.page--wide {
+  max-width: 1000px;
+}
+
 .page-heading {
   margin-bottom: var(--space-6);
 }
