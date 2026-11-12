@@ -2,6 +2,7 @@
 // It's started by index.js on your laptop, and imported directly by Vercel in production.
 // New to Express? See docs/help/express.md
 
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import express from 'express';
 import config from './config.js';
@@ -55,8 +56,11 @@ app.use('/api', (req, res) => {
 });
 
 // Any other address that isn't a file in client/ gets the friendly "Page not found" page.
+// Read once at start-up. Written with `new URL(…, import.meta.url)` so Vercel sees the file is
+// needed and includes it with the server.
+const notFoundPage = readFileSync(new URL('../client/404.html', import.meta.url), 'utf8');
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(clientFolder, '404.html'));
+  res.status(404).type('html').send(notFoundPage);
 });
 
 app.use(errorHandler);
