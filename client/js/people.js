@@ -1,21 +1,21 @@
-// The "Liked by" pop-up. It's a <dialog>, a pop-up box built into HTML: showModal() opens it,
+// A pop-up list of people: "Liked by", "Followers", "Following". It's a <dialog>, a pop-up box built into HTML: showModal() opens it,
 // dims the page behind it, and the Escape key closes it. See docs/help/dom.md
 
-import { getLikers } from './api.js';
 import { el, renderAvatar } from './render.js';
 
 let dialog;
+let title;
 let list;
 
 // The pop-up is made once, the first time someone opens it, and reused after that.
 function createDialog() {
   dialog = el('dialog', 'dialog');
-  dialog.setAttribute('aria-labelledby', 'likers-title');
+  dialog.setAttribute('aria-labelledby', 'people-title');
 
   const box = el('div', 'dialog-box');
   const header = el('div', 'dialog-header');
-  const title = el('h2', null, 'Liked by');
-  title.id = 'likers-title';
+  title = el('h2');
+  title.id = 'people-title';
   const closeButton = el('button', 'action-button', 'Close');
   closeButton.type = 'button';
   closeButton.addEventListener('click', () => dialog.close());
@@ -41,15 +41,18 @@ function renderPerson(person) {
   return item;
 }
 
-export async function openLikers(postId) {
+// openPeopleList('Liked by', () => getLikers(42), 'No likes yet.')
+// `loadPeople` is a function that asks the API, so the list loads after the pop-up opens.
+export async function openPeopleList(heading, loadPeople, emptyMessage) {
   if (!dialog) createDialog();
+  title.textContent = heading;
   list.replaceChildren(el('li', 'muted', 'Loading…'));
   dialog.showModal();
 
   try {
-    const { people } = await getLikers(postId);
+    const { people } = await loadPeople();
     list.replaceChildren(...people.map(renderPerson));
-    if (people.length === 0) list.append(el('li', 'muted', 'No likes yet.'));
+    if (people.length === 0) list.append(el('li', 'muted', emptyMessage));
   } catch (error) {
     list.replaceChildren(el('li', 'muted', error.message));
   }

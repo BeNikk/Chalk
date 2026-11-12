@@ -1,4 +1,4 @@
-// Fills your local database with fake users, posts, comments and likes,
+// Fills your local database with fake users, posts, comments, likes and follows,
 // so the app has something to show. Run it with `npm run db:seed`.
 // Every fake user's password is: chalk-dev-password
 
@@ -53,8 +53,23 @@ const likes = [
   ['quiet_kid', 9], ['mess_hall', 9],
 ];
 
+// Each pair is [follower, followed]: the first user follows the second.
+const follows = [
+  ['inkyfox', 'lofi_leela'], ['inkyfox', 'mess_hall'],
+  ['quiet_kid', 'inkyfox'], ['quiet_kid', 'lofi_leela'],
+  ['mess_hall', 'inkyfox'], ['lofi_leela', 'inkyfox'], ['mod_mango', 'inkyfox'],
+];
+
+async function createFollows(userIdByHandle) {
+  for (const [follower, followed] of follows) {
+    await prisma.follow.create({
+      data: { followerId: userIdByHandle[follower], followingId: userIdByHandle[followed] },
+    });
+  }
+}
+
 async function clearDatabase() {
-  // Deleting users also deletes their posts, comments, likes and tokens (onDelete: Cascade).
+  // Deleting users also deletes their posts, comments, likes, follows and tokens (onDelete: Cascade).
   await prisma.user.deleteMany();
   await prisma.session.deleteMany();
 }
@@ -117,7 +132,11 @@ await clearDatabase();
 const userIdByHandle = await createUsers();
 const postIds = await createPosts(userIdByHandle);
 await createCommentsAndLikes(userIdByHandle, postIds);
+await createFollows(userIdByHandle);
 await prisma.$disconnect();
 
-console.log(`Seeded ${users.length} users, ${posts.length} posts, ${comments.length} comments and ${likes.length} likes.`);
+console.log(
+  `Seeded ${users.length} users, ${posts.length} posts, ${comments.length} comments, ` +
+    `${likes.length} likes and ${follows.length} follows.`,
+);
 console.log('Log in as any of them, e.g. inkyfox@chalk.test, with the password: chalk-dev-password');

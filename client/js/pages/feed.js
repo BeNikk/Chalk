@@ -11,6 +11,7 @@ const errorMessage = document.querySelector('#feed-error');
 const filterButtons = document.querySelectorAll('.label-filter button');
 const labelNotes = document.querySelectorAll('.label-note');
 
+// The filters: '' (everything), 'following' (people you follow), or one of the labels.
 const labels = [...filterButtons].map((button) => button.dataset.label);
 
 let user = null;
@@ -34,7 +35,12 @@ async function loadPosts() {
   loadMoreButton.disabled = true;
   errorMessage.textContent = '';
   try {
-    const { posts } = await getPosts({ label, before: oldestPostId });
+    const following = label === 'following';
+    const { posts } = await getPosts({
+      label: following ? '' : label,
+      following,
+      before: oldestPostId,
+    });
     if (versionAtStart !== listVersion) return; // a different label was picked while we waited
 
     for (const post of posts) {
@@ -43,7 +49,11 @@ async function loadPosts() {
     if (posts.length > 0) {
       oldestPostId = posts.at(-1).id;
     } else if (oldestPostId === null) {
-      list.append(renderEmptyState('Nothing here yet. Be the first to write something!'));
+      const message =
+        label === 'following'
+          ? 'Nothing from people you follow yet. Open someone’s profile and tap Follow.'
+          : 'Nothing here yet. Be the first to write something!';
+      list.append(renderEmptyState(message));
       loadMoreButton.hidden = true;
       return;
     }
@@ -86,6 +96,9 @@ loadMoreButton.addEventListener('click', loadPosts);
 user = await loadSession();
 if (user) {
   document.querySelector('#greeting').textContent = `Hi @${user.handle}, here's what campus is writing.`;
+  document.querySelector('.label-filter [data-label="following"]').hidden = false;
+} else if (label === 'following') {
+  label = ''; // only logged-in people follow anyone
 }
 showActiveFilter();
 loadPosts();

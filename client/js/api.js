@@ -73,10 +73,11 @@ export async function getMe() {
 
 // ---------- Posts and likes ----------
 
-// `label` and `before` are optional: getPosts({ label: 'rant', before: 42 }).
-export function getPosts({ label, before } = {}) {
+// All optional: getPosts({ label: 'rant', before: 42 }), or getPosts({ following: true }).
+export function getPosts({ label, before, following } = {}) {
   const params = new URLSearchParams();
   if (label) params.set('label', label);
+  if (following) params.set('following', 'true');
   if (before) params.set('before', before);
   return request('GET', `/posts?${params}`);
 }
@@ -129,6 +130,22 @@ export function getProfile(handle) {
 export function getUserPosts(handle, before) {
   const query = before ? `?before=${before}` : '';
   return request('GET', `/users/${encodeURIComponent(handle)}/posts${query}`);
+}
+
+export function followUser(handle) {
+  return request('PUT', `/users/${encodeURIComponent(handle)}/follow`);
+}
+
+export function unfollowUser(handle) {
+  return request('DELETE', `/users/${encodeURIComponent(handle)}/follow`);
+}
+
+export function getFollowers(handle) {
+  return request('GET', `/users/${encodeURIComponent(handle)}/followers`);
+}
+
+export function getFollowing(handle) {
+  return request('GET', `/users/${encodeURIComponent(handle)}/following`);
 }
 
 export function updateMe({ bio, theme }) {

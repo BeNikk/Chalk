@@ -65,6 +65,12 @@ export async function loadSession() {
   return user;
 }
 
+// Sends someone to the login page, and back to this page afterwards.
+export function goToLogin() {
+  const page = window.location.pathname.split('/').pop() + window.location.search;
+  window.location.href = `login.html?next=${encodeURIComponent(page)}`;
+}
+
 // Authors can delete their own posts and comments; moderators and the admin can delete anything.
 export function canDelete(authorHandle, user) {
   if (!user) return false;

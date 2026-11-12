@@ -48,6 +48,22 @@ model User {
   comments Comment[]
   likes    Like[]
   tokens   EmailToken[]
+
+  // Two lists from the same Follow table, so each needs a name saying which side this user is on.
+  followers Follow[] @relation("followers") // rows where someone follows this user
+  following Follow[] @relation("following") // rows where this user follows someone
+}
+
+// One row per "follower follows following". Like the Like table, the pair is the id.
+model Follow {
+  followerId  Int
+  follower    User     @relation("following", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId Int
+  following   User     @relation("followers", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@id([followerId, followingId]) // you can only follow someone once
+  @@index([followingId]) // finds someone's followers quickly
 }
 
 // One row per "verify your email" or "reset your password" link we send.

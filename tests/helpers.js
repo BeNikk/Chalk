@@ -14,7 +14,7 @@ if (!process.env.DATABASE_URL.includes('chalk_test')) {
 export const PASSWORD = 'password123';
 
 export async function resetDatabase() {
-  await prisma.user.deleteMany(); // also deletes their posts, comments, likes and tokens
+  await prisma.user.deleteMany(); // also deletes their posts, comments, likes, follows and tokens
   await prisma.session.deleteMany();
   sentEmails.length = 0;
 }

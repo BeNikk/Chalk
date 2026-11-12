@@ -52,8 +52,12 @@ The website is just one **client** of Chalk's API. Anything that can send HTTP r
 
 | Method | Address | Who | Does |
 |---|---|---|---|
-| GET | `/api/users/:handle` | anyone | `{ "user": { handle, bio, theme, avatarUrl, role, joinedAt } }` (never the email) |
+| GET | `/api/users/:handle` | anyone | `{ "user": { handle, bio, theme, avatarUrl, role, joinedAt, followerCount, followingCount, followedByMe } }` (never the email) |
 | GET | `/api/users/:handle/posts?before=42` | anyone | that user's posts, like the feed |
+| PUT | `/api/users/:handle/follow` | logged in | follows them (not yourself) → `{ "followerCount": 4, "followedByMe": true }` |
+| DELETE | `/api/users/:handle/follow` | logged in | unfollows them |
+| GET | `/api/users/:handle/followers` | anyone | `{ "people": [ { handle, avatarUrl } ] }`, newest first, up to 100 |
+| GET | `/api/users/:handle/following` | anyone | who they follow, the same shape |
 
 ## Admin
 
@@ -67,7 +71,7 @@ The website is just one **client** of Chalk's API. Anything that can send HTTP r
 
 | Method | Address | Who | Does |
 |---|---|---|---|
-| GET | `/api/posts?label=rant&before=42` | anyone | 20 newest posts. `label` and `before` (load older posts) are optional |
+| GET | `/api/posts?label=rant&before=42` | anyone | 20 newest posts. `label` and `before` (load older posts) are optional. `following=true` (logged in): only people you follow |
 | POST | `/api/posts` | logged in | `{ label, title?, body }` → writes a post |
 | GET | `/api/posts/:id` | anyone | one post |
 | DELETE | `/api/posts/:id` | author, moderator, admin | deletes a post |

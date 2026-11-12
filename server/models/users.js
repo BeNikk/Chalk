@@ -14,6 +14,14 @@ export function findUserByHandle(handle) {
   return prisma.user.findUnique({ where: { handle } });
 }
 
+// A user with how many followers they have and how many people they follow, for their profile.
+export function findProfile(handle) {
+  return prisma.user.findUnique({
+    where: { handle },
+    include: { _count: { select: { followers: true, following: true } } },
+  });
+}
+
 export function createUser({ email, handle, passwordHash }) {
   return prisma.user.create({ data: { email, handle, passwordHash } });
 }
@@ -64,6 +72,8 @@ export function toPublicProfile(user) {
     avatarUrl: user.avatarUrl,
     role: user.role,
     joinedAt: user.createdAt,
+    followerCount: user._count?.followers,
+    followingCount: user._count?.following,
   };
 }
 

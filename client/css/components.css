@@ -468,13 +468,19 @@ fieldset.field legend {
   padding: var(--space-5);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: var(--label-color); /* each label has its own pastel, so you can scan the feed */
+  background: var(--card-color);
   animation: fade-in 0.4s ease-out;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* On a colored card, the chip and buttons sit on white so they stand out */
-.post-card .label-chip,
+/* The five card colors are the label colors, so themes that change those change cards too */
+.post-card[data-color="0"] { --card-color: var(--label-rant); }
+.post-card[data-color="1"] { --card-color: var(--label-poetry); }
+.post-card[data-color="2"] { --card-color: var(--label-mess); }
+.post-card[data-color="3"] { --card-color: var(--label-music); }
+.post-card[data-color="4"] { --card-color: var(--label-fixit); }
+
+/* On a colored card, the buttons sit on white so they stand out */
 .post-card .action-button,
 .post-card .like-group {
   background: var(--surface);
@@ -973,4 +979,24 @@ fieldset.field legend {
   .feed-side {
     display: none;
   }
+}
+
+/* "12 followers · 3 following" on profiles */
+.follow-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.follow-count {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.follow-count:hover {
+  text-decoration: underline;
 }

@@ -22,7 +22,7 @@ export const writeLimiter = rateLimit({
   message: { error: 'You are posting very fast. Please wait a few minutes.' },
 });
 
-// Liking and unliking: looser, because people tap the heart a lot.
+// Liking and following: looser, because people tap these a lot.
 export const likeLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: config.isTest ? 1000 : 200,

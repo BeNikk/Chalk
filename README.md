@@ -24,6 +24,7 @@ Chalk is built by the students of the open source guild. It's small on purpose, 
 
 - **A shared feed** of everyone's posts, newest first, filtered by label.
 - **Like, comment and share** posts. Sharing opens your phone's share sheet, or copies the link.
+- **Follow people** and see a profile's followers and following. The feed has a *Following* filter.
 - **Your own profile page** with a photo, a bio and a **theme**. Each theme is one CSS file, and anyone can add a new one.
 - **Accounts** with email and password, email verification, and "forgot password".
 - **Moderators**, chosen by the admin, can remove posts and comments that break the [rules](client/rules.html).

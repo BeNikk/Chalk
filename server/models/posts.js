@@ -31,12 +31,14 @@ function toPublicPost(post) {
 }
 
 // The newest posts first, PAGE_SIZE at a time. `before` is the id of the last post you already have.
-export async function listPosts({ label, authorId, before, viewerId }) {
+// `followedBy`: only posts by people that user follows.
+export async function listPosts({ label, authorId, before, viewerId, followedBy }) {
   const posts = await prisma.post.findMany({
     where: {
       label: label?.toUpperCase(),
       authorId,
       id: before ? { lt: before } : undefined,
+      author: followedBy ? { followers: { some: { followerId: followedBy } } } : undefined,
     },
     orderBy: { id: 'desc' },
     take: PAGE_SIZE,

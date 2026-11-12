@@ -113,7 +113,9 @@ export function joinedDate(dateString) {
 // One post. In the feed (`full: false`) long posts are shortened and the card links to the post page.
 export function renderPostCard(post, user, { full = false } = {}) {
   const card = el('article', full ? 'post-card post-card--full' : 'post-card');
-  card.dataset.label = post.label;
+  // Cards take turns through the pastel colors (by id, so a post keeps its color), so a feed
+  // full of #rant isn't all pink. The label chip still shows the label's own color.
+  card.dataset.color = post.id % 5;
 
   // In the feed, one link to the post: on the title, or on the body when there's no title.
   const link = `post.html?id=${post.id}`;

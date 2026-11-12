@@ -1,7 +1,8 @@
 // The ♥ button on every post, and the number next to it that shows who liked it.
 
-import { likePost, unlikePost } from './api.js';
-import { openLikers } from './likers.js';
+import { getLikers, likePost, unlikePost } from './api.js';
+import { openPeopleList } from './people.js';
+import { goToLogin } from './session.js';
 
 function showLikes(heart, count, likedByMe, likeCount) {
   heart.setAttribute('aria-pressed', String(likedByMe)); // the CSS fills the heart when pressed
@@ -15,15 +16,10 @@ export function setUpLikeButtons(heart, count, post, user) {
   heart.setAttribute('aria-label', 'Like');
   showLikes(heart, count, likedByMe, likeCount);
 
-  count.addEventListener('click', () => openLikers(post.id));
+  count.addEventListener('click', () => openPeopleList('Liked by', () => getLikers(post.id), 'No likes yet.'));
 
   heart.addEventListener('click', async () => {
-    if (!user) {
-      // Come back to this page after logging in.
-      const page = window.location.pathname.split('/').pop() + window.location.search;
-      window.location.href = `login.html?next=${encodeURIComponent(page)}`;
-      return;
-    }
+    if (!user) return goToLogin();
 
     heart.disabled = true;
     try {

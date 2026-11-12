@@ -22,15 +22,24 @@ async function existingPostId(req) {
   return id;
 }
 
-// GET /api/posts?label=rant&before=42
+// GET /api/posts?label=rant&before=42, or ?following=true for posts by people you follow
 export async function getFeed(req, res) {
   const { label } = req.query;
   if (label && !LABELS.includes(label)) {
     return res.status(400).json({ error: `Unknown label. Use one of: ${LABELS.join(', ')}.` });
   }
+  const following = req.query.following === 'true';
+  if (following && !req.user) {
+    return res.status(401).json({ error: 'Log in to see posts from people you follow.' });
+  }
   const before = readId(req.query.before) ?? undefined;
 
-  const posts = await listPosts({ label, before, viewerId: req.user?.id });
+  const posts = await listPosts({
+    label,
+    before,
+    viewerId: req.user?.id,
+    followedBy: following ? req.user.id : undefined,
+  });
   res.json({ posts });
 }
 
