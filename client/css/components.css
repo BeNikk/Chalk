@@ -250,7 +250,8 @@
   font-weight: 600;
 }
 
-.field input {
+.field input,
+.field textarea {
   padding: var(--space-3);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -259,7 +260,13 @@
   font: inherit;
 }
 
-.field input:focus {
+.field textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.field input:focus,
+.field textarea:focus {
   outline: 2px solid var(--accent);
   border-color: var(--text);
 }
@@ -307,6 +314,225 @@
   gap: var(--space-3);
   margin-top: var(--space-5);
   font-size: var(--text-sm);
+}
+
+/* Labels: anything with data-label="rant" etc. gets that label's color as --label-color */
+
+[data-label="rant"] { --label-color: var(--label-rant); }
+[data-label="poetry"] { --label-color: var(--label-poetry); }
+[data-label="mess"] { --label-color: var(--label-mess); }
+[data-label="music"] { --label-color: var(--label-music); }
+[data-label="fixit"] { --label-color: var(--label-fixit); }
+
+.label-chip {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--label-color);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* The row of label buttons above the feed. Scrolls sideways on small phones. */
+.label-filter {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  overflow-x: auto;
+}
+
+.label-filter button,
+.label-choice {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.label-choice {
+  position: relative; /* keeps the hidden radio button inside its chip */
+}
+
+.label-filter button[aria-pressed="true"] {
+  border-color: var(--text);
+  background: var(--label-color, var(--accent));
+}
+
+/* The label picker on the write page: radio buttons that look like chips. */
+fieldset.field {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+fieldset.field legend {
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+
+.label-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.label-choice input {
+  position: absolute;
+  opacity: 0; /* hidden, but still works with the keyboard and screen readers */
+}
+
+.label-choice:has(input:checked) {
+  border-color: var(--text);
+  background: var(--label-color);
+}
+
+.label-choice:has(input:focus-visible) {
+  outline: 2px solid var(--text);
+}
+
+/* Post cards */
+
+.post-card {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--label-color); /* the label's color, so you can scan the feed */
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  animation: fade-in 0.4s ease-out;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.post-title {
+  margin-top: var(--space-4);
+  font-size: var(--text-h3);
+}
+
+.post-card--full .post-title {
+  font-size: var(--text-h2);
+}
+
+.post-body {
+  margin-top: var(--space-2);
+  white-space: pre-wrap; /* keep the line breaks people typed, e.g. in poems */
+  overflow-wrap: anywhere;
+}
+
+/* In the feed, long posts are cut after 6 lines; the full post is one click away. */
+.post-card:not(.post-card--full) .post-body {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+}
+
+.post-card--full .post-body {
+  font-size: var(--text-lg);
+}
+
+.post-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.action-button {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background: var(--bg);
+}
+
+.action-button[aria-pressed="true"] {
+  background: var(--tint-red);
+}
+
+.action-button--danger {
+  margin-left: auto;
+  color: var(--danger);
+}
+
+/* Avatars */
+
+.avatar {
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar--small {
+  width: 28px;
+  height: 28px;
+}
+
+.avatar--letter {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--text);
+  background: var(--tint-purple);
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Bits and pieces */
+
+.empty-state {
+  padding: var(--space-7) 0;
+  text-align: center;
+}
+
+.empty-state .illustration {
+  width: 160px;
+  margin: 0 auto;
+}
+
+.load-more {
+  display: block;
+  margin: var(--space-6) auto 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-5);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  text-decoration: none;
 }
 
 /* Tick list */

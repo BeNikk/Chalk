@@ -1,0 +1,70 @@
+// feed.html: everyone's posts, newest first, with a label filter and "Load more".
+
+import { getPosts } from '../api.js';
+import { getUrlParam } from '../forms.js';
+import { renderEmptyState, renderPostCard } from '../render.js';
+import { loadSession } from '../session.js';
+
+const list = document.querySelector('#posts');
+const loadMoreButton = document.querySelector('#load-more');
+const errorMessage = document.querySelector('#feed-error');
+const filterButtons = document.querySelectorAll('.label-filter button');
+
+const labels = [...filterButtons].map((button) => button.dataset.label);
+
+let user = null;
+let label = labels.includes(getUrlParam('label')) ? getUrlParam('label') : '';
+let oldestPostId = null;
+// Goes up every time the list starts again, so answers to older requests can be ignored.
+let listVersion = 0;
+
+function showActiveFilter() {
+  for (const button of filterButtons) {
+    button.setAttribute('aria-pressed', String(button.dataset.label === label));
+  }
+}
+
+// Adds the next 20 posts to the bottom of the list.
+async function loadPosts() {
+  const versionAtStart = listVersion;
+  loadMoreButton.disabled = true;
+  errorMessage.textContent = '';
+  try {
+    const { posts } = await getPosts({ label, before: oldestPostId });
+    if (versionAtStart !== listVersion) return; // a different label was picked while we waited
+
+    for (const post of posts) {
+      list.append(renderPostCard(post, user));
+    }
+    if (posts.length > 0) {
+      oldestPostId = posts.at(-1).id;
+    } else if (oldestPostId === null) {
+      list.append(renderEmptyState('Nothing here yet. Be the first to write something!'));
+    }
+    loadMoreButton.hidden = posts.length < 20; // a short page means there's nothing older
+  } catch (error) {
+    errorMessage.textContent = error.message;
+  } finally {
+    loadMoreButton.disabled = false;
+  }
+}
+
+// Picking a label starts the list again, and puts the label in the address so it can be shared.
+function chooseLabel(newLabel) {
+  label = newLabel;
+  oldestPostId = null;
+  listVersion += 1;
+  list.replaceChildren();
+  showActiveFilter();
+  history.replaceState(null, '', label ? `feed.html?label=${label}` : 'feed.html');
+  loadPosts();
+}
+
+for (const button of filterButtons) {
+  button.addEventListener('click', () => chooseLabel(button.dataset.label));
+}
+loadMoreButton.addEventListener('click', loadPosts);
+
+user = await loadSession();
+showActiveFilter();
+loadPosts();

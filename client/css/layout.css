@@ -71,6 +71,23 @@
   width: 180px;
 }
 
+/* App pages: feed, write, a single post */
+
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5);
+}
+
+.page-heading {
+  margin-bottom: var(--space-6);
+}
+
+.post-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
 /* Narrow pages: sign up, log in and the other account forms */
 
 .narrow-page {
@@ -118,6 +135,11 @@
 @media (max-width: 720px) {
   .section {
     padding: var(--space-7) 0;
+  }
+
+  .page,
+  .narrow-page {
+    padding: var(--space-6) var(--space-4);
   }
 
   .split {

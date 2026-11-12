@@ -6,10 +6,11 @@ import { loadSession } from '../session.js';
 
 const form = document.querySelector('#login-form');
 
-// Only follow plain page names like "write.html", so a crafted link can't send you to another site.
+// Only follow our own pages, like "write.html" or "post.html?id=7", so a crafted link
+// can't send you to another site.
 function pageToGoTo() {
   const next = getUrlParam('next');
-  return next && /^[\w-]+\.html$/.test(next) ? next : 'feed.html';
+  return next && /^[\w-]+\.html(\?[\w=&-]*)?$/.test(next) ? next : 'feed.html';
 }
 
 // Shown when the account exists but its email isn't verified yet.

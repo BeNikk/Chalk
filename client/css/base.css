@@ -44,6 +44,7 @@
   --text-h3: 1.25rem;
 
   /* Spacing */
+  --space-1: 0.125rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
@@ -54,6 +55,7 @@
 
   --radius: 8px;
   --radius-lg: 14px;
+  --radius-pill: 999px; /* fully rounded ends, for chips and small buttons */
   --content-width: 1080px;
 }
 

@@ -68,3 +68,33 @@ export async function getMe() {
     return null;
   }
 }
+
+// ---------- Posts and likes ----------
+
+// `label` and `before` are optional: getPosts({ label: 'rant', before: 42 }).
+export function getPosts({ label, before } = {}) {
+  const params = new URLSearchParams();
+  if (label) params.set('label', label);
+  if (before) params.set('before', before);
+  return request('GET', `/posts?${params}`);
+}
+
+export function getPost(id) {
+  return request('GET', `/posts/${id}`);
+}
+
+export function createPost({ label, title, body }) {
+  return request('POST', '/posts', { label, title, body });
+}
+
+export function deletePost(id) {
+  return request('DELETE', `/posts/${id}`);
+}
+
+export function likePost(id) {
+  return request('PUT', `/posts/${id}/like`);
+}
+
+export function unlikePost(id) {
+  return request('DELETE', `/posts/${id}/like`);
+}
