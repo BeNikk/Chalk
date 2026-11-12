@@ -129,9 +129,32 @@ export function renderPostCard(post, user, { full = false } = {}) {
 
   const body = el('p', 'post-body', post.body);
   card.append(full || post.title ? body : linkTo(link, body));
+  if (!full) card.append(renderReadMore(card, body));
 
   card.append(renderActions(post, user));
   return card;
+}
+
+// In the feed, long posts are cut after a few lines (see .post-body in components.css).
+// This button shows the rest, but only appears when something was actually cut off.
+function renderReadMore(card, body) {
+  const button = el('button', 'read-more', 'Read more');
+  button.type = 'button';
+  button.hidden = true;
+
+  // We can only measure the text once it's on the page, so a ResizeObserver tells us
+  // when it gets its size (and again if the window is resized).
+  const observer = new ResizeObserver(() => {
+    if (card.classList.contains('is-expanded')) return;
+    button.hidden = body.scrollHeight <= body.clientHeight; // nothing hidden, no button
+  });
+  observer.observe(body);
+
+  button.addEventListener('click', () => {
+    const expanded = card.classList.toggle('is-expanded');
+    button.textContent = expanded ? 'Show less' : 'Read more';
+  });
+  return button;
 }
 
 function linkTo(href, content) {
