@@ -1,0 +1,73 @@
+# CI ("continuous integration"): GitHub runs these checks on every pull request and on every
+# push to main. A pull request can only be merged when they all pass.
+# New to CI? See docs/help/ci.md
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# The checks only need to read the code.
+permissions:
+  contents: read
+
+# A newer push to the same branch cancels the older, now pointless run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # A throwaway Postgres database for the tests, set up to match .env.test.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: chalk
+          POSTGRES_PASSWORD: chalk
+          POSTGRES_DB: chalk_test
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U chalk -d chalk_test"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 15
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v7
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Lint (code style and themes)
+        run: npm run lint
+
+      - name: Check the database schema
+        run: npx prisma validate
+
+      - name: Run the tests
+        run: npm test
+
+      - name: Start the server and check it answers
+        run: |
+          node --env-file=.env.test server/index.js &
+          for _ in $(seq 1 20); do
+            if curl --silent --fail http://localhost:3000/api/health; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "The server didn't start." && exit 1

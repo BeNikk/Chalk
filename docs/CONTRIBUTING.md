@@ -143,7 +143,7 @@ Have an idea that isn't an issue yet? Open a new issue to discuss it first, befo
 
 ## Review
 
-- Every PR needs **one approving review** before it's merged. (Automatic checks will be added soon.)
+- Every PR needs **one approving review** and **passing automatic checks (CI)** before it's merged. If the checks fail, see [docs/help/ci.md](help/ci.md).
 - A reviewer may ask questions or request changes. **This is normal and not a sign you did badly.** Even experienced developers get change requests on most PRs.
 - To update your PR, make the changes on the same branch, commit and push again. The PR updates by itself.
 - Be kind in reviews, both giving and receiving. Talk about the code, not the person.

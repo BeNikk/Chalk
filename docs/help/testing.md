@@ -2,7 +2,7 @@
 
 ## Why tests
 
-A test is a small program that uses the app and checks it behaves. Instead of clicking through sign-up by hand after every change, you run `npm test` and in a second or two you know whether sign-up, login and the rest still work.
+A test is a small program that uses the app and checks it behaves. Instead of clicking through sign-up by hand after every change, you run `npm test` and in a few seconds you know whether sign-up, login and the rest still work. CI runs them on every pull request too (see [ci.md](ci.md)).
 
 ## Running them
 

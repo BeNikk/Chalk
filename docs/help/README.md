@@ -19,6 +19,7 @@ When a comment in the code says *"See docs/help/…"*, this is where it points.
 | [Validation](validation.md) | Checking every request with Zod schemas | `server/schemas/`, `server/middleware/validate.js` |
 | [Uploads](uploads.md) | Profile photos: FormData, Multer, Cloudinary, and hidden photo data | `server/services/photos.js` |
 | [Tests](testing.md) | Running and writing tests | `tests/` |
+| [CI](ci.md) | The automatic checks on every pull request, and what to do when they're red | `.github/workflows/ci.yml` |
 | [The DOM](dom.md) | Building the page from data with JavaScript, and why we never use innerHTML for people's words | `client/js/render.js` |
 | [fetch and modules](fetch.md) | How pages call the API with fetch, async/await, and import/export | `client/js/api.js`, `client/js/pages/` |
 
