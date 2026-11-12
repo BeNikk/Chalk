@@ -3,7 +3,7 @@
 // New to databases or Prisma? See docs/help/databases.md and docs/help/prisma.md
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../server/generated/prisma"
 }
 

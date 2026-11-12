@@ -84,7 +84,7 @@ Go through this list after the first deploy, and after big changes:
 - **The build says the database was not updated** on a production deploy: add `DIRECT_URL` to the Production environment variables.
 - **Database SSL errors** (`P1010`, "self-signed certificate"): check both connection strings end with `sslmode=no-verify` (step 1.4), or follow [Prisma's SSL notes](https://www.prisma.io/docs/orm/overview/databases/postgresql).
 - **`The pattern "app.js" defined in functions doesn't match any Serverless Functions`**: `vercel.json` must not have a `functions` section; Vercel finds `app.js` by itself when the Framework Preset is **Express**.
-- **The API crashes with "Cannot find module … generated/prisma"**: the build didn't include Prisma's generated code. Check the build log shows `prisma generate` ran during install, and that the Node.js version is 22.18 or newer.
+- **The API crashes with `Cannot find module … generated/prisma`**: the build didn't include Prisma's generated code. Check the build log shows `prisma generate` ran during install. The schema must use the `prisma-client-js` generator: the newer `prisma-client` one writes TypeScript files, which Vercel renames to `.js`, so the server can't find them.
 - **Emails don't arrive**: check the domain shows *Verified* in Resend, and look at **Resend → Emails** for errors.
 - **Function logs**: Vercel → the project → **Logs** shows server errors.
 
