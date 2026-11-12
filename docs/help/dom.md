@@ -48,8 +48,20 @@ button.addEventListener('click', loadPosts);
 - `addEventListener('click', fn)` runs `fn` every time it's clicked.
 - `element.hidden = true` hides it; `element.dataset.label` reads `data-label="…"`.
 
+## Pop-ups with `<dialog>`
+
+The "Liked by" and "Followers" lists open in a `<dialog>`, a pop-up box that's built into HTML (see `client/js/people.js`):
+
+```js
+dialog.showModal(); // opens it, dims the page behind it, and Escape closes it
+dialog.close();     // closes it
+```
+
+Because the browser does the hard parts (dimming, Escape, keeping keyboard focus inside), it's easier and more accessible than building a pop-up from `<div>`s.
+
 ## Learn more
 
 - [Introduction to the DOM (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
+- [The dialog element (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog)
 - [Manipulating documents (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/DOM_scripting)
 - [Cross-site scripting (OWASP)](https://owasp.org/www-community/attacks/xss/)

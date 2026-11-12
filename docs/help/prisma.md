@@ -49,6 +49,8 @@ You never edit the database by hand. Instead:
 3. Prisma writes a **migration**: a new folder in `prisma/migrations/` with the SQL for that change, and applies it to your database.
 4. Commit the migration with your code. Everyone else (and the live site) applies the same file, so all databases stay identical.
 
+When you pull someone else's new migration, run `npm run db:update` to apply it to your database. Your data stays.
+
 Never edit an old migration; it has already run on other machines. Make a new one.
 
 ## Prisma Client and the generated code
@@ -65,6 +67,7 @@ Never edit an old migration; it has already run on other machines. Make a new on
 |---|---|
 | `npm run setup` | First time: starts the database, creates the tables, adds fake data |
 | `npm run db:migrate -- --name what_changed` | After you edit the schema: creates and applies a migration |
+| `npm run db:update` | After you pull: applies other people's new migrations |
 | `npm run db:seed` | Reset your local data to the fake data |
 | `npm run db:studio` | Browse your data in the browser |
 

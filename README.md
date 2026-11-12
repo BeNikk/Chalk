@@ -74,12 +74,13 @@ Open **http://localhost:3000**. You don't need any accounts or API keys:
 | `npm run dev` | Starts Chalk and restarts it when you save |
 | `npm test` | Runs the tests (needs the database from `npm run setup`) |
 | `npm run lint` | Checks the code and the themes for mistakes |
+| `npm run db:update` | After pulling new code: adds any new tables to your database (keeps your data) |
 | `npm run db:seed` | Resets your data to the fake users and posts |
 | `npm run db:studio` | Opens a page to browse the database |
 | `npm run db:migrate -- --name what_changed` | After changing `prisma/schema.prisma`: updates the tables |
 | `docker compose down` | Stops the database (your data stays) |
 
-Stuck? The [help pages](docs/help/README.md) explain every idea used in the code, from CSS variables to sessions.
+Something went wrong? See [If setup goes wrong](docs/CONTRIBUTING.md#if-setup-goes-wrong). Stuck on the code? The [help pages](docs/help/README.md) explain every idea used in the code, from CSS variables to sessions.
 
 ---
 

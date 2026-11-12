@@ -25,7 +25,7 @@ You should be able to explain every line you changed, and why you did it that wa
 
 Using AI tools, tutorials or Stack Overflow is fine *as long as you understand the result*. If you used an AI tool, say so in your pull request and explain the code in your own words. A small change you understand is worth more than a big one you don't.
 
-It is suggested that you write PR description in your own words, maintainers may check / ask questions before merging
+Write your pull request description in your own words. Maintainers may ask you questions about it before merging.
 
 ---
 
@@ -58,6 +58,17 @@ You only do this once.
    ```
 
    Open http://localhost:3000 and log in as `inkyfox@chalk.test` with the password `chalk-dev-password`. The README lists the other fake users and every command.
+
+### If setup goes wrong
+
+| You see | Try this |
+|---|---|
+| `Docker is not running` | Open Docker Desktop, wait until it says it's running, then `npm run setup` again. |
+| `node: bad option` or a syntax error on start | Your Node.js is too old. Check with `node --version`; you need 22.18 or newer. |
+| `port is already allocated` (5433) | Something else uses that port, maybe an old Chalk database. Run `docker compose down`, or quit the other program. |
+| `EADDRINUSE :3000` | Chalk is already running in another terminal. Stop it with `Ctrl+C`, or change `PORT` in your `.env` file. |
+| `The table ... does not exist` | Your database is missing new tables. Run `npm run db:update`. |
+| Anything else | Copy the whole error into your issue or the guild group. Someone will help. |
 
 ---
 
@@ -103,6 +114,8 @@ Have an idea that isn't an issue yet? Open a new issue to discuss it first, befo
    ```bash
    git checkout main
    git pull upstream main
+   npm install         # in case someone added a package
+   npm run db:update   # in case someone added a database table
    ```
 
 2. **Create a branch** for your change. Name it after what you're doing:
