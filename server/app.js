@@ -50,6 +50,12 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 
+// On Vercel, website files are served by Vercel itself, which doesn't turn "/" into index.html.
+// So "/" reaches us there, and we send the browser on to the home page.
+app.get('/', (req, res) => {
+  res.redirect('/index.html');
+});
+
 // Must come after all routes: any /api path nothing above matched gets a JSON 404.
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Not found' });

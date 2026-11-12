@@ -21,7 +21,8 @@ const config = {
   isProduction,
   isTest: process.env.NODE_ENV === 'test',
   port: Number(process.env.PORT) || 3000,
-  appUrl: process.env.APP_URL || 'http://localhost:3000',
+  // The site's address, used in email links. Required on the live site, or links would point at localhost.
+  appUrl: productionSetting('APP_URL') || 'http://localhost:3000',
   sessionSecret: requireSetting('SESSION_SECRET'),
   databaseUrl: requireSetting('DATABASE_URL'),
   adminEmail: productionSetting('ADMIN_EMAIL').toLowerCase(),
