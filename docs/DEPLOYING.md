@@ -78,6 +78,9 @@ Go through this list after the first deploy, and after big changes:
 
 ## Troubleshooting
 
+- **`P1001: Can't reach database server at db.….supabase.co`** during the build: the Direct connection only works over IPv6, and Vercel uses IPv4. Use the **Session pooler** string (`….pooler.supabase.com:5432`) for `DIRECT_URL`.
+- **Every address shows the landing page, and logging in or signing up fails with `405`**: Vercel is deploying only the website. Set **Framework Preset** to **Express**, turn off the Output Directory override, and redeploy without the build cache.
+- **`No entrypoint found which imports express`**: the root `app.js` must import `express` itself (it wraps `server/app.js` in a small Express app). Don't shorten it to a one-line re-export.
 - **The build says the database was not updated** on a production deploy: add `DIRECT_URL` to the Production environment variables.
 - **Database SSL errors** (`P1010`, "self-signed certificate"): check both connection strings end with `sslmode=no-verify` (step 1.4), or follow [Prisma's SSL notes](https://www.prisma.io/docs/orm/overview/databases/postgresql).
 - **`The pattern "app.js" defined in functions doesn't match any Serverless Functions`**: `vercel.json` must not have a `functions` section; Vercel finds `app.js` by itself when the Framework Preset is **Express**.

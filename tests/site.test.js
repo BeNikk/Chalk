@@ -26,3 +26,11 @@ test('unknown API addresses answer in JSON', async () => {
   const res = await request(app).get('/api/no-such-thing').expect(404);
   assert.equal(res.body.error, 'Not found');
 });
+
+test('the app.js that Vercel runs answers like the real server', async () => {
+  const { default: vercelApp } = await import('../app.js');
+  const res = await request(vercelApp).get('/api/health').expect(200);
+  assert.deepEqual(res.body, { ok: true });
+  await request(vercelApp).get('/no-such-page').expect(404);
+  await request(vercelApp).post('/api/auth/login').send({}).expect(400);
+});
