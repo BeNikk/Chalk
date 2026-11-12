@@ -1,17 +1,24 @@
-// Put this in front of any route that needs a logged-in user.
-// It loads the user and puts them on `req.user` for the controller to use.
+// Find out who's logged in, and put them on `req.user` for the controller to use.
 // New to sessions? See docs/help/sessions.md
 
 import { findUserById } from '../models/users.js';
 
-export async function requireSignIn(req, res, next) {
+async function findLoggedInUser(req) {
   const userId = req.session.userId;
-  const user = userId ? await findUserById(userId) : null;
+  return userId ? findUserById(userId) : null;
+}
 
-  if (!user) {
+// For pages anyone can see, but that show a bit more when you're logged in (like your own likes).
+export async function loadUserIfSignedIn(req, res, next) {
+  req.user = await findLoggedInUser(req);
+  next();
+}
+
+// For actions that need an account, like posting or liking.
+export async function requireSignIn(req, res, next) {
+  req.user = await findLoggedInUser(req);
+  if (!req.user) {
     return res.status(401).json({ error: 'Please log in first.' });
   }
-
-  req.user = user;
   next();
 }

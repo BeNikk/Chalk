@@ -7,6 +7,11 @@ export function errorHandler(error, req, res, _next) {
     return res.status(409).json({ error: 'That is already taken.' });
   }
 
+  // Prisma's codes for "that row is gone", e.g. a post deleted while someone was liking it.
+  if (error.code === 'P2025' || error.code === 'P2003') {
+    return res.status(404).json({ error: 'That no longer exists.' });
+  }
+
   // The browser sent something that isn't valid JSON.
   if (error.type === 'entity.parse.failed') {
     return res.status(400).json({ error: 'The request was not valid JSON.' });

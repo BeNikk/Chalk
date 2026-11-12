@@ -74,7 +74,7 @@ model Post {
   comments Comment[]
   likes    Like[]
 
-  @@index([createdAt]) // the feed always asks for the newest posts first
+  @@index([createdAt]) // for finding posts by date
 }
 
 model Comment {

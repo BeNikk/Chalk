@@ -34,6 +34,11 @@ export function updatePassword(userId, passwordHash) {
   return prisma.user.update({ where: { id: userId }, data: { passwordHash } });
 }
 
+// Moderators and the admin can remove anyone's posts and comments.
+export function canModerate(user) {
+  return user.role === 'MODERATOR' || user.role === 'ADMIN';
+}
+
 // What a user sees about their own account. Never includes the password hash.
 export function toMyAccount(user) {
   return {

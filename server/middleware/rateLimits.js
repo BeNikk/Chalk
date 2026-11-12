@@ -12,3 +12,21 @@ export const authLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Too many tries. Please wait a few minutes and try again.' },
 });
+
+// Posting and commenting: at most 30 per 15 minutes, which is plenty for a person and stops spam.
+export const writeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: config.isTest ? 1000 : 30,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: { error: 'You are posting very fast. Please wait a few minutes.' },
+});
+
+// Liking and unliking: looser, because people tap the heart a lot.
+export const likeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: config.isTest ? 1000 : 200,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: { error: 'Slow down a little! Try again in a few minutes.' },
+});

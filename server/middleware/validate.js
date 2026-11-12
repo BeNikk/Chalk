@@ -17,3 +17,13 @@ export function validate(schema) {
     next();
   };
 }
+
+// The biggest number a database id (Postgres "integer") can hold.
+const MAX_ID = 2147483647;
+
+// Turns an id from the address (like the 7 in /api/posts/7) into a number, or null if it isn't one.
+export function readId(value) {
+  if (!/^\d+$/.test(value ?? '')) return null; // digits only
+  const id = Number(value);
+  return id > 0 && id <= MAX_ID ? id : null;
+}
