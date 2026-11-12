@@ -150,3 +150,6 @@ vite.config.ts.timestamp-*
 
 # Local planning notes (not committed)
 PLAN.md
+
+# Profile photos uploaded during local development (production uses Cloudinary)
+uploads/
