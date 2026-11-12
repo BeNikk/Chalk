@@ -160,3 +160,6 @@ server/generated/
 
 # Personal Claude Code settings (not shared)
 .claude/settings.local.json
+
+# Made by scripts/vercel-build.js on Vercel (a copy of client/)
+public/
