@@ -34,6 +34,26 @@
       <div id="post">
         <p class="lead">Loading…</p>
       </div>
+
+      <!-- Shown once the post has loaded. -->
+      <section class="comments" id="comments" hidden>
+        <h2>Comments</h2>
+        <div class="comment-list" id="comment-list"></div>
+
+        <form class="form" id="comment-form" hidden>
+          <p class="form-message" role="alert"></p>
+          <div class="field">
+            <label for="comment-body">Add a comment</label>
+            <textarea id="comment-body" name="body" rows="3" maxlength="1000" required></textarea>
+            <p class="field-error" data-error-for="body"></p>
+          </div>
+          <div>
+            <button class="button button--primary" type="submit">Comment</button>
+          </div>
+        </form>
+
+        <p class="comment-login" id="comment-login" hidden><a href="login.html">Log in</a> to join the conversation.</p>
+      </section>
     </main>
 
     <script type="module" src="js/pages/post.js"></script>

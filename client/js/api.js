@@ -98,3 +98,17 @@ export function likePost(id) {
 export function unlikePost(id) {
   return request('DELETE', `/posts/${id}/like`);
 }
+
+// ---------- Comments ----------
+
+export function getComments(postId) {
+  return request('GET', `/posts/${postId}/comments`);
+}
+
+export function addComment(postId, body) {
+  return request('POST', `/posts/${postId}/comments`, { body });
+}
+
+export function deleteComment(id) {
+  return request('DELETE', `/comments/${id}`);
+}

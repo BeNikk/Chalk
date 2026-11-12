@@ -2,7 +2,14 @@
 
 import { readId } from '../middleware/validate.js';
 import { LABELS } from '../schemas/posts.js';
-import { createPost, deletePost, findPost, findPostAuthorId, listPosts } from '../models/posts.js';
+import {
+  createPost,
+  deletePost,
+  findPost,
+  findPostAuthorId,
+  listPosts,
+  postExists,
+} from '../models/posts.js';
 import { countLikes, likePost, unlikePost } from '../models/likes.js';
 import { canModerate } from '../models/users.js';
 
@@ -11,11 +18,7 @@ const POST_NOT_FOUND = { error: 'That post does not exist (or was deleted).' };
 // The post id from the address, but only if that post exists. Otherwise null.
 async function existingPostId(req) {
   const id = readId(req.params.id);
-  if (!id) return null;
-
-  const post = await findPostAuthorId(id);
-  if (!post) return null;
-
+  if (!id || !(await postExists(id))) return null;
   return id;
 }
 
@@ -33,7 +36,7 @@ export async function getFeed(req, res) {
 
 export async function getPost(req, res) {
   const id = readId(req.params.id);
-  const post = id && (await findPost(id, req.user?.id));
+  const post = id ? await findPost(id, req.user?.id) : null;
   if (!post) {
     return res.status(404).json(POST_NOT_FOUND);
   }
@@ -48,7 +51,7 @@ export async function writePost(req, res) {
 
 export async function removePost(req, res) {
   const id = readId(req.params.id);
-  const post = id && (await findPostAuthorId(id));
+  const post = id ? await findPostAuthorId(id) : null;
   if (!post) {
     return res.status(404).json(POST_NOT_FOUND);
   }

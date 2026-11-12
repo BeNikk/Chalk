@@ -10,6 +10,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.js';
 import meRoutes from './routes/me.js';
 import postRoutes from './routes/posts.js';
+import commentRoutes from './routes/comments.js';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/me', meRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
 
 // Must come after all routes: any /api path nothing above matched gets a JSON 404.
 app.use('/api', (req, res) => {

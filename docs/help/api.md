@@ -61,7 +61,7 @@ The website is just one **client** of Chalk's API. Anything that can send HTTP r
 - Like and unlike answer `{ "likeCount": 3, "likedByMe": true }`. Liking twice is harmless.
 - Labels are `rant`, `poetry`, `mess`, `music` and `fixit`; any other `label` gives `400`.
 
-A post looks like:
+## What a post looks like
 
 ```json
 {
@@ -76,6 +76,16 @@ A post looks like:
   "likedByMe": false
 }
 ```
+
+## Comments
+
+| Method | Address | Who | Does |
+|---|---|---|---|
+| GET | `/api/posts/:id/comments` | anyone | the post's comments, oldest first → `{ "comments": [ … ] }` |
+| POST | `/api/posts/:id/comments` | logged in | `{ body }` (1 to 1000 characters) → `{ "comment": { … } }` |
+| DELETE | `/api/comments/:id` | author, moderator, admin | deletes a comment → `{ "message": "Comment deleted." }` |
+
+A comment looks like `{ "id", "postId", "body", "createdAt", "author": { "handle", "avatarUrl" } }`. If the post doesn't exist (or was deleted), both comment routes answer `404`.
 
 ## Learn more
 

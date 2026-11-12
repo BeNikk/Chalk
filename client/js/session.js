@@ -40,3 +40,9 @@ export async function loadSession() {
   }
   return user;
 }
+
+// Authors can delete their own posts and comments; moderators and the admin can delete anything.
+export function canDelete(authorHandle, user) {
+  if (!user) return false;
+  return authorHandle === user.handle || user.role === 'MODERATOR' || user.role === 'ADMIN';
+}

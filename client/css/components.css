@@ -488,6 +488,37 @@ fieldset.field legend {
   color: var(--danger);
 }
 
+/* Comments */
+
+.comments {
+  margin-top: var(--space-7);
+}
+
+.comments h2 {
+  font-size: var(--text-h3);
+}
+
+.comment-list {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.comment {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.comment-body {
+  margin-top: var(--space-2);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.comment-login {
+  margin-top: var(--space-5);
+}
+
 /* Avatars */
 
 .avatar {

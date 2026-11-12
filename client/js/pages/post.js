@@ -1,16 +1,12 @@
-// post.html?id=7: one post on its own page, with a delete button for its author and moderators.
+// post.html?id=7: one post on its own page, with its comments.
 
 import { deletePost, getPost } from '../api.js';
 import { getUrlParam } from '../forms.js';
-import { el, renderEmptyState, renderPostCard } from '../render.js';
-import { loadSession } from '../session.js';
+import { el, renderEmptyState, renderPostCard, showCommentCount } from '../render.js';
+import { canDelete, loadSession } from '../session.js';
+import { setUpComments } from '../comments.js';
 
 const container = document.querySelector('#post');
-
-function canDelete(post, user) {
-  if (!user) return false;
-  return post.author.handle === user.handle || user.role === 'MODERATOR' || user.role === 'ADMIN';
-}
 
 function renderDeleteButton(post) {
   const button = el('button', 'action-button action-button--danger', 'Delete');
@@ -40,10 +36,13 @@ async function showPost(user) {
     document.title = `${post.title || `#${post.label} by @${post.author.handle}`} · Chalk`;
 
     const card = renderPostCard(post, user, { full: true });
-    if (canDelete(post, user)) {
+    if (canDelete(post.author.handle, user)) {
       card.querySelector('.post-actions').append(renderDeleteButton(post));
     }
     container.replaceChildren(card);
+
+    const commentLink = card.querySelector('.comment-link');
+    setUpComments(post.id, user, (count) => showCommentCount(commentLink, count));
   } catch (error) {
     container.replaceChildren(renderEmptyState(error.message, 'explainer'));
   }

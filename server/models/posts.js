@@ -58,6 +58,11 @@ export async function createPost({ authorId, label, title, body }) {
   return toPublicPost(post);
 }
 
+export async function postExists(id) {
+  const count = await prisma.post.count({ where: { id } });
+  return count > 0;
+}
+
 // Just the author's id: enough to check who may delete the post.
 export function findPostAuthorId(id) {
   return prisma.post.findUnique({ where: { id }, select: { authorId: true } });

@@ -40,18 +40,29 @@ export function renderLabelChip(label) {
   return chip;
 }
 
+// "@inkyfox" with their avatar, linking to their profile.
+function renderAuthor(author) {
+  const link = el('a', 'post-author');
+  link.href = `profile.html?handle=${author.handle}`;
+  link.append(renderAvatar(author), `@${author.handle}`);
+  return link;
+}
+
+function renderTime(dateString) {
+  const time = el('time', 'post-time', timeAgo(dateString));
+  time.dateTime = dateString;
+  return time;
+}
+
 function renderMeta(post) {
   const meta = el('div', 'post-meta');
-
-  const author = el('a', 'post-author');
-  author.href = `profile.html?handle=${post.author.handle}`;
-  author.append(renderAvatar(post.author), `@${post.author.handle}`);
-
-  const time = el('time', 'post-time', timeAgo(post.createdAt));
-  time.dateTime = post.createdAt;
-
-  meta.append(author, renderLabelChip(post.label), time);
+  meta.append(renderAuthor(post.author), renderLabelChip(post.label), renderTime(post.createdAt));
   return meta;
+}
+
+export function showCommentCount(link, count) {
+  link.textContent = `💬 ${count}`;
+  link.setAttribute('aria-label', `${count} comments`);
 }
 
 function renderActions(post, user) {
@@ -60,9 +71,9 @@ function renderActions(post, user) {
   const likeButton = el('button', 'action-button');
   setUpLikeButton(likeButton, post, user);
 
-  const comments = el('a', 'action-button', `💬 ${post.commentCount}`);
+  const comments = el('a', 'action-button comment-link');
   comments.href = `post.html?id=${post.id}#comments`;
-  comments.setAttribute('aria-label', `${post.commentCount} comments`);
+  showCommentCount(comments, post.commentCount);
 
   const shareButton = el('button', 'action-button');
   setUpShareButton(shareButton, post);
@@ -98,6 +109,14 @@ function linkTo(href, content) {
   a.href = href;
   a.append(content);
   return a;
+}
+
+export function renderComment(comment) {
+  const item = el('article', 'comment');
+  const meta = el('div', 'post-meta');
+  meta.append(renderAuthor(comment.author), renderTime(comment.createdAt));
+  item.append(meta, el('p', 'comment-body', comment.body));
+  return item;
 }
 
 // Shown when a list has nothing in it yet.
