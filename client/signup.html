@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign up · Chalk</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" />
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="index.html">
+          <span class="logo-mark" aria-hidden="true"></span>
+          Chalk
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a class="nav-link nav-link--extra" href="feed.html">Feed</a>
+          <a class="nav-link nav-link--extra" href="rules.html">Rules</a>
+          <a class="nav-link" href="login.html">Log in</a>
+          <a class="button button--primary button--small" href="signup.html">Start writing</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="narrow-page">
+      <div class="form-card fade-in">
+        <div class="art tint-yellow">
+          <img class="illustration" src="illustrations/writer.svg" alt="" />
+        </div>
+        <div class="form-card-body">
+          <h1>Join Chalk</h1>
+          <p class="lead">Pick a handle. It's the only name other students will see.</p>
+          <form class="form" id="signup-form">
+            <p class="form-message" role="alert"></p>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+              <p class="field-error" data-error-for="email"></p>
+            </div>
+            <div class="field">
+              <label for="handle">Handle</label>
+              <input id="handle" name="handle" type="text" autocomplete="username" required minlength="3" maxlength="20" />
+              <p class="field-hint">3 to 20 letters, numbers or underscores. You can't change it later.</p>
+              <p class="field-error" data-error-for="handle"></p>
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" autocomplete="new-password" required minlength="8" />
+              <p class="field-hint">At least 8 characters.</p>
+              <p class="field-error" data-error-for="password"></p>
+            </div>
+            <button class="button button--primary" type="submit">Create account</button>
+          </form>
+          <div class="form-links">
+            <a href="login.html">Already have an account? Log in</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="js/pages/signup.js"></script>
+  </body>
+</html>

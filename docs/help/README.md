@@ -16,6 +16,7 @@ When a comment in the code says *"See docs/help/…"*, this is where it points.
 | [Email links](email-links.md) | Verify and reset-password links, and why only hashes are stored | `server/services/tokens.js`, `server/services/email.js` |
 | [Validation](validation.md) | Checking every request with Zod schemas | `server/schemas/`, `server/middleware/validate.js` |
 | [Tests](testing.md) | Running and writing tests | `tests/` |
+| [fetch and modules](fetch.md) | How pages call the API with fetch, async/await, and import/export | `client/js/api.js`, `client/js/pages/` |
 
 ## Missing something?
 

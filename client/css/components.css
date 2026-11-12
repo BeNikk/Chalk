@@ -40,6 +40,15 @@
   color: var(--text);
 }
 
+/* A <button> that looks like a nav link, e.g. "Log out". */
+.nav-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 /* Buttons */
 
 .actions {
@@ -55,8 +64,16 @@
   border: 1px solid var(--text);
   border-radius: var(--radius);
   background: var(--surface);
+  color: var(--text);
+  font: inherit; /* <button>s don't pick up the page font on their own */
   font-weight: 600;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 .button:hover {
@@ -196,6 +213,101 @@
 .sticky-note[data-label="mess"] { --note-color: var(--label-mess); --tilt: -1deg; }
 .sticky-note[data-label="music"] { --note-color: var(--label-music); --tilt: 2deg; }
 .sticky-note[data-label="fixit"] { --note-color: var(--label-fixit); --tilt: -1.5deg; }
+
+/* Forms */
+
+.form-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.form-card .art .illustration {
+  width: 40%;
+}
+
+.form-card-body {
+  padding: var(--space-6);
+}
+
+.form-card-body h1 {
+  font-size: var(--text-h2);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.field label {
+  font-weight: 600;
+}
+
+.field input {
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.field input:focus {
+  outline: 2px solid var(--accent);
+  border-color: var(--text);
+}
+
+.field-hint,
+.field-error {
+  font-size: var(--text-sm);
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.field-hint {
+  color: var(--text-muted);
+}
+
+.field-error,
+.form-message--error {
+  color: var(--danger);
+}
+
+.form-message:empty {
+  display: none;
+}
+
+.form-message {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.form-message--error {
+  background: var(--tint-red);
+}
+
+.form-message--success {
+  background: var(--tint-green);
+}
+
+.form-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  font-size: var(--text-sm);
+}
 
 /* Tick list */
 

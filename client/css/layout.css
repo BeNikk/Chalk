@@ -71,6 +71,14 @@
   width: 180px;
 }
 
+/* Narrow pages: sign up, log in and the other account forms */
+
+.narrow-page {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5);
+}
+
 /* Grids */
 
 /* As many 240px+ columns as fit: one on a phone, three on a laptop. */
