@@ -1,5 +1,5 @@
 // `npm run setup`: gets a fresh copy of Chalk ready to run on your laptop.
-// Safe to run again at any time.
+// Running it again resets your local data to the fake data.
 
 import { execSync } from 'node:child_process';
 import { copyFileSync, existsSync } from 'node:fs';
@@ -29,5 +29,9 @@ checkDockerIsRunning();
 
 // --wait blocks until the database's healthcheck (in docker-compose.yml) says it's ready.
 run('docker compose up -d --wait');
+
+// Create (or update) the tables from prisma/migrations, then fill them with fake data.
+run('npx prisma migrate deploy');
+run('npm run db:seed');
 
 console.log('\nAll set! Run `npm run dev` and open http://localhost:3000');

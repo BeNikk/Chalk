@@ -9,6 +9,9 @@ When a comment in the code says *"See docs/help/…"*, this is where it points.
 | [CSS variables](css-variables.md) | Naming a value once and reusing it everywhere (`--text`, `var(--text)`) | `client/css/`, themes |
 | [Environment variables](environment-variables.md) | Settings and secrets in `.env`, and why they stay out of the code | `server/config.js`, `.env.example` |
 | [Express](express.md) | How the server answers requests: middleware, routes, JSON | `server/app.js` |
+| [Databases](databases.md) | Tables, rows, columns, relations, and where Chalk's database runs | `prisma/schema.prisma` |
+| [Prisma](prisma.md) | The schema, migrations, seeding, and the `db:` commands | `prisma/`, `server/db.js` |
+| [Passwords](passwords.md) | Why we store hashes, not passwords, and how bcrypt works | `server/services/passwords.js` |
 
 ## Missing something?
 
