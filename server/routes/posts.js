@@ -3,15 +3,17 @@
 
 import { Router } from 'express';
 import { loadUserIfSignedIn, requireSignIn } from '../middleware/requireSignIn.js';
-import { likeLimiter, writeLimiter } from '../middleware/rateLimits.js';
+import { likeLimiter, writeLimiter, glanceLimiter } from '../middleware/rateLimits.js';
 import { validate } from '../middleware/validate.js';
-import { createPostSchema } from '../schemas/posts.js';
+import { createPostSchema, recordGlanceSchema, updatePostSchema } from '../schemas/posts.js';
 import { createCommentSchema } from '../schemas/comments.js';
 import {
+  editPost,
   getFeed,
   getLikers,
   getPost,
   like,
+  recordPostGlance,
   removePost,
   unlike,
   writePost,
@@ -23,7 +25,9 @@ const router = Router();
 router.get('/', loadUserIfSignedIn, getFeed);
 router.post('/', requireSignIn, writeLimiter, validate(createPostSchema), writePost);
 router.get('/:id', loadUserIfSignedIn, getPost);
+router.patch('/:id', requireSignIn, writeLimiter, validate(updatePostSchema), editPost);
 router.delete('/:id', requireSignIn, removePost);
+router.post('/:id/glance', loadUserIfSignedIn, glanceLimiter, validate(recordGlanceSchema), recordPostGlance);
 router.get('/:id/likes', getLikers);
 router.put('/:id/like', requireSignIn, likeLimiter, like);
 router.delete('/:id/like', requireSignIn, likeLimiter, unlike);

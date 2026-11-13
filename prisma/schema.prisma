@@ -47,6 +47,7 @@ model User {
   posts    Post[]
   comments Comment[]
   likes    Like[]
+  glances  Glance[]
   tokens   EmailToken[]
 
   // Two lists from the same Follow table, so each needs a name saying which side this user is on.
@@ -79,16 +80,18 @@ model EmailToken {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   authorId  Int
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   label     Label
   title     String?
   body      String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  editedAt  DateTime?
 
   comments Comment[]
   likes    Like[]
+  glances  Glance[]
 
   @@index([createdAt]) // for finding posts by date
 }
@@ -113,6 +116,22 @@ model Like {
   createdAt DateTime @default(now())
 
   @@id([userId, postId]) // one like per person per post
+}
+
+// One row per unique reader per post. Tracks both unique readers (row count) and total reads (readCount sum).
+model Glance {
+  id          Int      @id @default(autoincrement())
+  postId      Int
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  readerKey   String // "u:<userId>" for signed-in readers, "a:<hmac>" for anonymous readers
+  readCount   Int      @default(1)
+  firstReadAt DateTime @default(now())
+  lastReadAt  DateTime @default(now())
+
+  @@unique([postId, readerKey])
+  @@index([postId])
 }
 
 // Login sessions, in the shape our session library (@quixo3/prisma-session-store) expects.

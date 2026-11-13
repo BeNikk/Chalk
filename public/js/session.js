@@ -71,6 +71,11 @@ export function goToLogin() {
   window.location.href = `login.html?next=${encodeURIComponent(page)}`;
 }
 
+// Only the original author can edit their own posts.
+export function canEdit(authorHandle, user) {
+  return Boolean(user && authorHandle === user.handle);
+}
+
 // Authors can delete their own posts and comments; moderators and the admin can delete anything.
 export function canDelete(authorHandle, user) {
   if (!user) return false;

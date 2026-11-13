@@ -30,3 +30,12 @@ export const likeLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Slow down a little! Try again in a few minutes.' },
 });
+
+// Reading analytics (Glances): prevents automated flooding.
+export const glanceLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: config.isTest ? 1000 : 60,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please slow down.' },
+});

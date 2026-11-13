@@ -4,6 +4,7 @@ import { getPosts } from '../api.js';
 import { getUrlParam } from '../forms.js';
 import { renderEmptyState, renderPostCard } from '../render.js';
 import { loadSession } from '../session.js';
+import { consumePendingToast, showToast } from '../toast.js';
 
 const list = document.querySelector('#posts');
 const loadMoreButton = document.querySelector('#load-more');
@@ -29,6 +30,20 @@ function showActiveFilter() {
   }
 }
 
+function emptyFeedMessage() {
+  return label === 'following'
+    ? 'Nothing from people you follow yet. Open someone’s profile and tap Follow.'
+    : 'Nothing here yet. Be the first to write something!';
+}
+
+function handlePostDeleted(_post, card) {
+  card.remove();
+  if (list.querySelectorAll('.post-card').length === 0 && loadMoreButton.hidden) {
+    list.replaceChildren(renderEmptyState(emptyFeedMessage()));
+  }
+  showToast('Post deleted.', 'success');
+}
+
 // Adds the next 20 posts to the bottom of the list.
 async function loadPosts() {
   const versionAtStart = listVersion;
@@ -44,16 +59,12 @@ async function loadPosts() {
     if (versionAtStart !== listVersion) return; // a different label was picked while we waited
 
     for (const post of posts) {
-      list.append(renderPostCard(post, user));
+      list.append(renderPostCard(post, user, { onDelete: handlePostDeleted }));
     }
     if (posts.length > 0) {
       oldestPostId = posts.at(-1).id;
     } else if (oldestPostId === null) {
-      const message =
-        label === 'following'
-          ? 'Nothing from people you follow yet. Open someone’s profile and tap Follow.'
-          : 'Nothing here yet. Be the first to write something!';
-      list.append(renderEmptyState(message));
+      list.append(renderEmptyState(emptyFeedMessage()));
       loadMoreButton.hidden = true;
       return;
     }
@@ -101,4 +112,5 @@ if (user) {
   label = ''; // only logged-in people follow anyone
 }
 showActiveFilter();
+consumePendingToast();
 loadPosts();
