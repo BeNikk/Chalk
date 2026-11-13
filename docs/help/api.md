@@ -74,7 +74,9 @@ The website is just one **client** of Chalk's API. Anything that can send HTTP r
 | GET | `/api/posts?label=rant&before=42` | anyone | 20 newest posts. `label` and `before` (load older posts) are optional. `following=true` (logged in): only people you follow |
 | POST | `/api/posts` | logged in | `{ label, title?, body }` → writes a post |
 | GET | `/api/posts/:id` | anyone | one post |
+| PATCH | `/api/posts/:id` | author only | `{ label?, title?, body? }` → edits your own post |
 | DELETE | `/api/posts/:id` | author, moderator, admin | deletes a post |
+| POST | `/api/posts/:id/glance` | anyone | `{ readDurationMs }` (≥ 2000) → records a genuine read (author views excluded; deduplicated per reader) |
 | PUT | `/api/posts/:id/like` | logged in | likes a post |
 | DELETE | `/api/posts/:id/like` | logged in | unlikes it |
 | GET | `/api/posts/:id/likes` | anyone | who liked it: `{ "people": [ { "handle", "avatarUrl" } ] }`, newest first, up to 100 |
@@ -93,10 +95,13 @@ The website is just one **client** of Chalk's API. Anything that can send HTTP r
   "title": null,
   "body": "8am classes should be illegal.",
   "createdAt": "2026-11-12T09:30:00.000Z",
+  "editedAt": null,
   "author": { "handle": "inkyfox", "avatarUrl": null },
   "likeCount": 2,
   "commentCount": 0,
-  "likedByMe": false
+  "likedByMe": false,
+  "glanceCount": 5,
+  "totalGlances": 7
 }
 ```
 

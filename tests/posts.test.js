@@ -191,3 +191,171 @@ test('liking the same post several times at once still counts once', async () =>
   assert.deepEqual(results.map((res) => res.status), [200, 200, 200]);
   assert.equal(await prisma.like.count({ where: { postId: post.id } }), 1);
 });
+
+// ---------- Edit post ----------
+
+test('authors can edit their own post while preserving likes, comments, and glances', async () => {
+  const author = await createUser({ handle: 'author' });
+  const fan = await createUser({ handle: 'fan' });
+  const authorBrowser = await logIn(author);
+  const fanBrowser = await logIn(fan);
+
+  const created = await authorBrowser
+    .post('/api/posts')
+    .send({ label: 'rant', title: 'Old title', body: 'Original body' })
+    .expect(201);
+  const postId = created.body.post.id;
+
+  await fanBrowser.put(`/api/posts/${postId}/like`).expect(200);
+  await fanBrowser.post(`/api/posts/${postId}/comments`).send({ body: 'Nice!' }).expect(201);
+  await fanBrowser.post(`/api/posts/${postId}/glance`).send({ readDurationMs: 3500 }).expect(200);
+
+  const edited = await authorBrowser
+    .patch(`/api/posts/${postId}`)
+    .send({ label: 'poetry', title: '   ', body: '  Updated verse  ' })
+    .expect(200);
+
+  assert.equal(edited.body.post.id, postId);
+  assert.equal(edited.body.post.label, 'poetry');
+  assert.equal(edited.body.post.title, null);
+  assert.equal(edited.body.post.body, 'Updated verse');
+  assert.ok(edited.body.post.editedAt);
+  assert.equal(edited.body.post.likeCount, 1);
+  assert.equal(edited.body.post.commentCount, 1);
+  assert.equal(edited.body.post.glanceCount, 1);
+  assert.equal(edited.body.post.totalGlances, 1);
+  assert.equal(await prisma.post.count(), 1);
+});
+
+test('partial edits keep omitted fields unchanged', async () => {
+  const author = await createUser({ handle: 'author' });
+  const browser = await logIn(author);
+  const post = await prisma.post.create({
+    data: { authorId: author.id, label: 'MUSIC', title: 'Track', body: 'First version' },
+  });
+
+  const edited = await browser.patch(`/api/posts/${post.id}`).send({ body: 'Second version' }).expect(200);
+  assert.equal(edited.body.post.label, 'music');
+  assert.equal(edited.body.post.title, 'Track');
+  assert.equal(edited.body.post.body, 'Second version');
+});
+
+test('only the original author can edit a post (not others, moderators, or admins)', async () => {
+  const author = await createUser({ handle: 'author' });
+  const post = await createPost(author);
+  const other = await logIn(await createUser({ handle: 'other' }));
+  const mod = await logIn(await createUser({ handle: 'mod', role: 'MODERATOR' }));
+  const admin = await logIn(await createUser({ handle: 'boss', role: 'ADMIN' }));
+
+  await request(app).patch(`/api/posts/${post.id}`).send({ body: 'hack' }).expect(401);
+  await other.patch(`/api/posts/${post.id}`).send({ body: 'hack' }).expect(403);
+  await mod.patch(`/api/posts/${post.id}`).send({ body: 'hack' }).expect(403);
+  await admin.patch(`/api/posts/${post.id}`).send({ body: 'hack' }).expect(403);
+});
+
+test('editing rejects invalid input and missing posts', async () => {
+  const author = await createUser({ handle: 'author' });
+  const browser = await logIn(author);
+  const post = await createPost(author);
+
+  await browser.patch('/api/posts/999999').send({ body: 'hi' }).expect(404);
+  await browser.patch('/api/posts/not-a-number').send({ body: 'hi' }).expect(404);
+  await browser.patch(`/api/posts/${post.id}`).send({}).expect(400);
+  await browser.patch(`/api/posts/${post.id}`).send({ body: '   ' }).expect(400);
+  await browser.patch(`/api/posts/${post.id}`).send({ label: 'invalid' }).expect(400);
+  await browser.patch(`/api/posts/${post.id}`).send({ title: 'x'.repeat(121) }).expect(400);
+});
+
+// ---------- Glances (reading analytics) ----------
+
+test('glances require a real post and a minimum reading duration', async () => {
+  const post = await createPost(await createUser({ handle: 'author' }));
+
+  await request(app).post('/api/posts/999999/glance').send({ readDurationMs: 4000 }).expect(404);
+  await request(app).post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 500 }).expect(400);
+  await request(app).post(`/api/posts/${post.id}/glance`).send({}).expect(400);
+});
+
+test('author views are not counted as glances', async () => {
+  const author = await createUser({ handle: 'author' });
+  const post = await createPost(author);
+  const browser = await logIn(author);
+
+  const res = await browser.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 5000 }).expect(200);
+  assert.equal(res.body.counted, false);
+  assert.equal(res.body.reason, 'author');
+  assert.equal(res.body.glanceCount, 0);
+  assert.equal(res.body.totalGlances, 0);
+});
+
+test('glances count unique readers and prevent duplicate rapid counting', async () => {
+  const author = await createUser({ handle: 'author' });
+  const post = await createPost(author);
+
+  // Loading the feed or opening the post without meeting the read threshold does not count a glance.
+  await request(app).get('/api/posts').expect(200);
+  const initial = await request(app).get(`/api/posts/${post.id}`).expect(200);
+  assert.equal(initial.body.post.glanceCount, 0);
+  assert.equal(initial.body.post.totalGlances, 0);
+
+  const reader1 = await logIn(await createUser({ handle: 'reader1' }));
+  const reader2 = await logIn(await createUser({ handle: 'reader2' }));
+
+  // Concurrent requests from the same reader only count once.
+  await Promise.all([1, 2, 3].map(() => reader1.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 4000 })));
+  const again = await reader1.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 4000 }).expect(200);
+  assert.equal(again.body.counted, false);
+  assert.equal(again.body.glanceCount, 1);
+  assert.equal(again.body.totalGlances, 1);
+
+  // A second distinct reader increments both counts.
+  const second = await reader2.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 4000 }).expect(200);
+  assert.equal(second.body.counted, true);
+  assert.equal(second.body.glanceCount, 2);
+  assert.equal(second.body.totalGlances, 2);
+
+  // An anonymous browser session is deduplicated via its visitor cookie.
+  const anon = request.agent(app);
+  await anon.get(`/api/posts/${post.id}`).expect(200);
+  const anonFirst = await anon.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 4000 }).expect(200);
+  assert.equal(anonFirst.body.glanceCount, 3);
+  assert.equal(anonFirst.body.totalGlances, 3);
+  const anonRepeat = await anon.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 4000 }).expect(200);
+  assert.equal(anonRepeat.body.counted, false);
+  assert.equal(anonRepeat.body.glanceCount, 3);
+  assert.equal(anonRepeat.body.totalGlances, 3);
+});
+
+test('re-reading after the cooldown increments total reads without inflating unique readers', async () => {
+  const post = await createPost(await createUser({ handle: 'author' }));
+  const reader = await createUser({ handle: 'reader' });
+  const browser = await logIn(reader);
+
+  await browser.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 3500 }).expect(200);
+
+  // Simulate a later reading session past the 15-minute cooldown.
+  await prisma.glance.update({
+    where: { postId_readerKey: { postId: post.id, readerKey: `u:${reader.id}` } },
+    data: { lastReadAt: new Date(Date.now() - 20 * 60 * 1000) },
+  });
+
+  const reread = await browser.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 3500 }).expect(200);
+  assert.equal(reread.body.counted, true);
+  assert.equal(reread.body.glanceCount, 1);
+  assert.equal(reread.body.totalGlances, 2);
+
+  const feed = await request(app).get('/api/posts').expect(200);
+  assert.equal(feed.body.posts[0].glanceCount, 1);
+  assert.equal(feed.body.posts[0].totalGlances, 2);
+});
+
+test('deleting a post deletes its glances', async () => {
+  const author = await createUser({ handle: 'author' });
+  const post = await createPost(author);
+  const reader = await logIn(await createUser({ handle: 'reader' }));
+  await reader.post(`/api/posts/${post.id}/glance`).send({ readDurationMs: 3500 }).expect(200);
+  assert.equal(await prisma.glance.count(), 1);
+
+  await (await logIn(author)).delete(`/api/posts/${post.id}`).expect(200);
+  assert.equal(await prisma.glance.count(), 0);
+});

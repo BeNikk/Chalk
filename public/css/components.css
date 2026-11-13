@@ -144,6 +144,17 @@
   font-size: var(--text-sm);
 }
 
+.button--danger {
+  border-color: var(--danger);
+  background: var(--tint-red);
+  color: var(--danger);
+}
+
+.button--danger:hover {
+  background: var(--danger);
+  color: var(--surface);
+}
+
 /* Cards */
 
 .card {
@@ -491,6 +502,11 @@ fieldset.field legend {
   box-shadow: 0 6px 16px rgb(0 0 0 / 0.06);
 }
 
+.post-card:has(.post-menu-list:not([hidden])) {
+  position: relative;
+  z-index: 2;
+}
+
 .post-meta {
   display: flex;
   flex-wrap: wrap;
@@ -498,6 +514,81 @@ fieldset.field legend {
   gap: var(--space-3);
   color: var(--text-muted);
   font-size: var(--text-sm);
+}
+
+.post-edited {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* Three-dot menu (⋮) in the post header */
+.post-menu {
+  position: relative;
+  margin-left: auto;
+}
+
+.post-menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.post-menu-button:hover,
+.post-menu-button[aria-expanded="true"] {
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.post-menu-list {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  right: 0;
+  z-index: 10;
+  display: grid;
+  min-width: 148px;
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.12);
+}
+
+.post-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: calc(var(--radius) - 2px);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.post-menu-item:hover {
+  background: var(--bg);
+}
+
+.post-menu-item--danger {
+  color: var(--danger);
+}
+
+.post-menu-item--danger:hover {
+  background: var(--tint-red);
 }
 
 .post-author {
@@ -599,6 +690,10 @@ fieldset.field legend {
 .icon--heart { --icon: url("../icons/heart.svg"); }
 .icon--comment { --icon: url("../icons/comment.svg"); }
 .icon--share { --icon: url("../icons/share.svg"); }
+.icon--eye { --icon: url("../icons/eye.svg"); }
+.icon--more { --icon: url("../icons/more.svg"); }
+.icon--edit { --icon: url("../icons/edit.svg"); }
+.icon--trash { --icon: url("../icons/trash.svg"); }
 
 /* The like button and its count look like one pill, but they're two buttons:
    the heart likes the post, the number shows who liked it. */
@@ -653,14 +748,20 @@ fieldset.field legend {
   50% { transform: scale(1.3); }
 }
 
-/* Pop-up boxes (<dialog>), like "Liked by" */
+/* Pop-up boxes (<dialog>), like "Liked by", Edit Post, Delete Confirmation, and Glances */
 .dialog {
-  width: min(360px, calc(100% - 2 * var(--space-5)));
+  width: min(380px, calc(100% - 2 * var(--space-5)));
+  max-height: 90vh;
+  overflow-y: auto;
   padding: 0; /* the padding is on .dialog-box, so a click on the dialog itself means "outside" */
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--surface);
   color: var(--text);
+}
+
+.dialog--wide {
+  width: min(580px, calc(100% - 2 * var(--space-5)));
 }
 
 .dialog::backdrop {
@@ -669,6 +770,98 @@ fieldset.field legend {
 
 .dialog-box {
   padding: var(--space-5);
+}
+
+.dialog-form {
+  margin-top: 0;
+  gap: var(--space-4);
+}
+
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.dialog-form .dialog-actions {
+  margin-top: var(--space-2);
+}
+
+.glance-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.glance-stat-box {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.glance-stat-value {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+
+.glance-note {
+  margin-top: var(--space-2);
+}
+
+/* Toast notifications */
+.toast-container {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 50;
+  pointer-events: none;
+}
+
+.toast {
+  max-width: min(360px, calc(100vw - 2 * var(--space-5)));
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+  pointer-events: auto;
+  cursor: pointer;
+  animation: fade-in 0.2s ease-out;
+}
+
+.toast--success {
+  border-color: var(--text);
+  background: var(--tint-green);
+}
+
+.toast--error {
+  border-color: var(--danger);
+  background: var(--tint-red);
+  color: var(--danger);
+}
+
+@media (max-width: 720px) {
+  .toast-container {
+    right: var(--space-4);
+    left: var(--space-4);
+    bottom: var(--space-4);
+    display: flex;
+    justify-content: center;
+  }
+
+  .glance-stats {
+    grid-template-columns: 1fr;
+  }
 }
 
 .dialog-header {
