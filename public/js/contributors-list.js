@@ -25,6 +25,12 @@ export const contributors = [
     url: 'https://github.com/BeNikk',
     peep: 'idea',
   },
+  {
+    name: 'Nandani',
+    url: 'https://github.com/Nandani-tech',
+    peep: 'writer'
+  }
+  {
     name: 'Rishi',
     url: 'https://github.com/me-Rishik',
     peep: 'idea',
