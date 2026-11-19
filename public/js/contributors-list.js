@@ -42,6 +42,11 @@ export const contributors = [
     photo: 'https://github.com/notdoneyet-wq.png',
     peep: 'hoodie',
   },
+  {
+    name: 'Aarush',
+    url: 'https://github.com/aarushshukla125',
+    peep: 'coffee',
+  },
 
  main
 ];
