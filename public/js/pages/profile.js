@@ -100,7 +100,9 @@ async function loadPosts(user) {
   try {
     const { posts } = await getUserPosts(handle, oldestPostId);
     for (const post of posts) {
-      list.append(renderPostCard(post, user));
+      const card = renderPostCard(post, user);
+      card.dataset.color = list.querySelectorAll('.post-card').length % 5;
+      list.append(card);
     }
     if (posts.length > 0) {
       oldestPostId = posts.at(-1).id;

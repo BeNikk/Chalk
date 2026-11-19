@@ -1,0 +1,1009 @@
+/* =========================================
+   SOFT — Buttery Pastel Theme
+   ========================================= */
+
+.profile {
+  --bg: #fffaf0;
+  --surface: #fffefa;
+  --text: #514638;
+  --text-muted: #998b78;
+  --border: #eee3cf;
+
+  --accent: #edc96c;
+  --accent-soft: #fff1c9;
+  --accent-dark: #9a7430;
+
+  --label-rant: #fbe5df;
+  --label-poetry: #eee6fa;
+  --label-mess: #fff0c9;
+  --label-music: #e4f0df;
+  --label-fixit: #e3edf8;
+
+  --tint-red: #fbe5df;
+  --tint-purple: #eee6fa;
+
+  --font: "DM Sans", sans-serif;
+  --font-heading: "Bricolage Grotesque", sans-serif;
+  --font-hand: "Caveat", cursive;
+
+  position: relative;
+  isolation: isolate;
+  background-color: #fff9ec;
+  background-image:
+    radial-gradient(ellipse at 12% 8%, #f9e6a866 0%, transparent 34%),
+    radial-gradient(ellipse at 88% 18%, #f7dcca66 0%, transparent 32%),
+    radial-gradient(ellipse at 75% 82%, #eee3f566 0%, transparent 35%),
+    radial-gradient(ellipse at 8% 88%, #f8e8c766 0%, transparent 30%),
+    radial-gradient(#c8a96b38 0.65px, transparent 0.8px),
+    radial-gradient(#ffffffb0 0.7px, transparent 1px);
+  background-size:
+    auto, auto, auto, auto, 17px 17px, 23px 23px;
+  background-position:
+    center, center, center, center, 0 0, 8px 11px;
+  color: var(--text);
+}
+
+.profile,
+.profile * {
+  font-family: var(--font);
+}
+
+.profile > * {
+  position: relative;
+}
+
+/* Background texture */
+
+.profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgb(160 128 75 / 2%) 0px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(ellipse at 8% 12%, #f6dfc744 0%, transparent 32%),
+    radial-gradient(ellipse at 92% 30%, #e8dcf544 0%, transparent 34%),
+    radial-gradient(ellipse at 12% 85%, #e5efd844 0%, transparent 32%),
+    radial-gradient(ellipse at 85% 90%, #f8e2e744 0%, transparent 30%),
+    radial-gradient(ellipse at 50% 35%, #fffdf588 0%, transparent 65%);
+}
+
+/* Background sparkles */
+
+.profile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    conic-gradient(from 0deg,
+      transparent 0deg 42deg,
+      #d8b66b99 43deg 47deg,
+      transparent 48deg 132deg,
+      #d8b66b99 133deg 137deg,
+      transparent 138deg 222deg,
+      #d8b66b99 223deg 227deg,
+      transparent 228deg 312deg,
+      #d8b66b99 313deg 317deg,
+      transparent 318deg),
+    conic-gradient(from 0deg,
+      transparent 0deg 42deg,
+      #dcae9b99 43deg 47deg,
+      transparent 48deg 132deg,
+      #dcae9b99 133deg 137deg,
+      transparent 138deg 222deg,
+      #dcae9b99 223deg 227deg,
+      transparent 228deg 312deg,
+      #dcae9b99 313deg 317deg,
+      transparent 318deg),
+    conic-gradient(from 0deg,
+      transparent 0deg 42deg,
+      #b9a4d699 43deg 47deg,
+      transparent 48deg 132deg,
+      #b9a4d699 133deg 137deg,
+      transparent 138deg 222deg,
+      #b9a4d699 223deg 227deg,
+      transparent 228deg 312deg,
+      #b9a4d699 313deg 317deg,
+      transparent 318deg),
+    radial-gradient(circle, #d8b66b99 1.5px, transparent 2px),
+    radial-gradient(circle, #dcae9b99 2px, transparent 2.5px),
+    radial-gradient(circle, #b9a4d699 1.5px, transparent 2px);
+  background-size: 19px 19px, 13px 13px, 16px 16px, 7px 7px, 8px 8px, 7px 7px;
+  background-repeat: no-repeat;
+  background-position:
+    9% 16%, 88% 12%, 77% 72%,
+    20% 48%, 93% 55%, 42% 88%;
+  opacity: 0.8;
+}
+
+/* Profile header */
+
+.profile .profile-header {
+  position: relative;
+  padding: 30px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 100% 0%, #f6dfc766 0%, transparent 42%),
+    radial-gradient(ellipse at 0% 100%, #f7edcf66 0%, transparent 45%),
+    linear-gradient(135deg, #fffefa 0%, #fffaf0 55%, #fff6ed 100%);
+  border: 1px solid #ead9b8;
+  border-radius: 25px;
+  box-shadow:
+    0 8px 24px #92764b10,
+    0 2px 5px #92764b08,
+    inset 0 1px 0 #ffffff;
+  transition: box-shadow 350ms ease, border-color 350ms ease;
+}
+
+.profile .profile-header::before {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  top: -100px;
+  right: -55px;
+  border-radius: 50%;
+  background: #f9e4a766;
+  pointer-events: none;
+}
+
+.profile .profile-header:hover {
+  border-color: #dfc99f;
+  box-shadow:
+    0 12px 30px #92764b18,
+    0 3px 8px #92764b0c,
+    inset 0 1px 0 #ffffff;
+}
+
+.profile .profile-details {
+  position: relative;
+  z-index: 1;
+}
+
+/* Profile avatar */
+
+.profile .profile-header .avatar--large {
+  border: 4px solid #fffdf6 !important;
+  outline: 2px solid #dfc58e;
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 6px #f3e5c766,
+    0 5px 16px #aa8b5830;
+  transition:
+    outline-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms ease;
+}
+
+.profile .profile-header .avatar--large:hover {
+  outline-color: #d8ad79;
+  box-shadow:
+    0 0 0 6px #f1d9c766,
+    0 0 20px 7px #e8c99455,
+    0 8px 20px #aa8b5838;
+  transform: translateY(-3px) scale(1.035);
+}
+
+/* Profile name and handle */
+
+.profile .profile-header h1,
+.profile .profile-name {
+  color: #514638;
+  font-family: var(--font-heading);
+  letter-spacing: -0.5px;
+}
+
+.profile .profile-name {
+  font-family: var(--font-heading) !important;
+  font-size: 1.35rem !important;
+  font-weight: 650;
+  color: #9a7430;
+  letter-spacing: -0.35px;
+  line-height: 1.25;
+  margin-top: 5px;
+}
+
+.profile .profile-details > h1 {
+  display: block;
+  color: #b18a3f !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 0 8px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-size: 1.3rem !important;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 1.3;
+  transition: color 250ms ease;
+}
+
+.profile .profile-details > h1:hover {
+  color: #c49a48 !important;
+  background: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.profile .profile-details > .badge {
+  margin-left: 6px;
+}
+
+.profile .profile-details > p {
+  margin-top: 2px;
+}
+
+.profile .profile-bio {
+  color: #857763;
+  line-height: 1.7;
+}
+
+/* Follow stats */
+
+.profile .follow-counts {
+  gap: 10px;
+}
+
+.profile .follow-count {
+  border: 1px solid #eddfc7;
+  border-radius: 12px;
+  background: #fffdf7;
+  color: #6d5d48;
+  padding: 8px 12px;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.profile .follow-count:hover {
+  background: #fff1cb;
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+
+.profile .button {
+  border-radius: 12px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.profile .button:hover {
+  transform: translateY(-2px);
+}
+
+.profile .profile-details .button {
+  background: linear-gradient(135deg, #fff2ce, #f5dfaa);
+  border: 1px solid #e8ce91;
+  color: #806333;
+  border-radius: 13px;
+  box-shadow: 0 3px 9px #c9a75b18;
+  transition:
+    background 350ms ease,
+    box-shadow 350ms ease,
+    transform 350ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.profile .profile-details .button:hover {
+  background: linear-gradient(135deg, #ffedbd, #f1d38f);
+  box-shadow: 0 6px 15px #c9a75b35;
+  transform: translateY(-2px);
+}
+
+/* Post cards */
+
+.profile .post-card {
+  padding: 22px;
+  border: 1px solid var(--card-edge);
+  outline: 1px solid var(--card-inner);
+  outline-offset: -5px;
+  border-radius: 19px;
+  background: #fffefa;
+  box-shadow: 0 4px 12px var(--card-shadow);
+  transition:
+    transform 350ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 350ms ease;
+}
+
+.profile .post-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px var(--card-shadow);
+}
+
+/* Butter yellow */
+
+.profile .post-card[data-color="0"] {
+  --card-edge: #dfc477;
+  --card-inner: #f0dfb5;
+  --card-shadow: #dfc47755;
+  --card-border: #ecd79e;
+  --action-bg: #fff5d9;
+  --action-border: #ecd79e;
+  --action-text: #8d713b;
+  background: linear-gradient(145deg, #fffdf5, #fff8e7);
+}
+
+/* Peach */
+
+.profile .post-card[data-color="1"] {
+  --card-edge: #dfb49f;
+  --card-inner: #f1d9cc;
+  --card-shadow: #dfb49f55;
+  --card-border: #edcbbb;
+  --action-bg: #fff0e8;
+  --action-border: #edcbbb;
+  --action-text: #9b705d;
+  background: linear-gradient(145deg, #fffaf6, #fff0e9);
+}
+
+/* Lavender */
+
+.profile .post-card[data-color="2"] {
+  --card-edge: #c6b1df;
+  --card-inner: #e4d9f0;
+  --card-shadow: #c6b1df55;
+  --card-border: #d9cbed;
+  --action-bg: #f5effd;
+  --action-border: #d9cbed;
+  --action-text: #806b9d;
+  background: linear-gradient(145deg, #fffaff, #f5effd);
+}
+
+/* Sage */
+
+.profile .post-card[data-color="3"] {
+  --card-edge: #b7cba6;
+  --card-inner: #dce8d2;
+  --card-shadow: #b7cba655;
+  --card-border: #cbdcbd;
+  --action-bg: #eff6e9;
+  --action-border: #cbdcbd;
+  --action-text: #6f8760;
+  background: linear-gradient(145deg, #fcfff9, #eff6e9);
+}
+
+/* Blush */
+
+.profile .post-card[data-color="4"] {
+  --card-edge: #dfb2bf;
+  --card-inner: #f0d9df;
+  --card-shadow: #dfb2bf55;
+  --card-border: #eacbd3;
+  --action-bg: #fff0f3;
+  --action-border: #eacbd3;
+  --action-text: #a16f7d;
+  background: linear-gradient(145deg, #fffafb, #fff0f3);
+}
+
+/* Post text */
+
+.profile .post-card,
+.profile .post-card p {
+  color: #5b5043;
+  line-height: 1.7;
+}
+
+.profile .post-card .post-title {
+  color: #514638;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* Post labels */
+
+.profile .post-card .post-label {
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: #786a56;
+}
+
+.profile .post-card[data-color="0"] .post-label {
+  background: #fff2cf;
+  border-color: #ecd79e;
+  color: #94743b;
+}
+
+.profile .post-card[data-color="1"] .post-label {
+  background: #ffede4;
+  border-color: #edcbbb;
+  color: #a27661;
+}
+
+.profile .post-card[data-color="2"] .post-label {
+  background: #f1eafa;
+  border-color: #d9cbed;
+  color: #806b9d;
+}
+
+.profile .post-card[data-color="3"] .post-label {
+  background: #edf4e7;
+  border-color: #cbdcbd;
+  color: #718761;
+}
+
+.profile .post-card[data-color="4"] .post-label {
+  background: #fbeaf0;
+  border-color: #eacbd3;
+  color: #a16f7d;
+}
+
+/* Post action area */
+
+.profile .post-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--card-border);
+}
+
+/* Like, comment and share */
+
+.profile .post-actions > .action-button,
+.profile .post-actions > .like-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 38px;
+  padding: 0 13px;
+  border: 1px solid var(--action-border);
+  border-radius: 11px;
+  background: var(--action-bg);
+  color: var(--action-text);
+  font: inherit;
+  font-size: 12px;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.profile .post-actions > .like-group {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.profile .post-actions .like-button,
+.profile .post-actions .like-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+}
+
+.profile .post-actions .like-button {
+  padding: 0 5px 0 12px;
+}
+
+.profile .post-actions .like-count {
+  min-width: 34px;
+  padding: 0 12px 0 5px;
+}
+
+.profile .post-actions > .action-button:hover,
+.profile .post-actions > .like-group:hover {
+  transform: translateY(-2px);
+}
+
+.profile .post-actions .like-button:hover,
+.profile .post-actions .like-count:hover {
+  background: transparent;
+  transform: none;
+}
+
+.profile .post-actions .like-button[aria-pressed="true"] .icon {
+  color: #df8290;
+}
+
+/* Card-matched action hover */
+
+.profile .post-card[data-color="0"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="0"] .post-actions > .like-group:hover {
+  background: #fff0c2;
+  border-color: #e8cc7e;
+  box-shadow: 0 3px 13px #e8cc7e55;
+}
+
+.profile .post-card[data-color="1"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="1"] .post-actions > .like-group:hover {
+  background: #ffe6d9;
+  border-color: #e8bda7;
+  box-shadow: 0 3px 13px #e8bda755;
+}
+
+.profile .post-card[data-color="2"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="2"] .post-actions > .like-group:hover {
+  background: #eee5fc;
+  border-color: #cdb9e9;
+  box-shadow: 0 3px 13px #cdb9e955;
+}
+
+.profile .post-card[data-color="3"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="3"] .post-actions > .like-group:hover {
+  background: #e5f0dc;
+  border-color: #bfd2ad;
+  box-shadow: 0 3px 13px #bfd2ad66;
+}
+
+.profile .post-card[data-color="4"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="4"] .post-actions > .like-group:hover {
+  background: #fbe5eb;
+  border-color: #e5b9c7;
+  box-shadow: 0 3px 13px #e5b9c766;
+}
+
+/* Links and load more */
+
+.profile .read-more {
+  display: inline-block;
+  color: #b47796;
+  cursor: pointer;
+  font-weight: 600;
+  background: transparent;
+  border: 0;
+  padding: 4px 0;
+}
+
+
+.profile .post-link {
+  color: inherit;
+}
+
+.profile #load-more {
+  border-radius: 12px;
+  background: #fff0c9;
+  color: #80652f;
+  border: 1px solid #ead49a;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .profile .profile-header {
+    padding: 20px;
+    border-radius: 19px;
+  }
+
+  .profile .post-card {
+    padding: 17px;
+    border-radius: 16px;
+  }
+
+  .profile .post-actions {
+    gap: 8px;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile .post-card,
+  .profile .post-actions *,
+  .profile .button,
+  .profile .follow-count,
+  .profile .profile-header,
+  .profile .profile-header .avatar--large,
+  .profile .profile-details .button {
+    transition: none;
+  }
+
+  .profile .post-card:hover,
+  .profile .follow-count:hover,
+  .profile .button:hover,
+  .profile .profile-header .avatar--large:hover {
+    transform: none;
+  }
+}
+
+/* Soft — Clean Pastel Cards */
+.profile .post-card {
+  position: relative;
+  border: 1px solid var(--card-edge);
+  border-radius: 18px;
+  box-shadow: 0 3px 10px var(--card-shadow);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.profile .post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px var(--card-shadow);
+}
+
+/* Soft Whimsical — dreamy pastel atmosphere */
+
+.profile {
+  background-color: #fffaf2;
+  background-image:
+    radial-gradient(ellipse at 8% 12%, #f9dfe8aa 0%, transparent 30%),
+    radial-gradient(ellipse at 92% 18%, #e6ddf8aa 0%, transparent 32%),
+    radial-gradient(ellipse at 80% 85%, #dcefe0aa 0%, transparent 30%),
+    radial-gradient(ellipse at 12% 88%, #ffedcbaa 0%, transparent 32%),
+    radial-gradient(#d6b8c855 1px, transparent 1.5px);
+  background-size: auto, auto, auto, auto, 28px 28px;
+  background-position: center, center, center, center, 4px 6px;
+}
+
+.profile .profile-header {
+  border-color: #eddfd1;
+  background:
+    radial-gradient(circle at 92% 15%, #f8e4ef 0 5%, transparent 5.5%),
+    radial-gradient(circle at 96% 24%, #e9e1fa 0 3%, transparent 3.5%),
+    linear-gradient(145deg, #fffefa, #fff8f2 60%, #fdf5fa);
+  box-shadow: 0 8px 25px #b99eaa18;
+}
+
+.profile .post-card {
+  border-radius: 21px;
+  box-shadow: 0 5px 16px #b99eaa16;
+}
+
+.profile .post-card:hover {
+  box-shadow: 0 9px 22px #b99eaa24;
+}
+
+/* Whimsical corner details */
+
+.profile .profile-header::after {
+  position: absolute;
+  right: 24px;
+  bottom: 15px;
+  color: #d5a9bd;
+  font-family: var(--font-hand);
+  font-size: 23px;
+  letter-spacing: 7px;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.profile .profile-details > h1::after {
+  color: #d9b6cc;
+  font-size: 17px;
+}
+
+.profile .follow-count {
+  background: #fff9f5;
+  border-color: #eedce5;
+}
+
+.profile .follow-count:hover {
+  background: #fcecf3;
+  border-color: #e8c8d8;
+}
+
+/* Whimsical scrapbook post cards */
+
+.profile .post-card {
+  position: relative;
+  overflow: hidden;
+  outline: 1px solid #ffffffa8;
+  outline-offset: -5px;
+  box-shadow: 0 5px 16px #b99eaa18, 0 1px 3px #b99eaa0c;
+}
+
+.profile .post-card::before {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: #d7b3c7;
+  font-size: 17px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.profile .post-card:hover {
+  transform: translateY(-3px) rotate(-0.2deg);
+}
+
+/* Cute pastel buttons */
+
+.profile .button,
+.profile #load-more {
+  border-radius: 14px;
+  border: 1px solid #e8cddd;
+  background: linear-gradient(135deg, #fff1f5, #f5edff);
+  color: #80647b;
+  box-shadow: 0 3px 9px #d8b9cc24;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.profile .button:hover,
+.profile #load-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px #d8b9cc38;
+}
+
+/* Cozy empty state */
+
+.profile .empty-state {
+  padding: 35px 20px;
+  border: 1px dashed #e8cddd;
+  border-radius: 22px;
+  background: #fffaf5cc;
+}
+
+.profile .empty-state .illustration {
+  max-width: 170px;
+  filter: drop-shadow(0 5px 8px #c9a9bb25);
+}
+
+.profile .empty-state .lead {
+  color: #92788b;
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+}
+
+/* Soft Pink Profile Card */
+
+.profile .profile-header {
+  background:
+    radial-gradient(ellipse at 100% 0%, #f8dce966, transparent 45%),
+    linear-gradient(135deg, #fff9fc, #fcecf3 60%, #f8eaf5);
+  border-color: #e8c8d8;
+  box-shadow: 0 8px 25px #b99eaa18;
+}
+
+.profile .profile-header::before {
+  background: #f8dce966;
+}
+
+.profile .profile-header:hover {
+  border-color: #e8c8d8;
+}
+
+.profile .profile-header .avatar--large {
+  border-color: #fff9fc !important;
+  outline-color: #e8c8d8;
+  box-shadow: 0 0 0 6px #fcecf3, 0 5px 16px #b99eaa30;
+}
+
+.profile .profile-header .avatar--large:hover {
+  outline-color: #d9a9c0;
+  box-shadow: 0 0 0 6px #fcecf3, 0 0 20px 7px #e8c8d855;
+}
+
+.profile .profile-details > h1,
+.profile .profile-name {
+  color: #b47796 !important;
+}
+
+.profile .profile-details > h1:hover {
+  color: #c58aa7 !important;
+}
+
+.profile .profile-details .button {
+  background: linear-gradient(135deg, #fff1f5, #f5edff);
+  border-color: #e8c8d8;
+  color: #98647e;
+}
+
+.profile .profile-details .button:hover {
+  background: linear-gradient(135deg, #fcecf3, #f2e8fa);
+  box-shadow: 0 6px 15px #b99eaa35;
+}
+
+/* Clean Soft — No decorative doodles */
+
+.profile {
+  background: #fff9fc !important;
+  background-image: none !important;
+}
+
+.profile .profile-header {
+  background: linear-gradient(135deg, #fff9fc, #fcecf3) !important;
+}
+
+.profile .profile-header::before,
+.profile .profile-header::after,
+.profile .post-card::before,
+.profile .post-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.profile .read-more {
+  color: #98647e;
+}
+
+.profile .read-more:hover {
+  color: #b47796;
+}
+
+.profile .post-card .read-more {
+  color: var(--action-text);
+}
+
+.profile .post-card .read-more:hover {
+  color: var(--action-text);
+  opacity: 0.75;
+}
+
+/* Soft pastel clouds — profile card only */
+.profile .profile-header {
+  background:
+    radial-gradient(ellipse 55% 85% at 5% 0%, #f4c9dcaa 0%, transparent 75%),
+    radial-gradient(ellipse 50% 75% at 100% 5%, #dfd2f5aa 0%, transparent 75%),
+    radial-gradient(ellipse 55% 65% at 75% 110%, #f5d5e5aa 0%, transparent 75%),
+    radial-gradient(ellipse 45% 60% at 25% 110%, #f8e2eaaa 0%, transparent 75%),
+    linear-gradient(135deg, #fffafd, #fdf2f8) !important;
+  border-color: #ebd2e0;
+}
+
+/* Cute Claymorphism — Profile Card */
+.profile .profile-header {
+  background:
+    radial-gradient(ellipse at 8% 8%, #f5cfe2 0%, transparent 48%),
+    radial-gradient(ellipse at 95% 12%, #ded2f5 0%, transparent 45%),
+    radial-gradient(ellipse at 75% 100%, #f7dce9 0%, transparent 48%),
+    linear-gradient(145deg, #fffafd, #fceef5) !important;
+  border: 1px solid #f2dce8;
+  border-radius: 28px;
+  box-shadow:
+    10px 10px 24px #d9bfd033,
+    -8px -8px 22px #ffffffc9,
+    inset 1px 1px 3px #ffffff;
+}
+
+.profile .profile-header .avatar--large {
+  border: 5px solid #fff8fc !important;
+  box-shadow:
+    7px 7px 14px #d5b5c755,
+    -5px -5px 12px #ffffff;
+}
+
+.profile .profile-details .button {
+  border: 1px solid #efd5e3;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #fffafd, #f8e7f0);
+  box-shadow:
+    4px 4px 8px #d9bfd044,
+    -3px -3px 8px #ffffff;
+}
+
+.profile .profile-details .button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    5px 5px 10px #d9bfd055,
+    -3px -3px 8px #ffffff;
+}
+
+/* =====================================
+   SOFT THEME — FULL CLAYMORPHISM
+   ===================================== */
+
+.profile {
+  --clay-shadow: #cdb5c955;
+  --clay-light: #ffffff;
+  --clay-surface: #fffafd;
+}
+
+/* Profile header */
+.profile .profile-header {
+  border: 1px solid #f0dce8 !important;
+  border-radius: 28px;
+  box-shadow:
+    10px 10px 22px var(--clay-shadow),
+    -8px -8px 20px var(--clay-light),
+    inset 1px 1px 3px #ffffff !important;
+}
+
+/* Message cards */
+.profile .post-card {
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+  box-shadow:
+    8px 8px 16px var(--card-shadow),
+    -6px -6px 14px #ffffff,
+    inset 1px 1px 2px #ffffff !important;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.profile .post-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    10px 10px 20px var(--card-shadow),
+    -6px -6px 14px #ffffff !important;
+}
+
+/* Profile avatar */
+.profile .avatar--large {
+  box-shadow:
+    6px 6px 12px #cdb5c966,
+    -5px -5px 12px #ffffff !important;
+}
+
+/* Buttons */
+.profile .button,
+.profile #load-more,
+.profile .profile-details .button {
+  border: 1px solid #efd9e6;
+  border-radius: 15px;
+  box-shadow:
+    5px 5px 10px #d8bfd044,
+    -4px -4px 10px #ffffff !important;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.profile .button:hover,
+.profile #load-more:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    6px 6px 12px #d8bfd055,
+    -4px -4px 10px #ffffff !important;
+}
+
+/* Like, comment and share */
+.profile .post-actions > .action-button,
+.profile .post-actions > .like-group {
+  border-radius: 13px;
+  box-shadow:
+    3px 3px 7px #cdb5c933,
+    -3px -3px 7px #ffffff !important;
+}
+
+.profile .post-actions > .action-button:active,
+.profile .post-actions > .like-group:active {
+  box-shadow:
+    inset 3px 3px 6px #cdb5c944,
+    inset -3px -3px 6px #ffffff !important;
+}
+
+/* Follow and follower counts */
+.profile .follow-count {
+  border-radius: 15px;
+  box-shadow:
+    4px 4px 9px #d8bfd044,
+    -4px -4px 9px #ffffff !important;
+}
+
+/* Inputs and text areas */
+.profile input,
+.profile textarea,
+.profile select {
+  border-radius: 13px;
+  box-shadow:
+    inset 3px 3px 6px #d8bfd033,
+    inset -3px -3px 6px #ffffff !important;
+}
+
+/* Read more */
+.profile .post-card .read-more {
+  font-weight: 700;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .profile .post-card,
+  .profile .button,
+  .profile #load-more {
+    transition: none;
+  }
+}
+
+.profile .follow-count,
+.profile .follow-count strong,
+.profile .follow-count span {
+  color: #a16f8b !important;
+}
+
+.profile .follow-count:hover,
+.profile .follow-count:hover strong,
+.profile .follow-count:hover span {
+  color: #b47796 !important;
+}

@@ -1,0 +1,1235 @@
+/* DOODLE — notebook pages, scrapbook scraps and little happy accidents */
+
+.profile {
+  --bg: #fffdf5;
+  --surface: #fffefa;
+  --text: #292d38;
+  --text-muted: #777987;
+  --border: #d9d9d2;
+
+  --accent: #f5d469;
+  --accent-hover: #ecc544;
+  --accent-soft: #fff1bd;
+  --accent-dark: #80651b;
+
+  --font: "DM Sans", sans-serif;
+  --font-heading: "Bricolage Grotesque", sans-serif;
+
+  color: var(--text);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(90deg, transparent 54px, #f1b8b8 55px, transparent 56px),
+    repeating-linear-gradient(
+      transparent 0,
+      transparent 31px,
+      #b9d7e5 32px,
+      transparent 33px
+    );
+  background-attachment: local;
+}
+
+.profile .page {
+  max-width: 790px;
+  padding: 58px 30px 90px 76px;
+}
+
+/* Scrapbook profile introduction */
+
+.profile .profile-header {
+  position: relative;
+  align-items: center;
+  gap: 26px;
+  padding: 30px 25px;
+  margin-bottom: 48px;
+  background: #fffefa;
+  border: 2px solid #343b49;
+  border-radius: 3px 18px 5px 14px;
+  box-shadow: 7px 7px 0 #f5d469;
+  transform: rotate(-0.7deg);
+}
+
+.profile .profile-header::before {
+  content: "";
+  position: absolute;
+  top: -13px;
+  left: 42%;
+  width: 82px;
+  height: 25px;
+  background: #f5d469;
+  opacity: 0.85;
+  transform: rotate(-4deg);
+  clip-path: polygon(3% 0, 100% 5%, 96% 100%, 0 94%);
+}
+
+.profile .profile-header::after {
+  content: "✳";
+  position: absolute;
+  right: -17px;
+  top: -24px;
+  color: #e78d83;
+  font-size: 39px;
+  transform: rotate(12deg);
+}
+
+.profile .avatar--large {
+  width: 116px;
+  height: 116px;
+  flex-shrink: 0;
+  border: 3px solid #343b49;
+  border-radius: 50% 46% 48% 44%;
+  box-shadow: 5px 5px 0 #f2b8ad;
+  transform: rotate(5deg);
+}
+
+.profile .profile-details {
+  gap: 10px;
+}
+
+.profile .profile-details h1 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(30px, 6vw, 43px);
+  font-weight: 800;
+  letter-spacing: -1.8px;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: #f5d469;
+  text-decoration-thickness: 5px;
+  text-underline-offset: 7px;
+}
+
+.profile .profile-details .lead {
+  max-width: 450px;
+  margin-top: 7px;
+  color: #626675;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.profile .profile-details .field-hint {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: #9294a0;
+}
+
+/* Little paper labels instead of ordinary pills */
+
+.profile .follow-counts {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.profile .follow-count {
+  padding: 7px 12px;
+  border: 1.5px dashed #697080;
+  border-radius: 3px 9px 4px 8px;
+  background: #fff4c9;
+  color: #343b49;
+  font-size: 12px;
+  font-weight: 700;
+  transform: rotate(-1.5deg);
+  transition: transform 180ms ease;
+}
+
+.profile .follow-count:nth-child(even) {
+  background: #fce8e5;
+  transform: rotate(1.5deg);
+}
+
+.profile .follow-count:hover {
+  transform: translateY(-3px) rotate(0deg);
+  text-decoration: none;
+}
+
+/* Sticker-like buttons */
+
+.profile .button {
+  padding: 9px 16px;
+  border: 2px solid #343b49;
+  border-radius: 4px 10px 5px 9px;
+  background: #fffefa;
+  color: #343b49;
+  font-weight: 800;
+  box-shadow: 3px 3px 0 #343b49;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.profile .button--primary {
+  background: #f5d469;
+  color: #343b49;
+}
+
+.profile .button:hover {
+  transform: translate(2px, 2px) rotate(-1deg);
+  box-shadow: 1px 1px 0 #343b49;
+}
+
+/* A scrapbook collection of post scraps */
+
+.profile .post-list {
+  gap: 30px;
+}
+
+.profile .post-card {
+  position: relative;
+  padding: 27px 28px 23px;
+  border: 1.5px solid #c9c7bd;
+  border-radius: 2px 13px 3px 10px;
+  background: #fffefa;
+  box-shadow: 5px 6px 0 rgb(49 54 67 / 12%);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.profile .post-card:nth-child(odd) {
+  transform: rotate(-0.65deg);
+}
+
+.profile .post-card:nth-child(even) {
+  transform: rotate(0.7deg);
+}
+
+.profile .post-card:nth-child(3n) {
+  border-radius: 12px 2px 10px 3px;
+}
+
+.profile .post-card::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 38px;
+  width: 67px;
+  height: 19px;
+  background: rgb(245 212 105 / 75%);
+  transform: rotate(-3deg);
+  clip-path: polygon(2% 5%, 98% 0, 100% 95%, 0 100%);
+}
+
+.profile .post-card:nth-child(even)::before {
+  left: auto;
+  right: 38px;
+  background: rgb(238 177 169 / 75%);
+  transform: rotate(3deg);
+}
+
+.profile .post-card[data-color="0"] {
+  background: #fff8ec;
+  box-shadow: 5px 6px 0 #f1d9c6;
+}
+
+.profile .post-card[data-color="1"] {
+  background: #f7f3ff;
+  box-shadow: 5px 6px 0 #dcd1f2;
+}
+
+.profile .post-card[data-color="2"] {
+  background: #fffbea;
+  box-shadow: 5px 6px 0 #eee1a9;
+}
+
+.profile .post-card[data-color="3"] {
+  background: #f1f8ed;
+  box-shadow: 5px 6px 0 #d1e2c7;
+}
+
+.profile .post-card[data-color="4"] {
+  background: #f0f6ff;
+  box-shadow: 5px 6px 0 #cbdcf1;
+}
+
+.profile .post-card:not(.post-card--full):hover {
+  transform: translateY(-4px) rotate(0deg);
+  box-shadow: 7px 10px 0 rgb(49 54 67 / 13%);
+}
+
+/* Post typography */
+
+.profile .post-title {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(21px, 4vw, 27px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  overflow-wrap: anywhere;
+}
+
+.profile .post-title a {
+  color: inherit;
+  text-decoration-color: #e8bd54;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.profile .post-body {
+  color: #454957;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+/* Post details */
+
+.profile .post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+}
+
+.profile .post-author {
+  color: #454957;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.profile .post-time {
+  color: #9294a0;
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+}
+
+.profile .label-chip {
+  border-radius: 3px 8px 3px 7px;
+  border: 1px dashed rgb(52 59 73 / 30%);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* Actions: tiny hand-drawn controls */
+
+.profile .post-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 17px;
+  margin-top: 18px;
+  border-top: 1px dashed #c9c7bd;
+}
+
+.profile .action-button,
+.profile .like-button,
+.profile .like-count {
+  border: 1.5px solid #b9b8b0;
+  border-radius: 4px 8px 4px 7px;
+  background: rgb(255 255 255 / 65%);
+  color: #515563;
+  font: inherit;
+  font-size: 12px;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.profile .action-button:hover,
+.profile .like-button:hover,
+.profile .like-count:hover {
+  background: #fff0bd;
+  transform: rotate(-2deg) translateY(-2px);
+}
+
+.profile .read-more {
+  border: 0;
+  border-bottom: 2px solid #e4c35e;
+  background: transparent;
+  color: #52586a;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.profile .post-link {
+  color: inherit;
+}
+
+/* Load-more and empty states */
+
+.profile #load-more {
+  display: block;
+  margin: 35px auto 0;
+}
+
+.profile .empty-state {
+  padding: 35px 20px;
+  border: 2px dashed #c8c4b7;
+  border-radius: 8px 3px 9px 4px;
+  background: rgb(255 255 255 / 65%);
+  text-align: center;
+}
+
+/* Small screens */
+
+@media (max-width: 600px) {
+  .profile {
+    background-image:
+      linear-gradient(90deg, transparent 19px, #f1b8b8 20px, transparent 21px),
+      repeating-linear-gradient(
+        transparent 0,
+        transparent 29px,
+        #b9d7e5 30px,
+        transparent 31px
+      );
+  }
+
+  .profile .page {
+    padding: 38px 17px 65px 34px;
+  }
+
+  .profile .profile-header {
+    gap: 17px;
+    padding: 23px 16px;
+    margin-bottom: 37px;
+  }
+
+  .profile .avatar--large {
+    width: 82px;
+    height: 82px;
+  }
+
+  .profile .profile-details h1 {
+    font-size: 29px;
+  }
+
+  .profile .profile-details .lead {
+    font-size: 13px;
+  }
+
+  .profile .post-list {
+    gap: 24px;
+  }
+
+  .profile .post-card {
+    padding: 23px 17px 19px;
+  }
+
+  .profile .post-card:nth-child(odd) {
+    transform: rotate(-0.35deg);
+  }
+
+  .profile .post-card:nth-child(even) {
+    transform: rotate(0.4deg);
+  }
+
+  .profile .profile-header::after {
+    right: -9px;
+    font-size: 29px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile .post-card,
+  .profile .button,
+  .profile .follow-count,
+  .profile .action-button,
+  .profile .like-button,
+  .profile .like-count {
+    transition: none;
+  }
+}
+
+/* Subtle frosted background blur */
+
+.profile {
+  position: relative;
+  isolation: isolate;
+}
+
+.profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 54px, rgb(241 184 184 / 75%) 55px, transparent 56px),
+    repeating-linear-gradient(
+      transparent 0,
+      transparent 31px,
+      rgb(185 215 229 / 75%) 32px,
+      transparent 33px
+    );
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.profile .profile-header {
+  box-shadow: 7px 7px 0 #f5d469, 0 14px 35px rgb(68 57 40 / 7%);
+}
+
+.profile .post-card {
+  backdrop-filter: blur(2px);
+}
+
+
+/* Simple notebook paper background */
+
+.profile {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #fffdf7;
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 54px,
+      rgb(221 151 151 / 38%) 55px,
+      transparent 56px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      rgb(151 190 207 / 35%) 32px,
+      transparent 33px
+    );
+}
+
+.profile::before {
+  content: none;
+}
+
+.profile > .page {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .profile {
+    background-image:
+      linear-gradient(
+        90deg,
+        transparent 19px,
+        rgb(221 151 151 / 35%) 20px,
+        transparent 21px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 29px,
+        rgb(151 190 207 / 32%) 30px,
+        transparent 31px
+      );
+  }
+}
+
+
+
+
+/* Hand-drawn doodles scattered around the notebook */
+
+.profile > .page {
+  position: relative;
+}
+
+.profile > .page::before {
+  content: "♡";
+  position: absolute;
+  top: 180px;
+  right: -35px;
+  color: #d99b9b;
+  font-family: "Caveat", cursive;
+  font-size: 35px;
+  letter-spacing: 9px;
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
+.profile > .page::after {
+  content: "☁";
+  position: absolute;
+  top: 340px;
+  left: -55px;
+  color: #91b8c9;
+  font-size: 34px;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.profile .post-list {
+  position: relative;
+}
+
+.profile .post-list::before {
+  content: "✿";
+  position: absolute;
+  top: 210px;
+  right: -42px;
+  color: #d69eb5;
+  font-size: 27px;
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+
+.profile .post-list::after {
+  content: "♡ 〰";
+  position: absolute;
+  top: 580px;
+  left: -55px;
+  color: #b49bcf;
+  font-size: 25px;
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .profile > .page::before {
+    right: 2px;
+    font-size: 26px;
+  }
+
+  .profile > .page::after {
+    left: -27px;
+    font-size: 25px;
+  }
+
+  .profile .post-list::before {
+    right: -20px;
+    font-size: 21px;
+  }
+
+  .profile .post-list::after {
+    left: -28px;
+    font-size: 20px;
+  }
+}
+
+/* A separate little star, away from the heart */
+.profile > .page {
+  position: relative;
+}
+
+.profile > .page .profile-header::after {
+  content: "✧";
+  position: absolute;
+  top: 20px;
+  left: -38px;
+  color: #d6a75e;
+  font-size: 27px;
+  transform: rotate(14deg);
+  pointer-events: none;
+}
+/* Extra hand-drawn details */
+
+.profile {
+  background-color: #fffdf7;
+  background-image:
+    radial-gradient(#d8c8a8 0.6px, transparent 0.6px);
+  background-size: 7px 7px;
+}
+
+/* Scattered flowers and stars */
+.profile::before {
+  content: none;
+  white-space: pre;
+  position: absolute;
+  top: 70px;
+  right: 12px;
+  color: #d6a5ad;
+  font-family: cursive;
+  font-size: 23px;
+  line-height: 115px;
+  letter-spacing: 18px;
+  transform: rotate(-7deg);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* Little pencil doodles on the opposite side */
+.profile::after {
+  content: none;
+  white-space: pre;
+  position: absolute;
+  top: 480px;
+  left: 8px;
+  color: #a5bdc8;
+  font-family: cursive;
+  font-size: 25px;
+  line-height: 105px;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .profile::before,
+  .profile::after {
+    font-size: 18px;
+    opacity: 0.55;
+  }
+}
+/* Subtle dotted notebook paper */
+.profile {
+  background-color: #fffdf7;
+  background-image:
+    radial-gradient(circle, rgb(190 170 139 / 28%) 0.8px, transparent 1px),
+    linear-gradient(90deg, transparent 54px, rgb(221 151 151 / 38%) 55px, transparent 56px),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      rgb(151 190 207 / 35%) 32px,
+      transparent 33px
+    );
+  background-size: 18px 18px, auto, auto;
+  background-position: 0 0, 0 0, 0 0;
+  background-repeat: repeat, no-repeat, repeat;
+}
+
+/* Scrapbook polish */
+
+.profile .profile-header {
+  position: relative;
+  border: 2px solid #343b49;
+  border-radius: 5px 18px 7px 15px;
+  box-shadow: 7px 8px 0 #f5d469, 0 12px 24px rgb(80 65 45 / 8%);
+}
+
+.profile .profile-header::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  width: 86px;
+  height: 25px;
+  top: -13px;
+  left: 42%;
+  background: #f5d469;
+  border: 1px solid #d9b84f;
+  opacity: 0.95;
+  transform: rotate(-5deg);
+  clip-path: polygon(3% 0, 100% 5%, 96% 100%, 0 94%);
+  pointer-events: none;
+}
+
+.profile .profile-header::after {
+  content: "✳";
+  position: absolute;
+  z-index: 2;
+  top: -23px;
+  right: -15px;
+  left: auto;
+  color: #e78d83;
+  font-size: 35px;
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
+/* Handcrafted paper edges on post cards */
+.profile .post-card {
+  border: 1.5px solid #d9cdbb;
+  border-radius: 5px 13px 7px 11px;
+  box-shadow: 4px 5px 0 rgb(210 190 165 / 28%);
+}
+
+.profile .profile-details h1 {
+  text-decoration-color: #e8a6a6;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+@media (max-width: 600px) {
+  .profile .profile-header::before {
+    width: 60px;
+    height: 19px;
+  }
+
+  .profile .profile-header::after {
+    font-size: 27px;
+  }
+}
+
+/* Cute dotted scrapbook borders */
+
+.profile .post-card {
+  position: relative;
+  border: 2px dotted #89909a;
+  border-radius: 12px 8px 13px 7px;
+  outline: none;
+  box-shadow: 3px 4px 0 rgb(210 190 165 / 20%);
+}
+
+.profile .post-card:nth-child(odd) {
+  transform: rotate(-0.35deg);
+}
+
+.profile .post-card:nth-child(even) {
+  transform: rotate(0.35deg);
+}
+
+/* Special scrapbook frame for profile card */
+
+.profile .profile-header {
+  border: 2px solid #59616b;
+  border-radius: 18px 5px 16px 7px;
+  outline: 1.5px dashed #d5a66e;
+  outline-offset: 5px;
+  box-shadow: 6px 7px 0 #f5d469;
+  transform: rotate(-0.5deg);
+  position: relative;
+  background-image:
+    radial-gradient(circle, #e8a6a6 2px, transparent 2.5px),
+    radial-gradient(circle, #d6b66e 2px, transparent 2.5px);
+  background-size: 18px 18px, 18px 18px;
+  background-position: 10px 10px, calc(100% - 10px) calc(100% - 10px);
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 600px) {
+  .profile .profile-header {
+    outline-offset: 3px;
+    box-shadow: 4px 5px 0 #f5d469;
+  }
+}
+
+
+/* Remove yellow profile-card shadow */
+.profile .profile-header {
+  box-shadow: 3px 4px 0 rgb(214 165 173 / 20%);
+}
+
+@media (max-width: 600px) {
+  .profile .profile-header {
+    box-shadow: 3px 4px 0 rgb(214 165 173 / 20%);
+  }
+}
+
+
+/* Preserve each post card's original pastel shadow on hover */
+
+.profile .post-card[data-color="0"]:not(.post-card--full):hover {
+  transform: translateY(-4px) scale(1.015) rotate(0deg);
+  box-shadow: 7px 9px 0 #f1d9c6;
+}
+
+.profile .post-card[data-color="1"]:not(.post-card--full):hover {
+  transform: translateY(-4px) scale(1.015) rotate(0deg);
+  box-shadow: 7px 9px 0 #dcd1f2;
+}
+
+.profile .post-card[data-color="2"]:not(.post-card--full):hover {
+  transform: translateY(-4px) scale(1.015) rotate(0deg);
+  box-shadow: 7px 9px 0 #eee1a9;
+}
+
+.profile .post-card[data-color="3"]:not(.post-card--full):hover {
+  transform: translateY(-4px) scale(1.015) rotate(0deg);
+  box-shadow: 7px 9px 0 #d1e2c7;
+}
+
+.profile .post-card[data-color="4"]:not(.post-card--full):hover {
+  transform: translateY(-4px) scale(1.015) rotate(0deg);
+  box-shadow: 7px 9px 0 #cbdcf1;
+}
+
+/* Restore the original combined like pill */
+
+.profile .like-group {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #b9b8b0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 65%);
+  overflow: hidden;
+}
+
+.profile .like-button,
+.profile .like-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #515563;
+  font: inherit;
+  font-size: 12px;
+  transform: none;
+}
+
+.profile .like-button {
+  padding: 8px 4px 8px 11px;
+}
+
+.profile .like-count {
+  min-width: 36px;
+  padding: 8px 11px 8px 5px;
+}
+
+.profile .like-group:hover {
+  border-color: #89909a;
+}
+
+.profile .like-button:hover,
+.profile .like-count:hover {
+  background: #fff0bd;
+  transform: none;
+}
+
+.profile .like-button[aria-pressed="true"] .icon {
+  color: #e78d83;
+}
+
+
+/* Uniform post action buttons */
+
+.profile .post-actions {
+  align-items: center;
+  gap: 10px;
+}
+
+.profile .post-actions > .like-group,
+.profile .post-actions > .action-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  min-height: 36px;
+  border: 1.5px solid #b9b8b0;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 75%);
+  color: #515563;
+}
+
+.profile .post-actions > .like-group {
+  padding: 0;
+  overflow: hidden;
+}
+
+.profile .post-actions > .action-button {
+  gap: 7px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 12px;
+}
+
+.profile .post-actions .like-button,
+.profile .post-actions .like-count {
+  height: 100%;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+}
+
+.profile .post-actions .like-button {
+  padding: 0 5px 0 11px;
+}
+
+.profile .post-actions .like-count {
+  min-width: 32px;
+  padding: 0 10px 0 5px;
+}
+
+.profile .post-actions > .action-button:hover,
+.profile .post-actions > .like-group:hover {
+  background: #fff0bd;
+  border-color: #b9a77b;
+}
+
+.profile .post-actions .like-button:hover,
+.profile .post-actions .like-count:hover {
+  background: transparent;
+  transform: none;
+}
+
+
+/* Doodle-themed profile introduction card */
+
+.profile .profile-header {
+  background-color: #fff9f2;
+  background-image:
+    radial-gradient(circle at 18% 78%, rgb(244 190 190 / 22%) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 82% 24%, rgb(190 181 231 / 24%) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 72% 82%, rgb(245 213 145 / 28%) 0 2px, transparent 2.8px),
+    linear-gradient(135deg, #fff9f2, #fff5f5 55%, #f8f5ff);
+  background-size: 34px 34px, 39px 39px, 43px 43px, auto;
+  overflow: visible;
+}
+
+/* Little hand-drawn flower in the card corner */
+.profile .profile-header {
+  --doodle-flower: "✿";
+}
+
+.profile .profile-header::after {
+  content: "✿";
+  position: absolute;
+  top: auto;
+  right: 17px;
+  bottom: 12px;
+  left: auto;
+  z-index: 2;
+  color: #e79a9b;
+  font-size: 34px;
+  line-height: 1;
+  transform: rotate(-14deg) scale(1);
+  transform-origin: center;
+  transition: transform 250ms ease;
+  pointer-events: none;
+  text-shadow: 2px 2px 0 #f8dca7;
+}
+
+/* A tiny star doodle */
+.profile .profile-header .profile-details::after {
+  content: "✧";
+  position: absolute;
+  right: 62px;
+  bottom: 17px;
+  color: #c5a4d9;
+  font-size: 25px;
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
+/* Zoom the flower when hovering over the profile card */
+.profile .profile-header:hover::after {
+  transform: rotate(18deg) scale(1.45);
+}
+
+@media (max-width: 600px) {
+  .profile .profile-header::after {
+    right: 10px;
+    bottom: 8px;
+    font-size: 27px;
+  }
+
+  .profile .profile-header .profile-details::after {
+    right: 43px;
+    bottom: 10px;
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile .profile-header::after {
+    transition: none;
+  }
+}
+
+
+/* Keep the left-side doodle independent from the flower */
+
+.profile > .page .profile-header::before {
+  content: "✧";
+  position: absolute;
+  z-index: 4;
+  top: 20px;
+  left: -38px;
+  width: auto;
+  height: auto;
+  background: none;
+  border: 0;
+  clip-path: none;
+  color: #d6a75e;
+  font-size: 29px;
+  opacity: 1;
+  transform: rotate(14deg);
+  pointer-events: none;
+}
+
+/* Flower stays in its own corner */
+.profile .profile-header::after {
+  content: "✿";
+  top: auto;
+  right: 17px;
+  bottom: 12px;
+  left: auto;
+  z-index: 4;
+  width: auto;
+  height: auto;
+  background: none;
+  border: 0;
+  color: #e79a9b;
+  font-size: 34px;
+  opacity: 1;
+  clip-path: none;
+  text-shadow: 2px 2px 0 #f8dca7;
+  transform: rotate(-14deg) scale(1);
+  transition: transform 250ms ease;
+}
+
+/* Do not make the left star disappear on card hover */
+.profile .profile-header:hover::before {
+  opacity: 1;
+  transform: rotate(14deg);
+}
+
+.profile .profile-header:hover::after {
+  transform: rotate(18deg) scale(1.45);
+}
+
+/* Doodle sparkle around the profile picture */
+.profile .profile-header > .avatar--large {
+  position: relative;
+  transition: transform 250ms ease;
+}
+
+.profile .profile-header > .avatar--large:hover {
+  transform: rotate(-5deg) scale(1.07);
+}
+
+.profile .profile-header > .avatar--large:hover {
+  outline: 3px dotted #e8a6a6;
+  outline-offset: 5px;
+}
+
+@media (max-width: 600px) {
+  .profile > .page .profile-header::before {
+    left: -22px;
+    top: 12px;
+    font-size: 23px;
+  }
+
+  .profile .profile-header::after {
+    right: 10px;
+    bottom: 8px;
+    font-size: 27px;
+  }
+}
+
+
+/* Subtle avatar hover zoom only */
+.profile .profile-header > .avatar--large {
+  outline: none;
+  outline-offset: 0;
+  transition: transform 220ms ease;
+}
+
+.profile .profile-header > .avatar--large:hover {
+  transform: rotate(5deg) scale(1.035);
+  outline: none;
+}
+
+
+/* Slight tilted avatar hover */
+.profile .profile-header > .avatar--large:hover {
+  transform: rotate(9deg) scale(1.045);
+}
+
+
+/* Keep the profile star crisp and independent of the card background */
+.profile .profile-header::before {
+  z-index: 10;
+  color: #c89442;
+  background: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+  text-shadow:
+    0 0 2px #fffdf7,
+    0 0 5px #fffdf7;
+}
+
+.profile .profile-header:hover::before {
+  opacity: 1;
+  transform: rotate(14deg);
+}
+
+
+/* Final fix: separate and stabilize profile doodles */
+
+.profile > .page .profile-header::before {
+  content: "✧";
+  top: 20px;
+  left: -38px;
+  width: auto;
+  height: auto;
+  background: none;
+  border: 0;
+  color: #c89442;
+  font-size: 29px;
+  transform: rotate(14deg);
+  transition: none;
+  clip-path: none;
+  opacity: 1;
+}
+
+.profile > .page .profile-header::after {
+  content: "✿";
+  top: auto;
+  right: 17px;
+  bottom: 12px;
+  left: auto;
+  color: #e79a9b;
+  font-size: 34px;
+  transform: rotate(-14deg) scale(1);
+  transition: transform 250ms ease;
+}
+
+/* Keep the small inner star completely still */
+.profile .profile-header .profile-details::after {
+  transform: rotate(12deg);
+  transition: none;
+}
+
+/* Only the flower zooms */
+.profile > .page .profile-header:hover::before {
+  transform: rotate(14deg);
+}
+
+.profile > .page .profile-header:hover::after {
+  transform: rotate(18deg) scale(1.35);
+}
+
+@media (max-width: 600px) {
+  .profile > .page .profile-header::before {
+    left: -22px;
+    top: 12px;
+    font-size: 23px;
+  }
+}
+
+
+/* Remove profile card flower */
+.profile > .page .profile-header::after {
+  content: none;
+}
+
+
+/* Move the floating heart away from the profile card */
+.profile > .page::before {
+  right: -50px;
+}
+
+
+.profile > .page::before {
+  right: -65px;
+}
+
+
+/* Shift the lower heart doodle left */
+.profile .post-list::after {
+  left: -75px;
+}
+
+
+/* Match action hover colour with each post card */
+.profile .post-card[data-color="0"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="0"] .post-actions > .like-group:hover {
+  background: #f1d9c6;
+  border-color: #d9b69b;
+}
+
+.profile .post-card[data-color="1"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="1"] .post-actions > .like-group:hover {
+  background: #dcd1f2;
+  border-color: #b9a7d8;
+}
+
+.profile .post-card[data-color="2"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="2"] .post-actions > .like-group:hover {
+  background: #eee1a9;
+  border-color: #d2c078;
+}
+
+.profile .post-card[data-color="3"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="3"] .post-actions > .like-group:hover {
+  background: #d1e2c7;
+  border-color: #a9c398;
+}
+
+.profile .post-card[data-color="4"] .post-actions > .action-button:hover,
+.profile .post-card[data-color="4"] .post-actions > .like-group:hover {
+  background: #cbdcf1;
+  border-color: #a5bfdc;
+}

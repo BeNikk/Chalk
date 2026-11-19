@@ -3,7 +3,7 @@
 import { z } from 'zod';
 
 // Every theme in public/themes/ must be listed here (scripts/check-themes.js checks this).
-export const THEMES = ['default', 'chalkboard'];
+export const THEMES = ['default', 'chalkboard', 'soft', 'doodle'];
 
 export const updateMeSchema = z.object({
   bio: z.string().trim().max(160, 'Bios can be at most 160 characters.').optional(),
