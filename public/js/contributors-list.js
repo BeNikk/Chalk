@@ -54,5 +54,10 @@ export const contributors = [
     name:"Saksham",
     url:"https://github.com/Saksh3m",
     peep:"coffee"
-  }
+  },
+    {
+    name: 'Prabhat',
+    url: 'https://github.com/prahar0322',
+    peep: 'coffee',
+  },
 ];
