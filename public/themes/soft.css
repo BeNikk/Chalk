@@ -243,7 +243,7 @@
 }
 
 .profile .profile-bio {
-  color: #857763;
+  color: #765064;
   line-height: 1.7;
 }
 
@@ -390,7 +390,7 @@
 }
 
 .profile .post-card .post-title {
-  color: #514638;
+  color: var(--action-text);
   font-family: var(--font-heading);
   font-weight: 700;
 }
@@ -1006,4 +1006,10 @@
 .profile .follow-count:hover strong,
 .profile .follow-count:hover span {
   color: #b47796 !important;
+}
+
+/* Profile tagline and joined date */
+.profile .profile-details > .lead,
+.profile .profile-details > .field-hint {
+  color: #765064 !important;
 }
