@@ -26,8 +26,22 @@ export const contributors = [
     peep: 'idea',
   },
   {
+    vaishnavi-branch
     name: 'va1shn4v1',
     url: 'https://github.com/vee710',
     peep: 'writer',
   },
+
+    name: 'atharva',
+    url: 'https://github.com/Devil-Atharva',
+    peep: 'hoodie',
+  },
+  {
+    name: 'Sagar Rai',
+    url: 'https://github.com/notdoneyet-wq/Chalk',
+    photo: 'https://github.com/notdoneyet-wq.png',
+    peep: 'hoodie',
+  },
+
+ main
 ];
