@@ -26,9 +26,13 @@ export const contributors = [
     peep: 'idea',
   },
   {
-    name:"atharva",
+    name: "atharva",
     url: "https://github.com/Devil-Atharva",
-    peep:'hoodie'
-
+    peep: 'hoodie'
+  },
+  {
+    name: 'Ayush Jain',
+    url: 'https://github.com/ayushjain-coder',
+    peep: 'hoodie',
   }
 ];
