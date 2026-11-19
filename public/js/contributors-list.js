@@ -26,15 +26,8 @@ export const contributors = [
     peep: 'idea',
   },
   {
-    name: 'atharva',
-    url: 'https://github.com/Devil-Atharva',
-    peep: 'hoodie',
-  },
-  {
-    name: 'Sagar Rai',
-    url: 'https://github.com/notdoneyet-wq/Chalk',
-    photo: 'https://github.com/notdoneyet-wq.png',
-    peep: 'hoodie',
-  },
-
+    name: 'Rishi',
+    url: 'https://github.com/me-Rishik',
+    peep: 'idea',
+  }
 ];
