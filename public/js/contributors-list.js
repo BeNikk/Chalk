@@ -29,5 +29,30 @@ export const contributors = [
     name: 'yesHA',
     url : 'https://github.com/yeshapatel08',
     peep: 'hoodie'
+    vaishnavi-branch
+    name: 'va1shn4v1',
+    url: 'https://github.com/vee710',
+    peep: 'writer',
+  },
+
+    name: 'atharva',
+    url: 'https://github.com/Devil-Atharva',
+    peep: 'hoodie',
+  },
+  {
+    name: 'Sagar Rai',
+    url: 'https://github.com/notdoneyet-wq/Chalk',
+    photo: 'https://github.com/notdoneyet-wq.png',
+    peep: 'hoodie',
+  },
+  {
+    name: 'Aarush',
+    url: 'https://github.com/aarushshukla125',
+    peep: 'coffee',
+  },
+  {
+    name:"Saksham",
+    url:"https://github.com/Saksh3m",
+    peep:"coffee"
   }
 ];
