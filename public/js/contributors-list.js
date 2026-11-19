@@ -26,6 +26,7 @@ export const contributors = [
     peep: 'idea',
   },
   {
+
     name: 'yesHA',
     url: 'https://github.com/yeshapatel08',
     peep: 'hoodie'
@@ -50,9 +51,15 @@ export const contributors = [
     name: "Saksham",
     url: "https://github.com/Saksh3m",
     peep: "coffee"
-  }, {
+  },
+  {
     name: "Anukriti",
     url: "https://github.com/Anukriti3009",
     peep: "writer"
+  },
+  {
+    name: 'Alok',
+    url: 'https://github.com/alokj8585-eng/Chalk.git',
+    peep: 'writer'
   }
 ];
