@@ -27,14 +27,10 @@ export const contributors = [
   },
   {
     name: 'yesHA',
-    url : 'https://github.com/yeshapatel08',
+    url: 'https://github.com/yeshapatel08',
     peep: 'hoodie'
-    vaishnavi-branch
-    name: 'va1shn4v1',
-    url: 'https://github.com/vee710',
-    peep: 'writer',
   },
-
+  {
     name: 'atharva',
     url: 'https://github.com/Devil-Atharva',
     peep: 'hoodie',
@@ -51,8 +47,12 @@ export const contributors = [
     peep: 'coffee',
   },
   {
-    name:"Saksham",
-    url:"https://github.com/Saksh3m",
-    peep:"coffee"
+    name: "Saksham",
+    url: "https://github.com/Saksh3m",
+    peep: "coffee"
+  }, {
+    name: "Anukriti",
+    url: "https://github.com/Anukriti3009",
+    peep: "writer"
   }
 ];
