@@ -34,7 +34,14 @@ function checkDockerIsRunning() {
   }
 }
 
+// Easy to skip `npm install` before setup; without it the Prisma commands below can't run.
+function installPackagesIfMissing() {
+  if (existsSync('node_modules/prisma')) return;
+  run('npm install');
+}
+
 createEnvFile();
+installPackagesIfMissing();
 checkDockerIsRunning();
 
 // --wait blocks until the database's healthcheck (in docker-compose.yml) says it's ready.
