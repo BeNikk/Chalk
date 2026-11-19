@@ -6,14 +6,15 @@ This guide covers:
 
 1. [The one rule](#the-one-rule)
 2. [Setting up](#setting-up)
-3. [Picking an issue](#picking-an-issue)
-4. [Making your change](#making-your-change)
-5. [Opening a pull request](#opening-a-pull-request)
-6. [Review](#review)
-7. [Adding a drawing](#adding-a-drawing)
-8. [Adding a theme](#adding-a-theme)
-9. [How we write code](#how-we-write-code)
-10. [Getting help](#getting-help)
+3. [Your first pull request: add yourself](#your-first-pull-request)
+4. [Picking an issue](#picking-an-issue)
+5. [Making your change](#making-your-change)
+6. [Opening a pull request](#opening-a-pull-request)
+7. [Review](#review)
+8. [Adding a drawing](#adding-a-drawing)
+9. [Adding a theme](#adding-a-theme)
+10. [How we write code](#how-we-write-code)
+11. [Getting help](#getting-help)
 
 ---
 
@@ -69,6 +70,39 @@ You only do this once.
 | `EADDRINUSE :3000` | Chalk is already running in another terminal. Stop it with `Ctrl+C`, or change `PORT` in your `.env` file. |
 | `The table ... does not exist` | Your database is missing new tables. Run `npm run db:update`. |
 | Anything else | Copy the whole error into your issue or the guild group. Someone will help. |
+
+---
+
+## Your first pull request
+
+Start here: **add yourself to the [contributors page](../public/contributors.html).** It's one small change, and it walks you through the whole fork → branch → pull request loop before you touch real code. You don't need to claim an issue for this one.
+
+1. Make a branch: `git checkout -b add-your-name`
+2. Open [`public/js/contributors-list.js`](../public/js/contributors-list.js) and add yourself at the **end** of the `contributors` list:
+
+   ```js
+   {
+     name: 'Your Name',
+     url: 'https://github.com/your-username',
+     photo: 'https://github.com/your-username.png',
+     peep: 'hoodie',
+   },
+   ```
+
+   | Field | Needed? | What it does |
+   |---|---|---|
+   | `name` | Yes | Shown under your picture. |
+   | `url` | No | Where your card links to: your GitHub, a portfolio. Must start with `https://`. |
+   | `photo` | No | A picture of **you** (see the [rules](../public/rules.html)). `https://github.com/your-username.png` is your GitHub picture. Must start with `https://`. |
+   | `peep` | No | Your Open Peeps character, shown when there's no photo: `writer`, `reader`, `coffee`, `explainer`, `hoodie` or `idea`. Leave it out and one is picked for you. |
+
+   No photo? You appear as your peep. If your photo link ever breaks, your peep shows instead.
+
+3. Run `npm run dev`, open http://localhost:3000/contributors.html and check your card. Take a screenshot.
+4. Run `npm run lint` and `npm test`. A test checks every entry, so a typo in a field name or a missing `https://` shows up here.
+5. Commit (`git commit -m "Add Your Name to contributors"`), push, and [open a pull request](#opening-a-pull-request). You can write `None` for the issue.
+
+Want to be a character that isn't in the list? Draw one! See [Adding a drawing](#adding-a-drawing), then add its name to `PEEPS` in the same file.
 
 ---
 

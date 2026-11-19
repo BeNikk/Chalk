@@ -28,5 +28,6 @@ We'd love drawings by students. Any Open Peeps figure on the site can be swapped
 4. **Name it** with lowercase words and dashes, describing what it shows: `carrying-boxes.svg`, not `drawing1.svg`.
 5. **It must be yours** (or CC0). Don't trace someone else's art, and don't copy Notion's illustrations.
 6. **Add a row to the table above** and open a pull request with a screenshot of where you used it.
+7. **Want people to be able to pick it on the contributors page?** Add its name (without `.svg`) to `PEEPS` in `public/js/contributors-list.js`.
 
 When you use a drawing on a page, give it `alt=""` if it's only decoration, or a short description if it adds meaning.

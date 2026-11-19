@@ -177,6 +177,15 @@
   gap: var(--space-5);
 }
 
+/* Contributor cards: small ones, so many fit in a row (two on a phone) */
+.contributor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
 /* Two equal columns, side by side */
 .split {
   display: grid;

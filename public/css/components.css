@@ -210,6 +210,50 @@
 .tint-blue { background: var(--tint-blue); }
 .tint-yellow { background: var(--tint-yellow); }
 
+/* Contributor cards: a peep or a photo, with a name under it */
+
+.contributor-card {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Every block is a square, so a row of cards lines up whether it shows a peep or a photo */
+.contributor-card .art {
+  aspect-ratio: 1;
+  padding-top: var(--space-4);
+}
+
+.contributor-card .art .illustration {
+  width: auto;
+  height: 100%;
+}
+
+/* A photo sits in the middle of the colored block as a circle, not at the bottom like a peep */
+.contributor-card .art--photo {
+  align-items: center;
+  padding: var(--space-5);
+}
+
+.contributor-photo {
+  height: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--text);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.contributor-name {
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  overflow-wrap: anywhere; /* long names wrap instead of stretching the card */
+}
+
+a.contributor-card:hover .contributor-name {
+  text-decoration: underline;
+}
+
 /* Sticky notes */
 
 .sticky-wall {
