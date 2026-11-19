@@ -30,5 +30,11 @@ export const contributors = [
     url: "https://github.com/Devil-Atharva",
     peep:'hoodie'
 
+  },
+    {
+    name:"aishwarya",
+    url: "https://github.com/invalid-0",
+    peep:'hoodie'
+
   }
 ];
