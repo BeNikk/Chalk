@@ -4,6 +4,8 @@
 export const THEMES = [
   { id: 'default', name: 'Classic' },
   { id: 'chalkboard', name: 'Chalkboard' },
+  { id: 'soft', name: 'Soft' },
+  { id: 'doodle', name: 'Doodle' },
 ];
 
 // Loads the theme's CSS file. Unknown names are ignored, so a profile can never load any other file.
