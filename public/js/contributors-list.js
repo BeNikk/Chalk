@@ -27,16 +27,17 @@ export const contributors = [
   },
   {
     name: 'yesHA',
-    url : 'https://github.com/yeshapatel08',
-    peep: 'hoodie'
-    vaishnavi-branch
+    url: 'https://github.com/yeshapatel08',
+    peep: 'hoodie',
+  },
+  {
     name: 'va1shn4v1',
     url: 'https://github.com/vee710',
     peep: 'writer',
   },
-
-    name: 'atharva',
-    url: 'https://github.com/Devil-Atharva',
+  {
+    name: 'Anant',
+    url: 'https://github.com/anantahir219-ops',
     peep: 'hoodie',
   },
   {
