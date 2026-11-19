@@ -55,4 +55,12 @@ export const contributors = [
     url:"https://github.com/Saksh3m",
     peep:"coffee"
   }
+  {
+    name:"Bhanu Kaushik",
+    url:"https://github.com/abhanukaushik-ctrlq",
+    peep:"coffee"
+  }
+
+
+  
 ];
