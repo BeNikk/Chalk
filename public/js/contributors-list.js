@@ -28,6 +28,6 @@ export const contributors = [
   {
     name: 'Kaustav',
     url: 'https://github.com/cool-zinger',
-    peep: 'coffee',
+    peep: 'coffee'
   }
 ];
