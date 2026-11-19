@@ -26,6 +26,12 @@ export const contributors = [
     peep: 'idea',
   },
   {
+    vaishnavi-branch
+    name: 'va1shn4v1',
+    url: 'https://github.com/vee710',
+    peep: 'writer',
+  },
+
     name: 'atharva',
     url: 'https://github.com/Devil-Atharva',
     peep: 'hoodie',
@@ -37,4 +43,5 @@ export const contributors = [
     peep: 'hoodie',
   },
 
+ main
 ];
