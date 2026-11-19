@@ -26,6 +26,9 @@ export const contributors = [
     peep: 'idea',
   },
   {
+    name: 'yesHA',
+    url : 'https://github.com/yeshapatel08',
+    peep: 'hoodie'
     vaishnavi-branch
     name: 'va1shn4v1',
     url: 'https://github.com/vee710',
