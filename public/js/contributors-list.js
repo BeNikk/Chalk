@@ -28,5 +28,10 @@ export const contributors = [
     name: 'Rishi',
     url: 'https://github.com/me-Rishik',
     peep: 'idea',
-  }
+  },
+ {
+   name: 'Sachin',
+   url: 'https://github.com/sachinrajpoot73880-max',
+   peep: 'reader',
+ }
 ];
