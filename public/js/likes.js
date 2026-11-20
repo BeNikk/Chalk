@@ -3,6 +3,7 @@
 import { getLikers, likePost, unlikePost } from './api.js';
 import { openPeopleList } from './people.js';
 import { goToLogin } from './session.js';
+import { showToast } from './toast.js';
 
 function showLikes(heart, count, likedByMe, likeCount) {
   heart.setAttribute('aria-pressed', String(likedByMe)); // the CSS fills the heart when pressed
@@ -28,7 +29,7 @@ export function setUpLikeButtons(heart, count, post, user) {
       likeCount = result.likeCount;
       showLikes(heart, count, likedByMe, likeCount);
     } catch (error) {
-      alert(error.message);
+      showToast(error.message, 'error');
     } finally {
       heart.disabled = false;
     }

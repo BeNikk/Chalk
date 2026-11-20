@@ -1,27 +1,17 @@
-// post.html?id=7: one post on its own page, with its comments.
+// post.html?id=7: one post on its own page, with its comments and reading analytics (Glances).
 
-import { deletePost, getPost } from '../api.js';
+import { getPost } from '../api.js';
 import { getUrlParam } from '../forms.js';
-import { el, renderEmptyState, renderPostCard, showCommentCount } from '../render.js';
-import { canDelete, loadSession } from '../session.js';
+import { showGlanceCount, trackPostGlance } from '../glances.js';
+import { renderEmptyState, renderPostCard, showCommentCount } from '../render.js';
+import { loadSession } from '../session.js';
+import { setPendingToast } from '../toast.js';
 import { setUpComments } from '../comments.js';
 
 const container = document.querySelector('#post');
 
-function renderDeleteButton(post) {
-  const button = el('button', 'action-button action-button--danger', 'Delete');
-  button.addEventListener('click', async () => {
-    if (!confirm('Delete this post? This can’t be undone.')) return;
-    button.disabled = true;
-    try {
-      await deletePost(post.id);
-      window.location.href = 'feed.html';
-    } catch (error) {
-      alert(error.message);
-      button.disabled = false;
-    }
-  });
-  return button;
+function postPageTitle(post) {
+  return `${post.title || `#${post.label} by @${post.author.handle}`} · Chalk`;
 }
 
 async function showPost(user) {
@@ -33,13 +23,24 @@ async function showPost(user) {
 
   try {
     const { post } = await getPost(id);
-    document.title = `${post.title || `#${post.label} by @${post.author.handle}`} · Chalk`;
+    document.title = postPageTitle(post);
 
-    const card = renderPostCard(post, user, { full: true });
-    if (canDelete(post.author.handle, user)) {
-      card.querySelector('.post-actions').append(renderDeleteButton(post));
-    }
+    const card = renderPostCard(post, user, {
+      full: true,
+      onEdit: (updated) => {
+        document.title = postPageTitle(updated);
+      },
+      onDelete: () => {
+        setPendingToast('Post deleted.', 'success');
+        window.location.href = 'feed.html';
+      },
+    });
     container.replaceChildren(card);
+
+    const glanceButton = card.querySelector('.glance-button');
+    trackPostGlance(post, card, user, (glanceCount, totalGlances) => {
+      showGlanceCount(glanceButton, glanceCount, totalGlances);
+    });
 
     const commentLink = card.querySelector('.comment-link');
     setUpComments(post.id, user, (count) => showCommentCount(commentLink, count));

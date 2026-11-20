@@ -6,6 +6,7 @@ import { el, joinedDate, renderAvatar, renderEmptyState, renderPostCard } from '
 import { openPeopleList } from '../people.js';
 import { goToLogin, loadSession } from '../session.js';
 import { applyTheme } from '../themes.js';
+import { showToast } from '../toast.js';
 
 const header = document.querySelector('#profile-header');
 const list = document.querySelector('#posts');
@@ -95,12 +96,20 @@ function renderFollowButton(profile, user) {
   return button;
 }
 
+function handlePostDeleted(_post, card) {
+  card.remove();
+  if (list.querySelectorAll('.post-card').length === 0 && loadMoreButton.hidden) {
+    list.replaceChildren(renderEmptyState('No posts yet.', 'coffee'));
+  }
+  showToast('Post deleted.', 'success');
+}
+
 async function loadPosts(user) {
   loadMoreButton.disabled = true;
   try {
     const { posts } = await getUserPosts(handle, oldestPostId);
     for (const post of posts) {
-      list.append(renderPostCard(post, user));
+      list.append(renderPostCard(post, user, { onDelete: handlePostDeleted }));
     }
     if (posts.length > 0) {
       oldestPostId = posts.at(-1).id;

@@ -60,6 +60,16 @@ const follows = [
   ['mess_hall', 'inkyfox'], ['lofi_leela', 'inkyfox'], ['mod_mango', 'inkyfox'],
 ];
 
+// Each entry is [handle, postIndex, readCount]: that user read that post (never its own author).
+const glances = [
+  ['mess_hall', 0, 2], ['lofi_leela', 0, 1], ['quiet_kid', 0, 1], ['mod_mango', 0, 1],
+  ['inkyfox', 1, 1], ['quiet_kid', 1, 2], ['lofi_leela', 1, 1],
+  ['inkyfox', 2, 1], ['mess_hall', 2, 1],
+  ['inkyfox', 3, 2], ['mess_hall', 3, 1], ['mod_mango', 3, 1],
+  ['lofi_leela', 4, 1],
+  ['quiet_kid', 9, 1], ['mess_hall', 9, 3],
+];
+
 async function createFollows(userIdByHandle) {
   for (const [follower, followed] of follows) {
     await prisma.follow.create({
@@ -128,15 +138,30 @@ async function createCommentsAndLikes(userIdByHandle, postIds) {
   }
 }
 
+async function createGlances(userIdByHandle, postIds) {
+  for (const [handle, postIndex, readCount] of glances) {
+    const userId = userIdByHandle[handle];
+    await prisma.glance.create({
+      data: {
+        postId: postIds[postIndex],
+        userId,
+        readerKey: `u:${userId}`,
+        readCount,
+      },
+    });
+  }
+}
+
 await clearDatabase();
 const userIdByHandle = await createUsers();
 const postIds = await createPosts(userIdByHandle);
 await createCommentsAndLikes(userIdByHandle, postIds);
 await createFollows(userIdByHandle);
+await createGlances(userIdByHandle, postIds);
 await prisma.$disconnect();
 
 console.log(
   `Seeded ${users.length} users, ${posts.length} posts, ${comments.length} comments, ` +
-    `${likes.length} likes and ${follows.length} follows.`,
+    `${likes.length} likes, ${glances.length} glances and ${follows.length} follows.`,
 );
 console.log('Log in as any of them, e.g. inkyfox@chalk.test, with the password: chalk-dev-password');

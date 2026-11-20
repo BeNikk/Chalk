@@ -1,6 +1,7 @@
 // Everything Chalk reads from or writes to the Post table.
 
 import prisma from '../db.js';
+import { getGlanceStats, getPostGlanceStats } from './glances.js';
 
 export const PAGE_SIZE = 20;
 
@@ -16,17 +17,20 @@ function postDetails(viewerId) {
 
 // The shape every post has in API answers. Labels are lowercase in the API ("rant"),
 // but uppercase in the database (RANT), because that's how Prisma enums are written.
-function toPublicPost(post) {
+function toPublicPost(post, glanceStats = { glanceCount: 0, totalGlances: 0 }) {
   return {
     id: post.id,
     label: post.label.toLowerCase(),
     title: post.title,
     body: post.body,
     createdAt: post.createdAt,
+    editedAt: post.editedAt ?? null,
     author: post.author,
     likeCount: post._count.likes,
     commentCount: post._count.comments,
     likedByMe: Boolean(post.likes?.length),
+    glanceCount: glanceStats.glanceCount,
+    totalGlances: glanceStats.totalGlances,
   };
 }
 
@@ -44,12 +48,16 @@ export async function listPosts({ label, authorId, before, viewerId, followedBy 
     take: PAGE_SIZE,
     include: postDetails(viewerId),
   });
-  return posts.map(toPublicPost);
+
+  const statsByPostId = await getGlanceStats(posts.map((post) => post.id));
+  return posts.map((post) => toPublicPost(post, statsByPostId.get(post.id)));
 }
 
 export async function findPost(id, viewerId) {
   const post = await prisma.post.findUnique({ where: { id }, include: postDetails(viewerId) });
-  return post ? toPublicPost(post) : null;
+  if (!post) return null;
+  const glanceStats = await getPostGlanceStats(post.id);
+  return toPublicPost(post, glanceStats);
 }
 
 export async function createPost({ authorId, label, title, body }) {
@@ -58,6 +66,21 @@ export async function createPost({ authorId, label, title, body }) {
     include: postDetails(authorId),
   });
   return toPublicPost(post);
+}
+
+export async function updatePost(id, { label, title, body }, viewerId) {
+  const data = { editedAt: new Date() };
+  if (label !== undefined) data.label = label.toUpperCase();
+  if (title !== undefined) data.title = title;
+  if (body !== undefined) data.body = body;
+
+  const post = await prisma.post.update({
+    where: { id },
+    data,
+    include: postDetails(viewerId),
+  });
+  const glanceStats = await getPostGlanceStats(id);
+  return toPublicPost(post, glanceStats);
 }
 
 export async function postExists(id) {

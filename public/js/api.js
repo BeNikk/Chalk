@@ -90,8 +90,16 @@ export function createPost({ label, title, body }) {
   return request('POST', '/posts', { label, title, body });
 }
 
+export function updatePost(id, { label, title, body }) {
+  return request('PATCH', `/posts/${id}`, { label, title, body });
+}
+
 export function deletePost(id) {
   return request('DELETE', `/posts/${id}`);
+}
+
+export function recordGlance(id, readDurationMs) {
+  return request('POST', `/posts/${id}/glance`, { readDurationMs });
 }
 
 export function likePost(id) {

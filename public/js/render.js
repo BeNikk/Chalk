@@ -2,16 +2,38 @@
 // Everything people wrote goes in with textContent, never innerHTML, so nobody can sneak code into a post.
 // New to building HTML from JavaScript? See docs/help/dom.md
 
+import { el, renderIcon } from './dom.js';
+import { openGlancesBreakdown, showGlanceCount } from './glances.js';
 import { setUpLikeButtons } from './likes.js';
+import { openDeletePostDialog, openEditPostDialog } from './postDialogs.js';
+import { canDelete, canEdit } from './session.js';
 import { setUpShareButton } from './share.js';
 
-// A small helper: el('p', 'post-body', 'Hello') makes <p class="post-body">Hello</p>.
-export function el(tag, className, text) {
-  const element = document.createElement(tag);
-  if (className) element.className = className;
-  if (text !== undefined) element.textContent = text;
-  return element;
+export { el };
+
+function closeAllPostMenus(exceptMenu = null) {
+  for (const menu of document.querySelectorAll('.post-menu')) {
+    if (menu === exceptMenu) continue;
+    const list = menu.querySelector('.post-menu-list');
+    const button = menu.querySelector('.post-menu-button');
+    if (list && !list.hidden) {
+      list.hidden = true;
+      button.setAttribute('aria-expanded', 'false');
+    }
+  }
 }
+
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.post-menu')) {
+    closeAllPostMenus();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeAllPostMenus();
+  }
+});
 
 // "just now", "5m", "3h", "2d", or a date for anything older than a week.
 export function timeAgo(dateString) {
@@ -54,17 +76,97 @@ function renderTime(dateString) {
   return time;
 }
 
-function renderMeta(post) {
-  const meta = el('div', 'post-meta');
-  meta.append(renderAuthor(post.author), renderLabelChip(post.label), renderTime(post.createdAt));
-  return meta;
+function renderEditedBadge(editedAt) {
+  const badge = el('span', 'post-edited', '(edited)');
+  if (editedAt) {
+    badge.title = `Edited ${new Date(editedAt).toLocaleString()}`;
+  } else {
+    badge.hidden = true;
+  }
+  return badge;
 }
 
-// A line icon from client/icons. aria-hidden: screen readers read the button's label instead.
-function renderIcon(name) {
-  const icon = el('span', `icon icon--${name}`);
-  icon.setAttribute('aria-hidden', 'true');
-  return icon;
+function renderPostMenu(post, user, { card, contentEl, metaEl, full, onEdit, onDelete }) {
+  const allowEdit = canEdit(post.author.handle, user);
+  const allowDelete = canDelete(post.author.handle, user);
+  if (!allowEdit && !allowDelete) return null;
+
+  const menu = el('div', 'post-menu');
+  const button = el('button', 'post-menu-button');
+  button.type = 'button';
+  button.setAttribute('aria-haspopup', 'menu');
+  button.setAttribute('aria-expanded', 'false');
+  button.setAttribute('aria-label', 'Post options');
+  button.append(renderIcon('more'));
+
+  const list = el('div', 'post-menu-list');
+  list.setAttribute('role', 'menu');
+  list.hidden = true;
+
+  button.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const opening = list.hidden;
+    closeAllPostMenus(menu);
+    list.hidden = !opening;
+    button.setAttribute('aria-expanded', String(opening));
+  });
+
+  if (allowEdit) {
+    const editItem = el('button', 'post-menu-item');
+    editItem.type = 'button';
+    editItem.setAttribute('role', 'menuitem');
+    editItem.append(renderIcon('edit'), 'Edit');
+    editItem.addEventListener('click', () => {
+      closeAllPostMenus();
+      openEditPostDialog(post, (updated) => {
+        Object.assign(post, updated);
+        const chip = metaEl.querySelector('.label-chip');
+        if (chip) {
+          chip.dataset.label = updated.label;
+          chip.textContent = `#${updated.label}`;
+        }
+        const editedBadge = metaEl.querySelector('.post-edited');
+        if (editedBadge && updated.editedAt) {
+          editedBadge.hidden = false;
+          editedBadge.title = `Edited ${new Date(updated.editedAt).toLocaleString()}`;
+        }
+        card.classList.remove('is-expanded');
+        renderPostContent(contentEl, post, full);
+        if (onEdit) onEdit(post, card);
+      });
+    });
+    list.append(editItem);
+  }
+
+  if (allowDelete) {
+    const deleteItem = el('button', 'post-menu-item post-menu-item--danger');
+    deleteItem.type = 'button';
+    deleteItem.setAttribute('role', 'menuitem');
+    deleteItem.append(renderIcon('trash'), 'Delete');
+    deleteItem.addEventListener('click', () => {
+      closeAllPostMenus();
+      openDeletePostDialog(post, () => {
+        if (onDelete) onDelete(post, card);
+      });
+    });
+    list.append(deleteItem);
+  }
+
+  menu.append(button, list);
+  return menu;
+}
+
+function renderMeta(post, user, menuContext) {
+  const meta = el('div', 'post-meta');
+  meta.append(
+    renderAuthor(post.author),
+    renderLabelChip(post.label),
+    renderTime(post.createdAt),
+    renderEditedBadge(post.editedAt),
+  );
+  const menu = renderPostMenu(post, user, { ...menuContext, metaEl: meta });
+  if (menu) meta.append(menu);
+  return meta;
 }
 
 export function showCommentCount(link, count) {
@@ -97,11 +199,38 @@ function renderActions(post, user) {
   comments.href = `post.html?id=${post.id}#comments`;
   showCommentCount(comments, post.commentCount);
 
+  const glances = renderActionButton('button', 'eye', 'glance-button');
+  showGlanceCount(glances, post.glanceCount, post.totalGlances);
+  glances.addEventListener('click', () => {
+    openGlancesBreakdown(Number(glances.dataset.glanceCount), Number(glances.dataset.totalGlances));
+  });
+
   const shareButton = renderActionButton('button', 'share');
   setUpShareButton(shareButton, post);
 
-  actions.append(likes, comments, shareButton);
+  actions.append(likes, comments, glances, shareButton);
   return actions;
+}
+
+function renderPostContent(contentEl, post, full) {
+  const link = `post.html?id=${post.id}`;
+  const nodes = [];
+
+  if (post.title) {
+    const title = el('h2', 'post-title');
+    title.append(full ? post.title : linkTo(link, post.title));
+    nodes.push(title);
+  }
+
+  const body = el('p', 'post-body', post.body);
+  nodes.push(full || post.title ? body : linkTo(link, body));
+
+  if (!full) {
+    const card = contentEl.closest('.post-card');
+    nodes.push(renderReadMore(card, body));
+  }
+
+  contentEl.replaceChildren(...nodes);
 }
 
 // "Joined November 2026"
@@ -111,26 +240,16 @@ export function joinedDate(dateString) {
 }
 
 // One post. In the feed (`full: false`) long posts are shortened and the card links to the post page.
-export function renderPostCard(post, user, { full = false } = {}) {
+export function renderPostCard(post, user, { full = false, onEdit, onDelete } = {}) {
   const card = el('article', full ? 'post-card post-card--full' : 'post-card');
   // Cards take turns through the pastel colors (by id, so a post keeps its color), so a feed
   // full of #rant isn't all pink. The label chip still shows the label's own color.
   card.dataset.color = post.id % 5;
 
-  // In the feed, one link to the post: on the title, or on the body when there's no title.
-  const link = `post.html?id=${post.id}`;
-  card.append(renderMeta(post));
-
-  if (post.title) {
-    const title = el('h2', 'post-title');
-    title.append(full ? post.title : linkTo(link, post.title));
-    card.append(title);
-  }
-
-  const body = el('p', 'post-body', post.body);
-  card.append(full || post.title ? body : linkTo(link, body));
-  if (!full) card.append(renderReadMore(card, body));
-
+  const contentEl = el('div', 'post-content');
+  const metaEl = renderMeta(post, user, { card, contentEl, full, onEdit, onDelete });
+  card.append(metaEl, contentEl);
+  renderPostContent(contentEl, post, full);
   card.append(renderActions(post, user));
   return card;
 }
@@ -145,7 +264,7 @@ function renderReadMore(card, body) {
   // We can only measure the text once it's on the page, so a ResizeObserver tells us
   // when it gets its size (and again if the window is resized).
   const observer = new ResizeObserver(() => {
-    if (card.classList.contains('is-expanded')) return;
+    if (!card || card.classList.contains('is-expanded')) return;
     button.hidden = body.scrollHeight <= body.clientHeight; // nothing hidden, no button
   });
   observer.observe(body);
