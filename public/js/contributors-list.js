@@ -30,8 +30,60 @@ export const contributors = [
     url: 'https://github.com/cool-zinger',
     peep:'coffee',
   },
+  {
+    name: 'Aditi',
+    url: 'https://github.com/aditi-015',
+    peep: 'writer',
+  },
+  {
+    name: 'yesHA',
+    url : 'https://github.com/yeshapatel08',
+    peep: 'hoodie'
+  },
+  {
+    name: 'va1shn4v1',
+    url: 'https://github.com/vee710',
+    peep: 'writer',
+  },
+  {
+    name: 'atharva',
+    url: 'https://github.com/Devil-Atharva',
+    peep: 'hoodie',
+  },
+  {
+    name: 'Sagar Rai',
+    url: 'https://github.com/notdoneyet-wq/Chalk',
+    photo: 'https://github.com/notdoneyet-wq.png',
+    peep: 'hoodie',
+  },
+  {
+    name: 'Aarush',
+    url: 'https://github.com/aarushshukla125',
+    peep: 'coffee',
+  },
+  {
+    name:"Saksham",
+    url:"https://github.com/Saksh3m",
+    peep:"coffee"
+  },
+  {
+    name: "Anukriti",
+    url: "https://github.com/Anukriti3009",
+    peep: "writer"
+  },
+  {
+    name: 'Alok',
+    url: 'https://github.com/alokj8585-eng/Chalk.git',
+    peep: 'writer'
+  },
+  {
     name: 'Rishi',
     url: 'https://github.com/me-Rishik',
     peep: 'idea',
+  },
+  {
+    name: 'AI-with-Dev',
+    url: 'https://github.com/AI-with-Dev',
+    peep: 'writer',
   }
 ];
