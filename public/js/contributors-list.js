@@ -75,5 +75,10 @@ export const contributors = [
     name: 'Rishi',
     url: 'https://github.com/me-Rishik',
     peep: 'idea',
+  },
+  {
+    name: 'AI-with-Dev',
+    url: 'https://github.com/AI-with-Dev',
+    peep: 'writer',
   }
 ];
