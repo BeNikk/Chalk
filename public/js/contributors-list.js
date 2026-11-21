@@ -26,10 +26,19 @@ export const contributors = [
     peep: 'idea',
   },
   {
-
+    name: 'Aditi',
+    url: 'https://github.com/aditi-015',
+    peep: 'writer',
+  },
+  {
     name: 'yesHA',
-    url: 'https://github.com/yeshapatel08',
+    url : 'https://github.com/yeshapatel08',
     peep: 'hoodie'
+  },
+  {
+    name: 'va1shn4v1',
+    url: 'https://github.com/vee710',
+    peep: 'writer',
   },
   {
     name: 'atharva',
@@ -48,9 +57,9 @@ export const contributors = [
     peep: 'coffee',
   },
   {
-    name: "Saksham",
-    url: "https://github.com/Saksh3m",
-    peep: "coffee"
+    name:"Saksham",
+    url:"https://github.com/Saksh3m",
+    peep:"coffee"
   },
   {
     name: "Anukriti",
