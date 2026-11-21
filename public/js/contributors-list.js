@@ -25,6 +25,44 @@ export const contributors = [
     url: 'https://github.com/BeNikk',
     peep: 'idea',
   },
+  {
+
+    name: 'yesHA',
+    url: 'https://github.com/yeshapatel08',
+    peep: 'hoodie'
+  },
+  {
+    name: 'atharva',
+    url: 'https://github.com/Devil-Atharva',
+    peep: 'hoodie',
+  },
+  {
+    name: 'Sagar Rai',
+    url: 'https://github.com/notdoneyet-wq/Chalk',
+    photo: 'https://github.com/notdoneyet-wq.png',
+    peep: 'hoodie',
+  },
+  {
+    name: 'Aarush',
+    url: 'https://github.com/aarushshukla125',
+    peep: 'coffee',
+  },
+  {
+    name: "Saksham",
+    url: "https://github.com/Saksh3m",
+    peep: "coffee"
+  },
+  {
+    name: "Anukriti",
+    url: "https://github.com/Anukriti3009",
+    peep: "writer"
+  },
+  {
+    name: 'Alok',
+    url: 'https://github.com/alokj8585-eng/Chalk.git',
+    peep: 'writer'
+  },
+  {
     name: 'Rishi',
     url: 'https://github.com/me-Rishik',
     peep: 'idea',
